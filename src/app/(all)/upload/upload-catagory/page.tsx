@@ -1,4 +1,4 @@
-import CatagoryUpdate from '@/Component/CatagoryUpdate'
+import CatagoryUpdate from '@/Component/catagory/CatagoryUpdate'
 import React from 'react'
 
 const page = () => {

@@ -1,14 +1,14 @@
 "use client"
 
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
-import { Images } from "./Image"
-import { convertBlobUrlToFIle, extractTimeAndDate } from "./Database"
-import {  getStorage, uploadProfileImage } from "@/supabase/storage/Storages"
+import {uploadProfileImage } from "@/supabase/storage/Storages"
 import { trpc } from "@/app/_trpc/client"
 import { Authclient } from "@/lib/auth-client"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { Images } from "../Image"
+import { convertBlobUrlToFIle, extractTimeAndDate } from "../Database"
 
 
 

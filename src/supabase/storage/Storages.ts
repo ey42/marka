@@ -71,7 +71,7 @@ try {
   
   const {data} = await storage.from(bucket).upload(path, file)
   const imageUrl = `/storage/v1/object/public/${bucket}/${data?.path}`
-
+  console.log("successfully upload image in postImage")
   return imageUrl
     }
    } else{
@@ -79,7 +79,7 @@ try {
     return 
    }
 } catch (error) {
-   return `error image uploading ${error}`
+   throw new Error( `error image uploading ${error}`)
 }
  
   
@@ -101,7 +101,7 @@ try {
         console.log(file.type)
        if((company === undefined || company === "") && update === false){
          console.log("error uploading image to storage due to company === undefined or empty string")
-         return
+         return new Error("error uploading image to profile")
        }else{
      
       if(update === false && profile){
@@ -145,7 +145,7 @@ try {
         return 
       }
    } catch (error) {
-      return `error image uploading ${error}`
+      return new Error("error on uploading image in upload profile catch")
    }
   }
  

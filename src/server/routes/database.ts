@@ -79,28 +79,29 @@ export const DatabaseRouter = router({
     const profile = profiles.find((profile) => profile.userId === userId ) as profileProp
     const users = await db.select().from(schema.user)
     const user = users.find((user) => user.id === userId)
-    console.log("in this area work")
+    console.log("starting uploading to post table...")
 
     try {
     if(user?.role === "merchant" && (catagory !== undefined || catagory !== null || catagory !== "") ){
+        console.log("the user is verified merchant and all data are right")
            const UUID:string = uuid.v4();
            const now = new Date();
-          const result = await db.insert(schema.post).values({userId: userId ,profileId: profile.id ,title: title ,catagory: catagory ,id: UUID ,file: imagefile, description: description, createdAt: now})
-
-          if(!result){
-            const deletedFileName = imagefile.split('/').pop() as string
-            console.log(deletedFileName + " delete file name from database")
-            const storage = getStorage()
-            await storage.from("Images").remove([`postImage/${deletedFileName}`])
-            console.log("successfully deleted this file from database " + deletedFileName)
-          }
-           return {result: result}
+           await db.insert(schema.post).values({userId: userId ,profileId: profile.id ,title: title ,catagory: catagory ,id: UUID ,file: imagefile, description: description, createdAt: now})
+          
+        //   if(!result){
+        //     const deletedFileName = imagefile.split('/').pop() as string
+        //     console.log(deletedFileName + " delete file name from database")
+        //     const storage = getStorage()
+        //     await storage.from("Images").remove([`postImage/${deletedFileName}`])
+        //     console.log("!result successfully deleted this file from database " + deletedFileName)
+        //   }
+         
         }else{
             const deletedFileName = imagefile.split('/').pop() as string
             console.log(deletedFileName + " delete file name from database")
             const storage = getStorage()
             await storage.from("Images").remove([`postImage/${deletedFileName}`])
-            console.log("successfully deleted this file from database " + deletedFileName)
+            console.log("unauthorized or undefined form successfully deleted this file from database " + deletedFileName)
             throw new TRPCError({
                 code:"UNAUTHORIZED",
                 message:"you are not authorized for posting"})
@@ -110,7 +111,7 @@ export const DatabaseRouter = router({
         console.log(deletedFileName + " delete file name from database post")
         const storage = getStorage()
         await storage.from("Images").remove([`postImage/${deletedFileName}`])
-        console.log("successfully deleted this file from database post " + deletedFileName)
+        console.log("catch error successfully deleted this file from database post " + deletedFileName)
         throw new TRPCError({
             code:"UNAUTHORIZED",
             message:`server error uploading post: ${error}`})

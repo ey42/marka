@@ -1,4 +1,4 @@
-import ProfileUpload from '@/Component/ProfileUpload'
+import ProfileUpload from '@/Component/user/ProfileUpload'
 import React from 'react'
 
 const page = () => {

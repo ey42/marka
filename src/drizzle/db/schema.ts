@@ -88,7 +88,7 @@ export const post = pgTable("post",{
 	createdAt: timestamp("createdAt").notNull().defaultNow(),
 	updatedAt: timestamp("updatedAt"),
 	userId: text("userId").notNull().references(() => user.id),
-	catagory: text("catagory").notNull().references(() => catagories.categories).unique(),
+	catagory: text("catagory").notNull().references(() => catagories.categories),
 	isSold: boolean("isSold").default(false),
 	description : text("description"),
 

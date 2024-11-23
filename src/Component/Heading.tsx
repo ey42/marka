@@ -69,7 +69,7 @@ console.log("user is undefined ")
   return (
     // <MaxWidthWrapper>
     <div className='w-screen backdrop-blur-lg rounded-md' >
-          <div className=" flex justify-between gap-4 border-dashed border-dark dark:border-slate-400 border-b-[0.5px] ">
+          <div className=" flex justify-between max-md:h-14 gap-4 border-dashed border-dark dark:border-slate-400 border-b-[0.5px] ">
          <div className='flex flex-row justify-center max-md:justify-start items-center pt-3 my-auto max-lg:mb-2'>
           <div className='flex justify-center gap-4 ml-2 max-md:hidden'>
           <div className="ml-3 ">
@@ -102,7 +102,7 @@ console.log("user is undefined ")
                   <NavigationMenu className="max-md:hidden ">
                     <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="transition-colors duration-100 bg-slate-300 text-dark lg:border-2 border-dark hover:bg-dark hover:text-slate-300 dark:bg-dark dark:text-slate-300 dark:border-slate-300 hover:dark:border-dark hover:dark:bg-slate-300 hover:dark:text-dark data-[state=open]:bg-dark data-[state=open]:text-slate-300 dark:data-[state=open]:bg-slate-300 dark:data-[state=open]:text-dark dark:data-[active]:bg-slate-300 dark:data-[active]:text-dark data-[active]:bg-dark data-[active]:text-slate-300 dark:focus:text-dark dark:focus:bg-slate-300 focus:text-slate-300 focus:bg-dark px-2 py-2 max-lg:w-8 max-lg:h-8" > <div className="flex gap-2 "><h1 className="max-lg:hidden">uploads</h1> <MonitorUp /></div> </NavigationMenuTrigger>
+          <NavigationMenuTrigger className="transition-colors duration-100 text-white bg-black lg:border-2 border-dark hover:bg-black hover:text-white dark:bg-black dark:text-white dark:border-slate-300 hover:dark:border-dark hover:dark:bg-black hover:dark:text-white data-[state=open]:bg-black data-[state=open]:text-white dark:data-[state=open]:bg-black dark:data-[state=open]:text-white dark:data-[active]:bg-slate-300 dark:data-[active]:text-white data-[active]:bg-black data-[active]:text-white dark:focus:text-white dark:focus:bg-black focus:text-slate-300 focus:bg-black px-2 py-2 max-lg:w-8 max-lg:h-8" > <div className="flex gap-2 "><h1 className="max-lg:hidden">uploads</h1> <MonitorUp /></div> </NavigationMenuTrigger>
           <NavigationMenuContent className=" w-full flex-col gap-2 backdrop-blur-sm bg-black">
             {/* <h1 className="py-2 text-lg text-center bg-slate-100">uploads</h1> */}
             <div className="flex flex-col w-56 h-full  ">
@@ -157,14 +157,11 @@ console.log("user is undefined ")
 
          </div>
        
-            <div className='flex gap-3 justify-center max-md:justify-start items-center mb-2 max-md:ml-0 my-auto'>
-             
-              
+            <div className='flex justify-center max-md:justify-start items-center gap-1 max-md:ml-0 my-auto'>
                 {user?.map((profile,i) => (
                 profile.role === "merchant" ? (
-                  
-               
-                  <Link href={`/profile/${profile.id}`} replace={true}>
+                           
+                  <Link href={`/profile/${profile.id}`} replace={true} key={profile.id} className={`group z-10 hover:z-20`}>
                   {/* <Link href='#'> */}
                     <div key={i} className=" flex-col overflow-hidden dark:border-slate-300  dark:text-slate-300 w-30 h-30 flex items-center justify-center cursor-pointer" >
                       <Image
@@ -172,9 +169,9 @@ console.log("user is undefined ")
                       alt=''
                       width={50}
                       height={50}
-                      className="rounded-full max-md:w-7 max-md:h-7 max-sm:w-6 max-sm:h-6  w-8 h-8 border-2 border-dark dark:border-dark"
+                      className="rounded-full max-md:w-7 max-md:h-7 max-sm:w-6 max-sm:h-6 w-8 h-8 border-2 border-dark dark:border-dark"
                       />
-                      <p className="text-[8px] overflow-hidden max-sm:hidden">{profile.name.split(' ')[0]}</p>
+                      <p className="text-[8px] overflow-hidden hidden group-hover:flex">{profile.name.split(' ')[0]}</p>
                     </div>
                     </Link>
                   
@@ -225,7 +222,7 @@ console.log("user is undefined ")
                   </div>
               </SheetTrigger>
               <SheetContent className="w-36 md:h-48  bg-inherit border-none rounded-md overflow-auto md:hidden">
-                <SheetHeader className="flex justify-center items-start mt-0">
+                <SheetHeader className="flex justify-center items-start">
                   <SheetTitle className="text-dark border-2 border-dark rounded-lg text-left ">
                   <div className=' w-10 dark:fill-slate-300 fill-dark ml-0'>
                       <Link href={'#'}>

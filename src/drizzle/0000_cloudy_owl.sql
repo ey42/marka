@@ -82,8 +82,7 @@ CREATE TABLE IF NOT EXISTS "post" (
 	"userId" text NOT NULL,
 	"catagory" text NOT NULL,
 	"isSold" boolean DEFAULT false,
-	"description" text,
-	CONSTRAINT "post_catagory_unique" UNIQUE("catagory")
+	"description" text
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "postSeen" (

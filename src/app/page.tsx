@@ -1,4 +1,4 @@
-import Landing from "@/Component/Landing";
+import Landing from '@/Component/catagory/Landing';
 import { db } from '@/drizzle'
 import * as schema from "@/drizzle/db/schema"
 
