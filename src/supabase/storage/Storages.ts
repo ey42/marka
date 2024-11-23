@@ -43,7 +43,7 @@ try {
   return imageUrl
   }
 } catch (error) {
-   return `error image uploading ${error}`
+   return new Error("error uploading image to catagory storage", )
 }
  
   
