@@ -70,9 +70,10 @@ export const DatabaseRouter = router({
         title: z.string(),
         description: z.string(),
         catagory: z.string(),
-        userId: z.string()
+        userId: z.string(),
+        prices: z.string()
    })).mutation(async({input}) => {
-    const {imagefile,title,catagory,description,userId} = input;
+    const {imagefile,title,catagory,description,userId, prices} = input;
     const profiles: profileProp[] = await db.query.profile.findMany({
         where: (profile, {eq}) => eq(profile.userId, userId)
     })
@@ -86,7 +87,7 @@ export const DatabaseRouter = router({
         console.log("the user is verified merchant and all data are right")
            const UUID:string = uuid.v4();
            const now = new Date();
-           await db.insert(schema.post).values({userId: userId ,profileId: profile.id ,title: title ,catagory: catagory ,id: UUID ,file: imagefile, description: description, createdAt: now})
+           await db.insert(schema.post).values({userId: userId ,profileId: profile.id ,title: title ,catagory: catagory ,id: UUID ,file: imagefile, description: description, createdAt: now, price: prices as string})
           
         //   if(!result){
         //     const deletedFileName = imagefile.split('/').pop() as string
@@ -310,5 +311,59 @@ throw new TRPCError({
         }
        
         
+    }),
+    updatePost: publicProcedure.input(z.object({
+        postId: z.string(),
+        Sold: z.boolean(),
+        Description: z.string(),
+        imageFile: z.union([
+            z.undefined(),
+            z.string()
+        ]),
+        Title: z.string(),
+        Catagory: z.string(),
+        update: z.boolean(),
+        userIds: z.string()
+
+    })).mutation(async({input}) => {
+    const {Catagory,Description,Title,Sold,postId,imageFile,update,userIds}  = input;
+    const posts = await db.query.post.findFirst({
+        where: (post, {eq}) => eq(post.id, postId),
+       with:{
+        author: true, 
+        likeAndDislikePost: true,
+        postCatagory :true,
+        postProfile: true,
+        postSeen: true
+       }
+    }) as postProps
+
+    const {catagory,description,file,isSold,title,updatedAt,userId,profileId,createdAt,id} = posts
+    try {
+        if(update === true){
+            const now = new Date();
+            await db.update(schema.post)
+            .set({
+            catagory: Catagory ? Catagory : catagory,
+            description: Description ? Description : description,
+            file: imageFile ? imageFile : file,
+            title: Title ? Title : title,
+            updatedAt: now,
+            isSold: Sold ? Sold : isSold
+            })
+            .where(eq(schema.post.userId, userIds));
+            return{success : true , message: "succussfully updating your post "}
+        } else if( update === false){
+            await db.update(schema.post)
+            .set({
+            isSold: Sold ? Sold : isSold
+            })
+            .where(eq(schema.post.userId, userIds));
+            return{success : true , message: "succussfully updating your post "}
+        }
+    } catch (error) {
+        
+    }
+
     })
 })

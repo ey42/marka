@@ -22,8 +22,8 @@ const PostUserOnly = ({catagoryName, userId} : {catagoryName: string, userId: st
         <div className=' grid gap-10 max-xl:grid-cols-3 max-md:gap-5 grid-flow-row grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1'>
       {posts !== undefined ? posts.map((post) => (
         post.catagory === catagoryName ? (
-        <Link href={`#`} key={post.id}>
-          <div className='flex flex-col w-80 border-r-2 border-dark bg-yellow-400  '>
+        <div key={post.id}>
+          <div className='flex flex-col gap-2 rounded-md w-80 border-r-2 border-dark bg-dark dark:bg-slate-300 text-slate-300 dark:text-dark  '>
             <div className='flex flex-row '>
               <div className='w-40'> 
                 <Image src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}${post.file as string}`} alt="image" width={200} height={200} className="w-40 h-40 rounded-lg"/>
@@ -41,7 +41,8 @@ const PostUserOnly = ({catagoryName, userId} : {catagoryName: string, userId: st
           </div>
           </div>
           <div>
-          <div className='flex font-semibold text-xs'>
+          <div className='flex justify-between font-semibold text-xs'>
+            <div className='ml-2'>
             {post.updatedAt ? (
               <h1>{extractTimeAndDate(post.updatedAt).date}-{extractTimeAndDate(post.updatedAt).time} 
               </h1>) : (
@@ -50,9 +51,14 @@ const PostUserOnly = ({catagoryName, userId} : {catagoryName: string, userId: st
               )
               }
             </div>
+             <Link className='mr-2' href={`#`}>
+             <button> edit </button>
+             </Link>
+           
+            </div>
           </div>
           </div>
-        </Link>) : ""
+        </div>) : ""
        ) ) : ""}
     </div>
     </div>

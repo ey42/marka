@@ -2,7 +2,7 @@
 
 import { relations } from "drizzle-orm";
 
-import { pgTable, text, timestamp, boolean, uuid,  varchar, index,  pgEnum, AnyPgColumn, primaryKey, integer, jsonb,  } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, uuid,  varchar, index,  pgEnum, AnyPgColumn, primaryKey, integer, jsonb, numeric,  } from "drizzle-orm/pg-core";
 			
 export const roleEnum = pgEnum('role', [ 'customer', 'merchant']);
 
@@ -91,6 +91,7 @@ export const post = pgTable("post",{
 	catagory: text("catagory").notNull().references(() => catagories.categories),
 	isSold: boolean("isSold").default(false),
 	description : text("description"),
+	price: numeric("price").notNull()
 
 	
 },(table) => {

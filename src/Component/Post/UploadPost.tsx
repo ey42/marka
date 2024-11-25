@@ -43,6 +43,7 @@ const {useSession} = Authclient
     const [formSubmitted, setFormSubmited] = useState<boolean>(false)    
     const [open, setOpen] = useState(false)
     const [catagory, setCatagory] = useState<string>("")
+    const [price, setPrice] = useState<string>()
     const {data } = useSession()
     const session = data?.session;
     const userId = session?.userId
@@ -91,6 +92,10 @@ const {useSession} = Authclient
       setDescription(e.target?.value)
      
     }
+    const handlePrice = (e: ChangeEvent<HTMLInputElement>) => {
+      const value  = e.target.value
+      setPrice(value)
+    }
    
    const onsubmit = async(e:FormEvent<HTMLFormElement>) => {
   e.preventDefault()
@@ -110,7 +115,10 @@ const {useSession} = Authclient
     description: description as string,
     imagefile: url as string,
     title: title as string,
-    userId: userId as string}) 
+    userId: userId as string,
+    prices: price as string
+  
+  }) 
 
     router.refresh()
     await refetch()
@@ -131,6 +139,7 @@ const {useSession} = Authclient
       setCatagory("")
       setImage("")
       setOpen(false)
+      setPrice("")
       refetch()
       fetchAgain()
 
@@ -156,6 +165,9 @@ const {useSession} = Authclient
             </div>
            <div className="flex gap-4"> 
            <Textarea className="w-80 border-2 max-sm:w-40 border-dark dark:border-slate-300 transition-all duration-200 placeholder:text-gray-500 dark:focus:placeholder:text-transparent dark:placeholder:text-gray-500 focus:placeholder:text-transparent text-dark dark:text-slate-300 font-bold text-sm bg-slate-300 dark:bg-dark focus:outline-none focus:ring-1 focus:ring-dark dark:focus:ring-slate-300 dark:focus:bg-neutral-800" id="description" onChange={(e) => handleDescription(e)} value={description} placeholder="description"/>
+           </div>
+           <div>
+            <input type="number" className="w-80 border-2 max-sm:w-40 border-dark dark:border-slate-300 transition-all duration-200 placeholder:text-gray-500 dark:focus:placeholder:text-transparent dark:placeholder:text-gray-500 focus:placeholder:text-transparent text-dark dark:text-slate-300 font-bold text-sm bg-slate-300 dark:bg-dark focus:outline-none focus:ring-1 focus:ring-dark dark:focus:ring-slate-300 dark:focus:bg-neutral-800" id="description" onChange={(e) => handlePrice(e)} value={price} placeholder="price in ethiopian birr"/>
            </div>
            <div>
            <Popover open={open} onOpenChange={setOpen}>
