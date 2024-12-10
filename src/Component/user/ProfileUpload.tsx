@@ -159,7 +159,7 @@ const ProfileUpload = () => {
     }
 
   return (
-    <div className="mt-5 w-full flex flex-row justify-between gap-40 max-lg:gap-28 max-md:flex-col max-w-screen-sm">
+    <div className="mt-5 font-mono dark:text-light text-dark w-full flex flex-row justify-between gap-40 max-lg:gap-28 max-md:flex-col max-w-screen-sm">
       <div className="ml-2">
      
         <form onSubmit={onsubmit} className="flex flex-col gap-4 justify-start items-start max-w-max">
@@ -169,67 +169,67 @@ const ProfileUpload = () => {
         <div className="flex flex-col gap-6 w-full max-sm:w-40">
           <div>
             <label htmlFor="image" className="flex flex-col font-bold text-sm text-dark dark:text-slate-300 cursor-pointer gap-2 ">
-              <input id="image" type="file" onChange={handleImage} className=" h-9 file:text-sm p-0 font-bold text-dark dark:text-slate-300 border-1 rounded-md dark:border-slate-300 border-dark dark:file:text-slate-300 file:font-bold file:text-dark file:border-1 file:border-dark dark:file:border-slate-300 file:bg-slate-300 file:mr-3 file:rounded-md file:h-full dark:file:bg-dark file:cursor-pointer cursor-pointer text-nowrap transition-all duration-150 file:duration-150 file:transition-all" accept="image/*"/>
+              <input id="image" type="file" onChange={handleImage} className=" h-9 file:text-sm p-0 font-bold text-dark dark:text-slate-300 border-1 rounded-md dark:border-slate-300 border-dark dark:file:text-light file:font-bold file:text-dark file:border-1 file:border-dark dark:file:border-slate-300  file:mr-3 file:rounded-md file:h-full dark:file:bg-dark file:cursor-pointer cursor-pointer text-nowrap file:duration-150 file:transition-all" accept="image/*"/>
               <h1>select .jpeg image for your company profile</h1>
             </label>
           </div>
           <div>
-            <label htmlFor="type" className="text-dark font-bold text-sm cursor-pointer max-sm:w-40 dark:text-slate-300"> Type: {update ? "" : (<span className="text-red-500">must</span>)}
-              <input id="type" type="text" onChange={handleType} placeholder="your buisness type" required = {update === false} className="h-9 font-semibold rounded-md ml-2 pl-2 bg-slate-300 border-2 required:border-red-500 dark:required:border-red-500 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:bg-dark placeholder:text-slate-500 dark:border-slate-300 dark:focus:bg-neutral-800 dark:focus:placeholder:text-transparent w-full"/>
+            <label htmlFor="type" className=" font-bold text-sm cursor-pointer max-sm:w-40"> Type: {update ? "" : (<span className="text-red-500">must</span>)}
+              <input id="type" type="text" onChange={handleType} placeholder="your buisness type" required = {update === false} className="h-9 font-semibold rounded-md ml-2 pl-2 border-2 required:border-red-500 dark:required:border-red-500 border-dark focus:placeholder:text-transparent focus:bg-slate-200 placeholder:text-slate-500 dark:border-slate-300 dark:focus:bg-neutral-800 dark:focus:placeholder:text-transparent w-full dark:bg-dark"/>
             </label>
           </div>
           <div>
-            <label htmlFor="instagram" className="text-dark max-sm:w-40 cursor-pointer font-bold text-sm dark:text-slate-300"> Instagram: optional?
-              <input id="instagram" type="text" onChange={handleInstagram} placeholder="instagram link" className="h-9 font-semibold rounded-md ml-2 pl-2 bg-slate-300 border-2 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:bg-dark dark:border-slate-300 dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent w-full"/>
+            <label htmlFor="instagram" className=" max-sm:w-40 cursor-pointer font-bold text-sm"> Instagram: optional?
+              <input id="instagram" type="text" onChange={handleInstagram} placeholder="instagram link" className="h-9 font-semibold rounded-md ml-2 pl-2 border-2 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:border-light dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent w-full dark:bg-dark"/>
               </label>
           </div>
           <div>
-            <label htmlFor="telegram" className="text-dark max-sm:w-40 font-bold cursor-pointer text-sm dark:text-slate-300"> Telegram: optional?
-              <input id="telegram" type="text" onChange={handleTelegram} placeholder="telegram link" className="h-9 font-semibold rounded-md ml-2 pl-2 bg-slate-300 border-2 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:bg-dark dark:border-slate-300 dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent w-full"/>
+            <label htmlFor="telegram" className=" max-sm:w-40 font-bold cursor-pointer text-sm"> Telegram: optional?
+              <input id="telegram" type="text" onChange={handleTelegram} placeholder="telegram link" className="h-9 font-semibold rounded-md ml-2 pl-2 border-2 border-dark dark:bg-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:border-slate-300 dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent w-full"/>
               </label>
           </div>
           <div>
-            <label htmlFor="facebook"  className="text-dark font-bold max-sm:w-40 cursor-pointer text-sm dark:text-slate-300"> Facebook: optional
-              <input id="facebook" type="text" onChange={handleFacebook} placeholder="facebook account name" className="h-9 font-semibold rounded-md ml-2 pl-2 bg-slate-300 border-2 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:bg-dark dark:border-slate-300 dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent w-full"/>
+            <label htmlFor="facebook"  className=" font-bold max-sm:w-40 cursor-pointer text-sm"> Facebook: optional
+              <input id="facebook" type="text" onChange={handleFacebook} placeholder="facebook account name" className="h-9 font-semibold rounded-md ml-2 pl-2 border-2 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:border-light dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent dark:bg-dark w-full"/>
             </label>
           </div>
           <div>
-            <label htmlFor="x" className="text-dark max-sm:w-40 font-bold cursor-pointer text-sm dark:text-slate-300"> Tweeter or X: optional?
-              <input id="x" type="text" onChange={handleX} placeholder="tweeter or X account" className="h-9 font-semibold rounded-md ml-2 pl-2 bg-slate-300 border-2 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:bg-dark dark:border-slate-300 dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent w-full"/>
+            <label htmlFor="x" className=" max-sm:w-40 font-bold cursor-pointer text-sm"> Tweeter or X: optional?
+              <input id="x" type="text" onChange={handleX} placeholder="tweeter or X account" className="h-9 font-semibold rounded-md ml-2 pl-2 border-2 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:border-light dark:focus:bg-neutral-800 dark:bg-dark placeholder:text-slate-500 dark:focus:placeholder:text-transparent w-full"/>
             </label>
           </div>
           <div>
-            <label htmlFor="description" className="text-dark max-sm:w-40 font-bold cursor-pointer text-sm dark:text-slate-300"> Description: optional?
-              <textarea id="description"  onChange={handleDescription} placeholder="description" className="h-9 font-semibold rounded-md ml-2 pl-2 bg-slate-300 border-2 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:bg-dark dark:border-slate-300 dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent w-full"/>
+            <label htmlFor="description" className="max-sm:w-40 font-bold cursor-pointer text-sm"> Description: optional?
+              <textarea id="description"  onChange={handleDescription} placeholder="description" className="h-9 font-semibold rounded-md ml-2 pl-2 border-2 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:bg-dark dark:border-light dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent w-full"/>
               </label>
           </div>
           <div>
-            <label htmlFor="company" className="text-dark max-sm:w-40 font-bold cursor-pointer text-sm dark:text-slate-300"> Company Name: {update ? "" : (<span className="text-red-500">must</span>)}
-              <input id="company" type="text" onChange={handleCompany} required = {update === false} placeholder="your company name" className="required:border-red-500 dark:required:border-red-500 h-9 font-semibold rounded-md ml-2 pl-2 bg-slate-300 border-2 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:bg-dark dark:border-slate-300 dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent w-full"/>
+            <label htmlFor="company" className="max-sm:w-40 font-bold cursor-pointer text-sm "> Company Name: {update ? "" : (<span className="text-red-500">must</span>)}
+              <input id="company" type="text" onChange={handleCompany} required = {update === false} placeholder="your company name" className="required:border-red-500 dark:required:border-red-500 h-9 font-semibold rounded-md ml-2 pl-2 border-2 border-dark focus:placeholder:text-transparent dark:bg-dark focus:bg-slate-200 dark:border-light dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent w-full"/>
             </label>
           </div>
           <div>
-            <label htmlFor="phoneNumber1" className="text-dark max-sm:w-40 font-bold cursor-pointer text-sm dark:text-slate-300"> phone number 1: {update ? "" : (<span className="text-red-500">must</span>)}
-              <input id="phoneNumber1" type="text" onChange={handlePhoneNumber1} required = {update === false} placeholder="0900000000" className="h-9 font-semibold rounded-md ml-2 pl-2 bg-slate-300 border-2 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:bg-dark dark:border-slate-300 dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent required:border-red-500 dark:required:border-red-500 w-full"/>
+            <label htmlFor="phoneNumber1" className="max-sm:w-40 font-bold cursor-pointer text-sm "> phone number 1: {update ? "" : (<span className="text-red-500">must</span>)}
+              <input id="phoneNumber1" type="text" onChange={handlePhoneNumber1} required = {update === false} placeholder="0900000000" className="h-9 font-semibold rounded-md ml-2 pl-2 border-2 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:border-light dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent required:border-red-500 dark:bg-dark dark:required:border-red-500 w-full"/>
             </label>
           </div>
           <div>
-            <label htmlFor="phoneNumber2" className="text-dark max-sm:w-40 font-bold cursor-pointer text-sm dark:text-slate-300"> phone number 2:
-              <input id="phoneNumber2" type="text" onChange={handlePhoneNumber2} placeholder="0900000000" className="h-9 font-semibold rounded-md ml-2 pl-2 bg-slate-300 border-2 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:bg-dark dark:border-slate-300 dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent w-full"/>
+            <label htmlFor="phoneNumber2" className="max-sm:w-40 font-bold cursor-pointer text-sm"> phone number 2:
+              <input id="phoneNumber2" type="text" onChange={handlePhoneNumber2} placeholder="0900000000" className="h-9 font-semibold rounded-md ml-2 pl-2 border-2 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:border-lightdark:focus:bg-neutral-800 dark:bg-dark placeholder:text-slate-500 dark:focus:placeholder:text-transparent w-full"/>
             </label>
           </div>
         </div>
-        <div className="flex flex-col gap-4 max-sm:w-40 justify-center items-center w-[50%] ml-2">
+        <div className="flex flex-col gap-4 max-sm:w-40 w-[100%] ml-2">
           
         {profileImage ? (
           <div>
           <p className="text-xs font-mono text-center"> click to {!update ? "true" : "false"}</p>
-          <label htmlFor="check" className={`dark:bg-dark dark:text-slate-300 ${update ? "bg-green-500" : "bg-red-500"} dark:border-slate-300 text-center cursor-pointer w-full border-2 flex items-center border-dark px-2 py-1 rounded-md font-bold text-dark`}>update : {update ? "true" : "false"} <input  className=" appearance-none" id="check" type="checkbox" checked={update} onChange={() => 
+          <label htmlFor="check" className={` ${update ? "bg-green-500" : "bg-red-500"} dark:border-light text-center cursor-pointer w-full border-2 flex items-center border-dark px-2 py-1 rounded-md font-bold text-dark`}>update : {update ? "true" : "false"} <input  className=" appearance-none" id="check" type="checkbox" checked={update} onChange={() => 
           {
               setUpdate(!update)
             console.log(update)
           }} /> </label></div>) : ""}
-        <button type="submit"  className="dark:bg-dark dark:text-slate-300 dark:border-slate-300 cursor-pointer border-2 w-full flex items-center border-dark px-2 py-1 rounded-md font-bold text-dark">{isPending ? "loading..." : "submit"} </button>
+        <button type="submit"  className=" dark:border-slate-300 cursor-pointer border-2 w-full flex items-center border-dark px-2 py-1 rounded-md font-bold">{isPending ? "loading..." : "submit"} </button>
         
         
         </div>
@@ -240,38 +240,38 @@ const ProfileUpload = () => {
          <div className='flex flex-col mt-10 max-w-sm'>
          {
           user !== undefined && profile !== undefined ? (
-          <div className="flex flex-col border-2 justify-center items-center border-dark dark:border-slate-300 rounded-lg text-wrap truncate">
+          <div className="flex flex-col border-2 justify-center items-center border-dark dark:border-light rounded-lg text-wrap truncate">
             <div><Image src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}${profile?.imageFile as string}`} alt="company name" className="w-20 h-20 my-2
-            rounded-full border-2 border-dark dark:border-slate-300" width={200} height={200}/></div> 
-            <div className="border-t-2 w-full p-4 flex flex-col gap-3 border-dark font-semibold font dark:border-slate-300">
+            rounded-full border-2 border-dark dark:border-light" width={200} height={200}/></div> 
+            <div className="border-t-2 w-full p-4 flex flex-col gap-3 border-dark font-semibold font dark:border-light">
 
-            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-slate-300 dark:text-slate-300 w-full bg-slate-300 text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-slate-300 dark:bg-slate-300 dark:text-dark">name: </h1> <h1>{user ? `${user.name.split(' ')[0]} ${user.name.split(' ')[1]}` : "loading..."}</h1></div>
+            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">name: </h1> <h1>{user ? `${user.name.split(' ')[0]} ${user.name.split(' ')[1]}` : "loading..."}</h1></div>
 
-            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-slate-300 dark:text-slate-300 w-full bg-slate-300 text-dark border-dark rounded-lg text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-slate-300 dark:bg-slate-300 dark:text-dark" >company name: </h1> <h1>{profile ? `${profile?.companyName}`: company}</h1></div>
+            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark" >company name: </h1> <h1>{profile ? `${profile?.companyName}`: company}</h1></div>
 
-            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-slate-300 dark:text-slate-300 w-full bg-slate-300 text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-slate-300 dark:bg-slate-300 dark:text-dark" >email: </h1> <h1>{user ? `${user?.email}` : "loading..."}</h1></div>
+            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark" >email: </h1> <h1>{user ? `${user?.email}` : "loading..."}</h1></div>
 
-            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-slate-300 dark:text-slate-300 w-full bg-slate-300 text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-slate-300 dark:bg-slate-300 dark:text-dark">role: </h1> <h1>{user ? `${user?.role}` : "loading..."}</h1></div>
+            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">role: </h1> <h1>{user ? `${user?.role}` : "loading..."}</h1></div>
 
-            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-slate-300 dark:text-slate-300 w-full bg-slate-300 text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-slate-300 dark:bg-slate-300 dark:text-dark">type of market: </h1> <h1>{ profile ? `${profile?.type!}` : type}</h1></div>
+            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">type of market: </h1> <h1>{ profile ? `${profile?.type!}` : type}</h1></div>
 
-            <Link target="_blank" href={profile?.instagram?.includes('https://www.instagram.com/') ? profile?.instagram : `https://www.instagram.com/${profile?.instagram}`} className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-slate-300 dark:text-slate-300 w-full bg-slate-300 text-dark border-dark rounded-lg text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-slate-300 dark:bg-slate-300 dark:text-dark">instagram account: </h1> <div >@{ profile ? `${profile?.instagram?.split("/").pop()!}` : instagram}</div></Link>
+            <Link target="_blank" href={profile?.instagram?.includes('https://www.instagram.com/') ? profile?.instagram : `https://www.instagram.com/${profile?.instagram}`} className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">instagram account: </h1> <div >@{ profile ? `${profile?.instagram?.split("/").pop()!}` : instagram}</div></Link>
 
-            <Link target="_blank" href={profile?.telegram?.includes('https://t.me/') ? profile?.telegram : `https://t.me/${profile?.telegram}`} className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-slate-300 dark:text-slate-300 w-full bg-slate-300 text-dark border-dark rounded-lg text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-slate-300 dark:bg-slate-300 dark:text-dark">telegram account: </h1> <div>@{ profile ? `${profile?.telegram?.split("/").pop()!}` : telegram}</div></Link>
+            <Link target="_blank" href={profile?.telegram?.includes('https://t.me/') ? profile?.telegram : `https://t.me/${profile?.telegram}`} className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">telegram account: </h1> <div>@{ profile ? `${profile?.telegram?.split("/").pop()!}` : telegram}</div></Link>
 
-            <Link target="_blank" href={profile?.facebook?.includes('https://www.facebook.com/') ? profile?.facebook : `https://www.facebook.com/${profile?.facebook}`} className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-slate-300 dark:text-slate-300 w-full bg-slate-300 text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-slate-300 dark:bg-slate-300 dark:text-dark">facebook account: </h1> <div >@{ profile ? `${profile?.facebook?.split("/").pop()!}` : facebook}</div></Link>
+            <Link target="_blank" href={profile?.facebook?.includes('https://www.facebook.com/') ? profile?.facebook : `https://www.facebook.com/${profile?.facebook}`} className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">facebook account: </h1> <div >@{ profile ? `${profile?.facebook?.split("/").pop()!}` : facebook}</div></Link>
 
-            <Link target="_blank" href={profile?.x?.includes('https://x.com/') ? profile.x : `https://x.com/${profile?.x}`} className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-slate-300 dark:text-slate-300 w-full bg-slate-300 text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-slate-300 dark:bg-slate-300 dark:text-dark">X account: </h1> <div >@{ profile ? `${profile?.x?.split("/").pop()!}` : x}</div></Link>
+            <Link target="_blank" href={profile?.x?.includes('https://x.com/') ? profile.x : `https://x.com/${profile?.x}`} className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">X account: </h1> <div >@{ profile ? `${profile?.x?.split("/").pop()!}` : x}</div></Link>
 
-            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-slate-300 dark:text-slate-300 w-full bg-slate-300 text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-slate-300 dark:bg-slate-300 dark:text-dark">phone number 1: </h1> <h1>{ profile ? `${profile?.phoneNumber1!}` : phoneNumber1}</h1></div>
+            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">phone number 1: </h1> <h1>{ profile ? `${profile?.phoneNumber1!}` : phoneNumber1}</h1></div>
 
-            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-slate-300 dark:text-slate-300 w-full bg-slate-300 text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-slate-300 dark:bg-slate-300 dark:text-dark">phone number 2: </h1> <h1>{ profile ? `${profile?.phoneNumber2!}` : phoneNumber2}</h1></div>
+            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">phone number 2: </h1> <h1>{ profile ? `${profile?.phoneNumber2!}` : phoneNumber2}</h1></div>
 
-            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-slate-300 dark:text-slate-300 w-full bg-slate-300 text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-slate-300 dark:bg-slate-300 dark:text-dark">description: </h1> <h1>{profile?.description!}</h1></div>
+            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">description: </h1> <h1>{profile?.description!}</h1></div>
 
-            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-slate-300 dark:text-slate-300 w-full bg-slate-300 text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-slate-300 dark:bg-slate-300 dark:text-dark">profile created at: </h1> <h1> {profile ? `${extractTimeAndDate(profile?.createdAt!).date} ${extractTimeAndDate(profile?.createdAt!).time}` : "loading profile created time"}</h1></div>
+            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">profile created at: </h1> <h1> {profile ? `${extractTimeAndDate(profile?.createdAt!).date} ${extractTimeAndDate(profile?.createdAt!).time}` : "loading profile created time"}</h1></div>
 
-            <div hidden={!profile?.updatedAt} className="flex flex-row gap-2 text-wrap h-auto truncate overflow-auto dark:bg-dark border-2 dark:border-slate-300 dark:text-slate-300 w-full bg-slate-300 text-dark border-dark rounded-lg "><h1 className="bg-dark pl-1 text-slate-300 dark:bg-slate-300 dark:text-dark">profile updated at: </h1> <h1> { profile?.updatedAt ? `${extractTimeAndDate(profile?.updatedAt!).date} ${extractTimeAndDate(profile?.updatedAt!).time}` : "you arn't update you profile"}</h1></div>
+            <div hidden={!profile?.updatedAt} className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto "><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">profile updated at: </h1> <h1> { profile?.updatedAt ? `${extractTimeAndDate(profile?.updatedAt!).date} ${extractTimeAndDate(profile?.updatedAt!).time}` : "you arn't update you profile"}</h1></div>
           </div></div>) 
           :
            (<div>profile place</div>)

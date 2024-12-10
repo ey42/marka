@@ -170,6 +170,11 @@ export const profileWithCatagory = pgTable("profileWithCatagory", {
 	pk: primaryKey({columns: [t.catagoryName, t.profileId]})
 }))
 
+// export const creator = pgTable("creator",{
+// 	personalId: uuid("personalId").notNull(),
+// 	profileId: text("profileId").notNull().references(() => profile.id)
+// })
+
 // relation 
 export const userRelation = relations(user, ({one,many}) => ({
 	userContent: one(profile,{

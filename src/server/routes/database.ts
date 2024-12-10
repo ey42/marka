@@ -29,7 +29,7 @@ export const DatabaseRouter = router({
        if(user?.email === "eyuealzerihun1@gmail.com" && user.role === "merchant" && userId === user.id){
         if(indexCatagory !== -1){
             const deletedFileName = Imagefile.split('/').pop() as string
-            console.log(deletedFileName + " delete file name from database")
+            console.log(deletedFileName + " delete file name from database b/c there is catagory by this name")
             const storage = getStorage()
             await storage.from("Images").remove([`catagoryImage/${deletedFileName}`])
             console.log("successfully deleted this file from database " + deletedFileName)
@@ -37,13 +37,20 @@ export const DatabaseRouter = router({
             code:"CONFLICT",
             message:"there is a catagory name like you type, try another"})
         }else{
+           const fileName = Imagefile.split('/').pop()
+           console.log("outside " + fileName)
+           if(fileName !== undefined && fileName.includes('.jpeg')){
+            console.log("inside " + fileName)
            const UUID:string = uuid.v4();
            const now = new Date();
            await db.insert(schema.catagories).values({categories: categories ,id: UUID ,Imagefile: Imagefile, description: description, createdAt: now})
-           return {success: true}
+           return {success: true} 
+           } else{
+            throw new Error("error because image is undefined")
+           }
         }} else{
             const deletedFileName = Imagefile.split('/').pop() as string
-            console.log(deletedFileName + " delete file name from database")
+            console.log(deletedFileName + " delete file name from database b/c you are not the owner ")
             const storage = getStorage()
             await storage.from("Images").remove([`catagoryImage/${deletedFileName}`])
             console.log("successfully deleted this file from database " + deletedFileName)
@@ -54,7 +61,7 @@ export const DatabaseRouter = router({
         }
     } catch (err) {
         const deletedFileName = Imagefile.split('/').pop() as string
-        console.log(deletedFileName + " delete file name from database")
+        console.log(deletedFileName + " delete file name from database b/c catch")
         const storage = getStorage()
         await storage.from("Images").remove([`catagoryImage/${deletedFileName}`])
         console.log("successfully deleted this file from database " + deletedFileName)
@@ -133,10 +140,11 @@ export const DatabaseRouter = router({
         postCatagory :true,
         postProfile: true,
         postSeen: true
-       }
+       },
+        
     }) 
         const postCatagory: string[] = posts.map((c) => c.catagory)
-        return {posts, postCatagory}
+        return {posts, postCatagory,}
     
  
     
@@ -338,9 +346,9 @@ throw new TRPCError({
        }
     }) as postProps
 
-    const {catagory,description,file,isSold,title,updatedAt,userId,profileId,createdAt,id} = posts
+    const {catagory,description,file,isSold,title} = posts
     try {
-        if(update === true){
+        
             const now = new Date();
             await db.update(schema.post)
             .set({
@@ -353,17 +361,9 @@ throw new TRPCError({
             })
             .where(eq(schema.post.userId, userIds));
             return{success : true , message: "succussfully updating your post "}
-        } else if( update === false){
-            await db.update(schema.post)
-            .set({
-            isSold: Sold ? Sold : isSold
-            })
-            .where(eq(schema.post.userId, userIds));
-            return{success : true , message: "succussfully updating your post "}
-        }
+       
     } catch (error) {
-        
+        throw new TRPCError({code: "NOT_FOUND", message: "error updating post" })
     }
-
     })
 })

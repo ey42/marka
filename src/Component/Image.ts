@@ -1,4 +1,3 @@
-import { error } from 'console';
 "use client"
 
 
@@ -8,7 +7,7 @@ export const Images = (file: Blob, e: ChangeEvent<HTMLInputElement>) : Promise<s
     return new Promise((resolve, reject) => {
     if((file instanceof Blob)){
         
-        console.log(`this is the first file: ${file}`)
+        console.log(`this file is blob type in Image.ts: ${file}`)
       const reader = new FileReader()
         reader.readAsDataURL(file)
        console.log(reader)
@@ -47,7 +46,6 @@ export const Images = (file: Blob, e: ChangeEvent<HTMLInputElement>) : Promise<s
             console.log(`img w: ${image.width} h: ${image.height}  h > w`)
             context?.drawImage(image, 0, 0, canvas.width, canvas.height)
             const new_image_url : string | undefined = context?.canvas.toDataURL("image/jpeg", 90)
-            // setImage(new_image_url)
             
             console.log( new_image_url)
             console.log(`w: ${canvas.width} h: ${canvas.height}`)

@@ -41,6 +41,38 @@ export function extractTimeAndDate(timestamp: string): { time: string; date: str
   return { time, date };
 }
   
+export function formatCurrency(
+  value: number,
+  options: {
+    locale?: string;// locale for fomatting, defaults to "en-US"
+    currency?: string;
+    minimumFractionDigits?: number;// min number of decimal place
+    maximumFractionDigits?: number;// max number of decimal place
+    style?: "currency" | "decimal"; // style of formating
+    useGrouping?: boolean; // whether to use grouping (e.g., thousand separator)
+  } = {}
+): string {
+
+  const {currency,locale,maximumFractionDigits,minimumFractionDigits,style,useGrouping } = options
+
+  if (typeof value !== "number" || !isFinite(value)){
+    throw new TypeError("Invalid number provided for formatting.")
+  }
+// define options for currency formatting
+  const formatOptions: Intl.NumberFormatOptions = {
+    style,
+    currency,
+    minimumFractionDigits,
+    maximumFractionDigits,
+    useGrouping
+  };
+
+  try {
+    return new Intl.NumberFormat(locale, formatOptions).format(value)
+  } catch (error: any) {
+    throw new Error(`failed to format currency: ${error.message}`)
+  }
+}
 
 
 

@@ -79,7 +79,7 @@ try {
     return 
    }
 } catch (error) {
-   throw new Error( `error image uploading ${error}`)
+   throw new Error( `error image uploading in supabase storage catch error: ${error}`)
 }
  
   
