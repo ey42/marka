@@ -66,8 +66,8 @@ console.log("user is undefined ")
 
  console.log(pathname)
   return (
-    // <MaxWidthWrapper>
-    <div className='w-screen backdrop-blur-3xl rounded-md' >
+
+    <div className='w-full backdrop-blur-3xl ' >
           <div className=" flex justify-between max-md:h-14 gap-4  border-dark dark:border-light border-b-[0.5px] ">
          <div className='flex flex-row max-md:hidden justify-center gap-4 max-md:justify-start items-center pt-3 my-auto max-lg:mb-2'>
           <div className='flex justify-center gap-4 ml-2 max-md:hidden'>
@@ -352,7 +352,7 @@ console.log("user is undefined ")
         </div>
             </div> 
         </div>
-        // {/* </MaxWidthWrapper> */}
+      
   )
 }
 

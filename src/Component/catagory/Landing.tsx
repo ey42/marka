@@ -20,7 +20,10 @@ const Landing = ({AllCatagory}: {AllCatagory: Catagoryprops[]}) => {
 </div>
 <div className="flex justify-between text-slate-50 dark:text-neutral-900 font-semibold font-mono text-md text-start">
   <h1 className=" px-2 leading-5 h-7 ">{catagory.categories}</h1>
-  <p className="ml-2 pr-2">200</p>
+  <div className="flex flex-col">
+    <p className="ml-2 -mb-2 pr-2">200</p>
+    <p>posts</p>
+  </div>
 </div>
   </Link>
   </div>

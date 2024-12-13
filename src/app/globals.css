@@ -67,3 +67,46 @@
       @apply bg-background text-foreground;
     }
   }
+
+
+  @media not all and (min-width: 683px) {
+    .footer-h1 {
+        font-size: 6.5rem;
+    }
+}
+
+  @media not all and (min-width: 546px) {
+    .footer-h1 {
+        font-size: 6rem;
+    }
+}
+  @media not all and (min-width: 505px) {
+    .footer-h1 {
+        font-size: 5.5rem;
+    }
+}
+  @media not all and (min-width: 470px) {
+    .footer-h1 {
+        font-size: 5rem;
+    }
+}
+  @media not all and (min-width: 420px) {
+    .footer-h1 {
+        font-size: 4.5rem;
+    }
+}
+  @media not all and (min-width: 380px) {
+    .footer-h1 {
+        font-size: 4rem;
+    }
+}
+  @media not all and (min-width: 340px) {
+    .footer-h1 {
+        font-size: 3.5rem;
+    }
+}
+  @media not all and (min-width: 295px) {
+    .footer-h1 {
+        font-size: 3rem;
+    }
+}

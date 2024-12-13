@@ -1,5 +1,6 @@
 import { db } from '@/drizzle'
 import * as schema from "@/drizzle/db/schema"
+import { eq } from 'drizzle-orm';
 import * as uuid from 'uuid';
 
 
@@ -13,9 +14,7 @@ export interface Catagoryprops {
     description: string | null;
     Imagefile: string | string[]
   }
-  // export const catagories: Catagoryprops[]  = [{id , catagories  }]
 
-//   const AllCatagory:Catagoryprops[] =  await db.select().from(schema.catagories)
 
  
   

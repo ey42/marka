@@ -1,5 +1,5 @@
 {
-  "id": "4348f63c-57c4-40b1-aa74-bb47a921191f",
+  "id": "90a19a36-d44e-4b46-8c7c-f43556645449",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -569,6 +569,12 @@
           "type": "numeric",
           "primaryKey": false,
           "notNull": true
+        },
+        "soldDate": {
+          "name": "soldDate",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {

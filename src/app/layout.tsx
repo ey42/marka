@@ -25,12 +25,12 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={cn("dark:bg-dark min-h-screen w-screen min-w-max bg-light dark:text-slate-300 text-dark",inter.className)}>
+      <body className={cn("dark:bg-dark min-h-screen m-0 p-0 box-border absolute bg-dark dark:text-slate-300 text-dark",inter.className)}>
       <ThemeProvider>
           <Provider>
-            <div className="w-screen dark:bg-dark  bg-light ">
+            <div className="w-full dark:bg-dark min-h-screen bg-light ">
         <NavBar />
-        <div className="w-screen overflow-hidden h-screen">
+        <div className="">
             {children} 
         </div>
         <Footer/>

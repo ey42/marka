@@ -54,14 +54,12 @@ const {useSession} = Authclient
     const {mutate: upload, isError, isSuccess, isPending} = trpc.database.uploadPost.useMutation({
       onSuccess: () => {
         console.log('Success! Uploading post...');
-        setFormSubmited(false); // Reset form state after success
+        setFormSubmited(false); 
         router.refresh()
-        refetch();
-        fetchAgain(); // Navigate to categories page
+        fetchAgain(); 
       },
       onError: (err) => {
         console.error('Error uploading post:', err);
-        refetch();
         fetchAgain()
       },})
       
@@ -186,22 +184,22 @@ const {useSession} = Authclient
           <div className="w-56 cursor-pointer transition-all duration-200 rounded-md text-dark dark:text-slate-300 ">
 
          
-            <Input type="file" onChange={(e) => handleOnChange(e)} className="h-9 file:text-sm p-0 font-semibold font-mono text-dark dark:text-light border-1 rounded-md dark:border-slate-300 border-dark dark:file:text-light file:font-semibold file:text-dark file:border-1 file:border-dark dark:file:border-slate-300 file:mr-3 file:rounded-md file:h-full file:cursor-pointer cursor-pointer text-nowrap transition-all duration-200 file:duration-[1000ms] file:transition-all" accept="image/*" />
+            <Input type="file" onChange={(e) => handleOnChange(e)} className="h-9 file:text-sm p-0 font-semibold font-mono text-dark dark:text-light border-1 rounded-md dark:border-slate-300 border-dark dark:file:text-light file:font-semibold file:text-dark file:border-1 file:border-dark dark:file:border-slate-300 file:mr-3 file:rounded-md file:h-full file:cursor-pointer cursor-pointer text-nowrap transition-all duration-200" accept="image/*" />
             </div> 
           <div className="flex gap-4 rounded-md">
-           <input className= "transition-all max-sm:w-40 duration-200 dark:bg-dark placeholder:text-gray-500 focus:placeholder:text-transparent w-full h-9 p-0 dark:text-slate-300 text-dark font-bold text-sm  rounded-md border-2 border-dark dark:border-slate-300 pl-1 focus:ring-1 dark:focus:ring-slate-300 focus:ring-dark focus:outline-none dark:focus:bg-neutral-800" id="catagory" type="text" onChange={(e) => handleTitle(e)} value={title} placeholder="Post title" required/>
+           <input className= "transition-all max-sm:w-40 duration-100 dark:bg-dark placeholder:text-gray-500 focus:placeholder:text-transparent w-full h-9 p-0 dark:text-slate-300 text-dark font-bold text-sm  rounded-md border-2 border-dark dark:border-slate-300 pl-1 focus:ring-1 dark:focus:ring-slate-300 focus:ring-dark focus:outline-none dark:focus:bg-neutral-800" id="catagory" type="text" onChange={(e) => handleTitle(e)} value={title} placeholder="Post title" required/>
             </div>
            <div className="flex gap-4"> 
            <Textarea className="w-80 border-2 max-sm:w-40 border-dark dark:border-slate-300 transition-all duration-200 placeholder:text-gray-500 dark:focus:placeholder:text-transparent dark:placeholder:text-gray-500 focus:placeholder:text-transparent text-dark dark:text-slate-300 font-bold text-sm focus:outline-none focus:ring-1 focus:ring-dark dark:focus:ring-slate-300 dark:focus:bg-neutral-800" id="description" onChange={(e) => handleDescription(e)} value={description} placeholder="description"/>
            </div>
            <div>
-            <input type="number" className="w-80 border-2 max-sm:w-40 border-dark dark:border-slate-300 transition-all duration-200 placeholder:text-gray-500 dark:focus:placeholder:text-transparent rounded-sm h-9 dark:placeholder:text-gray-500 focus:placeholder:text-transparent text-dark dark:text-slate-300 font-bold text-sm focus:outline-none focus:ring-1 dark:bg-dark focus:ring-dark dark:focus:ring-slate-300 dark:focus:bg-neutral-800" id="description" onChange={(e) => handlePrice(e)} value={price} placeholder="price in ethiopian birr"/>
+            <input type="number" className="w-80 border-2 max-sm:w-40 border-dark dark:border-slate-300 transition-all duration-300 placeholder:text-gray-500 dark:focus:placeholder:text-transparent rounded-sm h-9 dark:placeholder:text-gray-500 focus:placeholder:text-transparent text-dark dark:text-slate-300 font-bold text-sm focus:outline-none focus:ring-1 dark:bg-dark focus:ring-dark dark:focus:ring-slate-300 dark:focus:bg-neutral-800" id="description" onChange={(e) => handlePrice(e)} value={price} placeholder="price in ethiopian birr"/>
            </div>
            <div>
            <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          className="transition-all hover:bg-light font-mono dark:hover:bg-dark max-sm:w-40 duration-200 justify-between border-2 border-dark dark:border-slate-300 dark:bg-dark dark:text-light text-dark bg-light focus:ring-1 focus:ring-dark  font-semibold w-full dark:focus:ring-slate-300  dark:focus:border-slate-300 focus:border-dark"
+          className="transition-all hover:bg-light font-mono dark:hover:bg-dark max-sm:w-40 duration-400 justify-between border-2 border-dark dark:border-slate-300 dark:bg-dark dark:text-light text-dark bg-light focus:ring-1 focus:ring-dark  font-semibold w-full dark:focus:ring-slate-300  dark:focus:border-slate-300 focus:border-dark"
         >
           {catagory && access !== undefined
             ? access.find((a:string) => a === catagory)

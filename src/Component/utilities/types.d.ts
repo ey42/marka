@@ -51,4 +51,6 @@ interface postProps {
     createdAt: Date;
     updatedAt: Date | null;
     isSold: boolean | null;
+    soldDate: string;
+    price: string;
 }

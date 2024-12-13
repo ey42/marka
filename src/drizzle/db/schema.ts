@@ -91,9 +91,8 @@ export const post = pgTable("post",{
 	catagory: text("catagory").notNull().references(() => catagories.categories),
 	isSold: boolean("isSold").default(false),
 	description : text("description"),
-	price: numeric("price").notNull()
-
-	
+	price: numeric("price").notNull(),
+	soldDate: numeric("soldDate")
 },(table) => {
 	return {
 		post_index: index("post_index").on(table.title),

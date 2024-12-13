@@ -9,7 +9,7 @@ import { eq } from "drizzle-orm";
 import { getStorage } from "@/supabase/storage/Storages";
 
 
-const ee = new EventEmitter();
+// const ee = new EventEmitter();
 
 export const DatabaseRouter = router({
     uploadCatagories: publicProcedure.input(z.object({
@@ -149,7 +149,7 @@ export const DatabaseRouter = router({
  
     
 } catch (error) {
-    
+    throw new TRPCError({code:"INTERNAL_SERVER_ERROR", message:'error getting post'})
 }
    }),
     getCatagoriesName: publicProcedure.query(async function ()  {
@@ -365,5 +365,49 @@ throw new TRPCError({
     } catch (error) {
         throw new TRPCError({code: "NOT_FOUND", message: "error updating post" })
     }
-    })
+    }),
+    soldPost: publicProcedure.input(z.object({
+        Sold: z.boolean(),
+        id: z.string()
+})).mutation( async({input}) => {
+    const {id, Sold} = input
+    const posts = await db.query.post.findMany({
+        where: (post, {eq}) => eq(post.userId, id),
+       with:{
+        author : true, 
+        likeAndDislikePost: true,
+        postCatagory :true,
+        postProfile: true,
+        postSeen: true
+       },
+    }) as postProps[]
+    // const post = posts.find((p) => p.id === id) as postProps
+    const now = new Date()
+    const date = now.getTime()/86400000
+    console.log("d 0")
+  
+    try {
+        console.log("starting...")
+        if(Sold === true){
+        console.log("sold true")
+        await db.update(schema.post)
+        .set({
+        isSold: Sold,
+        soldDate: date.toString()
+        }).where(eq(schema.post.id, id));
+    }else{
+        console.log("sold false isSold date string")
+        await db.update(schema.post).set({
+        isSold: Sold,
+        soldDate: "20060" 
+        }).where(eq(schema.post.id, id));
+        console.log('it work')
+   
+    }
+        return{ success : true , message: Sold === true ? "post sold successfully" : "not sold"}
+    } catch (error) {
+       throw new TRPCError({code: "UNPROCESSABLE_CONTENT", message:"error to sold the product"})
+    }
+})
+
 })
