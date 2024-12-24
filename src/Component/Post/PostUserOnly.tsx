@@ -5,21 +5,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import {extractTimeAndDate } from '../Database';
+import {extractTimeAndDate, FunctionDate } from '../Database';
 import { cn } from '@/lib/utils';
 
 const PostUserOnly = ({catagoryName, userId} : {catagoryName: string, userId: string}) => {
     const {useSession} = Authclient
-    const {data } = useSession()
-    const session = data?.session;
-    const [formSubmitted, setFormSubmited] = useState<boolean>(false)
-    // const [id, setId] = useState<string>("")
-    // const [sold, setSold] = useState<boolean>()
-    // const userId = session?.userId
+    const {data } = useSession()   
+     const [formSubmitted, setFormSubmited] = useState<boolean>(false)
+
    
     const router = useRouter()
     const {data: success , refetch: fetchAgain} = trpc.database.getPosts.useQuery({id: userId as string})
     const posts = success?.posts
+      
     const {mutate: upload } = trpc.database.soldPost.useMutation({
       onSuccess: () => {
         console.log('Success! Uploading issold...');
@@ -32,30 +30,29 @@ const PostUserOnly = ({catagoryName, userId} : {catagoryName: string, userId: st
         console.error('Error uploading post:', err);
         fetchAgain()
       },})
+      const {refetch, data: succe,} = trpc.database.deleteSolded.useQuery()
 
-      // const handleClick = ({sold, id}: {sold: boolean, id: string}) => {
-      //     setId(id)
-      //     setSold(!sold)
-      //     fetchAgain()
-      // }
-
+if( succe?.success === true){
+console.log("eyukaye "+ succe.message)
+}
       const onsubmit = (e:FormEvent<HTMLFormElement>, {sold, id}: {sold: boolean, id: string}) => {
         e.preventDefault()
         setFormSubmited(true)
         upload({id: id as string, Sold: sold as boolean})
         fetchAgain()
         router.refresh()
+        refetch()
 
       }
       useEffect(() => {
         
 fetchAgain
 setFormSubmited(false)
-// setId("")
-// setSold(false)
-
       }, 
     [formSubmitted])
+    const now = new Date()
+    const date = now.getTime()
+   const time = FunctionDate(date)
   return (
     <div className="flex flex-col justify-between items-center font-mono">
         <div className=' grid gap-10 gap-y-20 max-xl:grid-cols-3 max-md:gap-5 grid-flow-row grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 max-md:gap-y-20'>
@@ -72,11 +69,16 @@ setFormSubmited(false)
               </div>
           <div className='text-xs flex flex-col ml-2 items-start w-40 justify-between'>
           <div>
-          <h1 className=''>- {post.catagory}</h1>
+          <h1 className=''>- {post.catagory.replace(/_/g, ' ')}</h1> 
           <h1 className=''>- {post.title}</h1>
           <p className='text-xs'>- {post.description}</p>
           <h1>- {post.price} birr</h1>
-          <p className={cn("text-lg", {"text-red-500 font-bold": post.isSold === true})}>- {post.isSold === true ? "sold" : "not sold"}</p>
+          <p className={cn(
+          {"text-red-500 font-bold": post.isSold === true,
+          "text-lg": post.isSold === true,
+            "text-green-500": post.isSold === false})}>
+              - {post.isSold === true ? "solded" : "...waiting for sold"}</p>
+          {post.soldDate && (<p className="text-red-500 font-sim">- after {24 - (time.hours - (FunctionDate(Number(post.soldDate)).hours))} hours automatically this post will be deleted permanently!!</p>)}
           </div>
           <div className='flex items-end bottom-0'>
            {/* this is for how many user see this post */}

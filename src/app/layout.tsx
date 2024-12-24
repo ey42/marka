@@ -25,7 +25,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={cn("dark:bg-dark min-h-screen m-0 p-0 box-border absolute bg-dark dark:text-slate-300 text-dark",inter.className)}>
+      <body className={cn("dark:bg-dark min-h-screen m-0 p-0 box-border absolute bg-dark dark:text-light text-dark",inter.className)}>
       <ThemeProvider>
           <Provider>
             <div className="w-full dark:bg-dark min-h-screen bg-light ">

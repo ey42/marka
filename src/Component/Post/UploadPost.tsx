@@ -62,10 +62,10 @@ const {useSession} = Authclient
         console.error('Error uploading post:', err);
         fetchAgain()
       },})
-      
+        const spacedAccess = access?.map((a) => a.replace(/_/g, ' ')) || [] 
         const catagoryName = success?.postCatagory as string[] || []
         const uniqueNames: string[] = [];
-          const nameMap:{[name: string] : boolean} = {};
+        const nameMap:{[name: string] : boolean} = {};
 
      if(catagoryName && catagoryName.length >= 1)
           {   
@@ -87,7 +87,7 @@ const {useSession} = Authclient
             }
 
             
-        const posts = success?.posts
+        // const posts = success?.posts
       
 
     const handleOnChange = async(e:ChangeEvent<HTMLInputElement>) => {
@@ -139,7 +139,7 @@ const {useSession} = Authclient
     description: description as string,
     imagefile: url as string,
     title: title as string,
-    userId: userId as string,
+    userID: userId as string,
     prices: price as string
   
   }) 
@@ -177,7 +177,7 @@ const {useSession} = Authclient
       <div className="flex flex-row max-lg:flex-col max-lg:justify-center justify-evenly max-lg:items-center max-lg:gap-12 w-full max-sm:ml-2 ml-4">
         <form onSubmit={onsubmit} className="flex flex-col gap-5 items-center justify-center ml-4">
           <div className="w-52 h-52 flex items-center transition-all duration-200 rounded-lg text-dark dark:text-light font-bold border-1 border-dark dark:border-slate-300">
-            <Image src={image as string} alt="catagory image" width={208} height={208} className="w-52 h-52 rounded-lg border-2 dark:border-slate-300 z-10 border-dark"/>
+            <Image src={image as string} alt="post image" width={208} height={208} className="w-52 h-52 rounded-lg border-2 dark:border-slate-300 z-10 border-dark"/>
             <p className="text-center -ml-36 z-0">take image</p>
           </div>
           <div className="ml-0 flex gap-4 flex-col">
@@ -201,8 +201,8 @@ const {useSession} = Authclient
         <Button
           className="transition-all hover:bg-light font-mono dark:hover:bg-dark max-sm:w-40 duration-400 justify-between border-2 border-dark dark:border-slate-300 dark:bg-dark dark:text-light text-dark bg-light focus:ring-1 focus:ring-dark  font-semibold w-full dark:focus:ring-slate-300  dark:focus:border-slate-300 focus:border-dark"
         >
-          {catagory && access !== undefined
-            ? access.find((a:string) => a === catagory)
+          {catagory && spacedAccess !== undefined
+            ? spacedAccess.find((a:string) => a === catagory)
             : "Select catagory..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-100" />
         </Button>
@@ -213,7 +213,7 @@ const {useSession} = Authclient
           <CommandList className="">
             <CommandEmpty className="font-bold text-sm bg-slate-50">No catagory found.</CommandEmpty>
             <CommandGroup className="flex flex-col gap-2 bg-slate-50">
-              {access !== undefined ? access.map((a) => (
+              {spacedAccess !== undefined ? spacedAccess.map((a) => (
                 <div key={a} className=" ">
                 <CommandItem
                   
@@ -244,6 +244,7 @@ const {useSession} = Authclient
             <Button type="submit" className="dark:bg-white w-full max-sm:w-40 bg-gray-950 font-bold text-white dark:text-gray-950 dark:hover:bg-slate-300 hover:bg-gray-900 transition-all duration-500 " disabled = {isPending}>{isPending ? "uploading..." : "upload post"}</Button>
             </div>
             </div>
+            <p>{isSuccess ? "successful uploading" : "error uploading" }</p>
         </form>
         <div className={`font-mono tracking-wide text-dark max-sm:w-40 dark:text-slate-50 text-sm flex flex-col max-lg:justify-center max-lg:items-center justify-start gap-4 lg:ml-36 max-sm:justify-start max-sm:items-start`}> <h1 className="text-center transition-all duration-500 font-semibold text-sm">
           {catagoryName !== undefined && catagoryName.length > 0 ?`you do have list of posts by  ${catagoryName?.length! <= 1 ? "this catagory" : "these catagories"} click it to see `: `catagories...`}</h1>
@@ -251,7 +252,7 @@ const {useSession} = Authclient
                   <ul className="text-sm font-semibold  max-md:grid-rows-10 max-sm:grid-flow-row grid grid-rows-5 grid-flow-col gap-x-10 gap-5 dark:marker:text-white list-none items-center justify-center">
                 { 
 uniqueNames !== undefined ? uniqueNames.map((n) => ( 
-  <Link href={`/post/catagory/${n}/${userId}`} key={n} className="border-2 dark:border-slate-50 w-auto  transition-all duration-500 border-dark h-auto bggre overflow-hidden rounded-md text-center py-2 px-2 font-semibold"> {n} {nameCounts[n]} </Link>
+  <Link href={`/post/catagory/${n}/${userId}`} key={n} className="border-2 dark:border-slate-50 w-auto  transition-all duration-500 border-dark h-auto bggre overflow-hidden rounded-md text-center py-2 px-2 font-semibold"> {n.replace(/_/g, ' ')} {nameCounts[n]} </Link>
                 )
               ) : "loading..."
                } 

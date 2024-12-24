@@ -46,7 +46,7 @@ interface postProps {
     catagory: string;
     userId: string;
     id: string;
-    file: unknown;
+    file: string[];
     profileId: string;
     createdAt: Date;
     updatedAt: Date | null;

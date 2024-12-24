@@ -1,3 +1,4 @@
+import { post } from './../../drizzle/db/schema';
 import { publicProcedure, router } from "../trpc";
 import { db } from '@/drizzle'
 import * as schema from "@/drizzle/db/schema"
@@ -5,11 +6,26 @@ import { z } from "zod";
 import * as uuid from 'uuid';
 import { TRPCError } from "@trpc/server";
 import EventEmitter, { on } from "events";
-import { eq } from "drizzle-orm";
+import { asc, desc, eq } from "drizzle-orm";
 import { getStorage } from "@/supabase/storage/Storages";
+import { FunctionDate } from '@/Component/Database';
 
 
 // const ee = new EventEmitter();
+const postSchema : z.ZodType<postProps[]>  = z.array(z.object({
+    title: z.string(),
+    description: z.string().nullable(),
+    catagory: z.string(),
+    userId: z.string(),
+    id: z.string(),
+    file: z.array(z.string()),
+    profileId: z.string(),
+    createdAt: z.date(),
+    updatedAt: z.date().nullable(),
+    isSold: z.boolean().nullable(),
+    soldDate: z.string(),
+    price: z.string()
+}))
 
 export const DatabaseRouter = router({
     uploadCatagories: publicProcedure.input(z.object({
@@ -43,7 +59,7 @@ export const DatabaseRouter = router({
             console.log("inside " + fileName)
            const UUID:string = uuid.v4();
            const now = new Date();
-           await db.insert(schema.catagories).values({categories: categories ,id: UUID ,Imagefile: Imagefile, description: description, createdAt: now})
+           await db.insert(schema.catagories).values({categories: categories.replace(/ /g, '_') ,id: UUID ,Imagefile: Imagefile, description: description, createdAt: now})
            return {success: true} 
            } else{
             throw new Error("error because image is undefined")
@@ -77,16 +93,16 @@ export const DatabaseRouter = router({
         title: z.string(),
         description: z.string(),
         catagory: z.string(),
-        userId: z.string(),
+        userID: z.string(),
         prices: z.string()
    })).mutation(async({input}) => {
-    const {imagefile,title,catagory,description,userId, prices} = input;
+    const {imagefile,title,catagory,description,userID, prices} = input;
     const profiles: profileProp[] = await db.query.profile.findMany({
-        where: (profile, {eq}) => eq(profile.userId, userId)
+        where: (profile, {eq}) => eq(profile.userId, userID)
     })
-    const profile = profiles.find((profile) => profile.userId === userId ) as profileProp
+    const profile = profiles.find((profile) => profile.userId === userID ) as profileProp
     const users = await db.select().from(schema.user)
-    const user = users.find((user) => user.id === userId)
+    const user = users.find((user) => user.id === userID)
     console.log("starting uploading to post table...")
 
     try {
@@ -94,16 +110,8 @@ export const DatabaseRouter = router({
         console.log("the user is verified merchant and all data are right")
            const UUID:string = uuid.v4();
            const now = new Date();
-           await db.insert(schema.post).values({userId: userId ,profileId: profile.id ,title: title ,catagory: catagory ,id: UUID ,file: imagefile, description: description, createdAt: now, price: prices as string})
-          
-        //   if(!result){
-        //     const deletedFileName = imagefile.split('/').pop() as string
-        //     console.log(deletedFileName + " delete file name from database")
-        //     const storage = getStorage()
-        //     await storage.from("Images").remove([`postImage/${deletedFileName}`])
-        //     console.log("!result successfully deleted this file from database " + deletedFileName)
-        //   }
-         
+           await db.insert(schema.post).values({userId: userID ,profileId: profile.id ,title: title ,catagory: catagory.replace(/ /g, '_') ,id: UUID ,file: imagefile, description: description, createdAt: now, price: prices as string})
+              return {success: true}
         }else{
             const deletedFileName = imagefile.split('/').pop() as string
             console.log(deletedFileName + " delete file name from database")
@@ -114,6 +122,7 @@ export const DatabaseRouter = router({
                 code:"UNAUTHORIZED",
                 message:"you are not authorized for posting"})
         }
+            
     } catch (error) {
         const deletedFileName = imagefile.split('/').pop() as string
         console.log(deletedFileName + " delete file name from database post")
@@ -129,7 +138,7 @@ export const DatabaseRouter = router({
     id: z.string(),
     catagory: z.string().optional()
 })).query(async({input}) => {
-   const {id, catagory} = input;
+   const {id,} = input;
    try {
 
     const posts = await db.query.post.findMany({
@@ -141,7 +150,7 @@ export const DatabaseRouter = router({
         postProfile: true,
         postSeen: true
        },
-        
+       orderBy: (post) => desc(post.createdAt)
     }) 
         const postCatagory: string[] = posts.map((c) => c.catagory)
         return {posts, postCatagory,}
@@ -304,12 +313,9 @@ export const DatabaseRouter = router({
             with:{
                 userContent: true
             }
-        })
+        }) as userProps[]
         const user = users.find((user) => user.id === id)
         if(id === user?.id && user.role === "merchant"){
-            // const profiles:profileProp[] = await db.select().from(schema.profile) 
-            // const profile = profiles.find((profile) => profile.userId === id)
-            
             return {user}
         } else{
 throw new TRPCError({
@@ -381,15 +387,14 @@ throw new TRPCError({
         postSeen: true
        },
     }) as postProps[]
-    // const post = posts.find((p) => p.id === id) as postProps
     const now = new Date()
-    const date = now.getTime()/86400000
-    console.log("d 0")
-  
+    const date = now.getTime()
+    
     try {
         console.log("starting...")
         if(Sold === true){
         console.log("sold true")
+        console.log(`will delete after 7 days`)
         await db.update(schema.post)
         .set({
         isSold: Sold,
@@ -399,7 +404,7 @@ throw new TRPCError({
         console.log("sold false isSold date string")
         await db.update(schema.post).set({
         isSold: Sold,
-        soldDate: "20060" 
+        soldDate: null
         }).where(eq(schema.post.id, id));
         console.log('it work')
    
@@ -408,6 +413,49 @@ throw new TRPCError({
     } catch (error) {
        throw new TRPCError({code: "UNPROCESSABLE_CONTENT", message:"error to sold the product"})
     }
-})
+}),
+    deleteSolded: publicProcedure.query(async() => {
+        const posts = await db.query.post.findMany({
+           with:{
+            author : true, 
+            likeAndDislikePost: true,
+            postCatagory :true,
+            postProfile: true,
+            postSeen: true
+           },
+        }) 
+        const now:Date = new Date()
+        const date = now.getTime()
+        const time = FunctionDate(date)
+        
+        try {
+             posts.map(async(p) => {
+                console.log("start here bro")
+                if(p.soldDate !== null && p.isSold === true ) {
+                    console.log("sold-date not null")
+                    console.log(`current date is : ${time.days - Number(p.soldDate)}`)
+                    if(time.days - FunctionDate(Number(p.soldDate)).days >= 1){
+                        const post = posts.find((po) => po.id === p.id) as postProps
+                        console.log("end here bro")
+                        await db.delete(schema.post).where(eq(schema.post.id, post.id))
+                        console.log("deleted")
+                        return {success: true , message: "successfully delete the post"}
+                    }
+                }
 
+        })
+        return {success: true, message: "post sold not sold"}
+        } catch (error) {
+            throw new TRPCError({code:"NOT_FOUND", message:"error deleting sold post"})
+        }
+       
+    }),
+    getProfiles: publicProcedure.query(async() => {
+        const profiles = await db.query.profile.findMany({
+            with:{
+                userContent: true
+            },
+         })
+        return profiles
+    }),
 })

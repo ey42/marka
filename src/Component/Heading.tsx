@@ -67,12 +67,12 @@ console.log("user is undefined ")
  console.log(pathname)
   return (
 
-    <div className='w-full backdrop-blur-3xl ' >
-          <div className=" flex justify-between max-md:h-14 gap-4  border-dark dark:border-light border-b-[0.5px] ">
-         <div className='flex flex-row max-md:hidden justify-center gap-4 max-md:justify-start items-center pt-3 my-auto max-lg:mb-2'>
+    <div className='w-full backdrop-blur-3xl' >
+          <div className=" flex justify-between gap-4 h-[75px] border-dark dark:border-light border-b-[0.5px] ">
+         <div className='flex flex-row font-mono justify-center gap-4 max-md:justify-start items-center pt-3 my-auto '>
           <div className='flex justify-center gap-4 ml-2 max-md:hidden'>
           <div className="ml-3 ">
-          <div className='w-10 dark:fill-slate-50 fill-dark border-2 dark:border-slate-50 border-dark rounded-lg flex flex-col justify-center'>
+          <div className='w-10 dark:fill-slate-50 fill-dark border-2 dark:border-slate-50 border-dark bg-light dark:bg-dark rounded-lg flex flex-col justify-center'>
             <Link href={'/'} className=" dark:fill-slate-50 fill-dark">
             <Icons.Logo />
             </Link>
@@ -98,26 +98,26 @@ console.log("user is undefined ")
               </div>
                 </Link> } */}
                 {activeUser?.email === 'eyuealzerihun1@gmail.com' && activeUser.role === "merchant" ? (
-                  <NavigationMenu className="max-md:hidden ">
+                  <NavigationMenu className=" text-sm font-semibold max-md:ml-5" hidden=
+                  {activeUser?.role !== "merchant"}>
                     <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="transition-colors duration-300 rounded-sm font-mono font-semibold h-7 text-sm text-white hover:bg-dark bg-dark hover:text-white dark:bg-slate-50 dark:text-dark hover:dark:bg-slate-50 hover:dark:text-dark data-[state=open]:bg-dark data-[state=open]:text-white dark:data-[state=open]:bg-slate-50 dark:data-[state=open]:text-dark dark:data-[active]:bg-slate-300 dark:data-[active]:text-dark data-[active]:bg-black data-[active]:text-white dark:focus:text-black dark:focus:bg-slate-100 focus:text-white focus:bg-black px-2 py-2 max-lg:w-8 max-lg:h-8" > <div className="flex gap-2 "><h1 className="max-lg:hidden text-sm">upload</h1> <MonitorUp /></div> </NavigationMenuTrigger>
-          <NavigationMenuContent className=" w-full flex-col gap-2 backdrop-blur-sm dark:bg-light bg-dark dark:text-dark text-light">
-            {/* <h1 className="py-2 text-lg text-center bg-slate-100">uploads</h1> */}
-            <div className="flex flex-col w-56 h-full ">
-                <Link href='/upload/upload-catagory' hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('upload/upload-catagory') || !activeUserSession} className=" group  max-md:hidden">
+          <NavigationMenuTrigger className="transition-colors duration-150 rounded-sm font-mono border-2 border-dark dark:border-light font-semibold h-7 text-sm text-dark hover:bg-light bg-light hover:text-dark dark:bg-dark dark:text-light hover:dark:bg-dark hover:dark:text-light data-[state=open]:bg-light data-[state=open]:text-dark dark:data-[state=open]:bg-dark dark:data-[state=open]:text-light dark:data-[active]:bg-slate-300 dark:data-[active]:text-black data-[active]:bg-slate-100 data-[active]:text-black dark:focus:text-white dark:focus:bg-dark focus:text-black focus:bg-slate-100 px-1 py-2 max-lg:w-8 max-lg:h-8"> <div className="flex gap-2 "><h1 className="max-lg:hidden text-sm">upload</h1> <MonitorUp /></div> </NavigationMenuTrigger>
+          <NavigationMenuContent className=" transition-all duration-150 w-32 flex-col gap-2 backdrop-blur-sm dark:bg-light bg-dark dark:text-dark text-light">
+            <div className="flex flex-col w-32 h-full">
+                <Link href='/upload/upload-catagory' hidden={pathname.includes('upload/upload-catagory') || !activeUserSession} className=" group  ">
               <div className="flex flex-row justify-between transition-all duration-300 px-2 py-2">
-              <ArrowUpFromLine className="group-hover:-translate-y-2 transition-transform duration-500 stroke-light dark:stroke-dark group-hover:stroke-light dark:group-hover:stroke-dark"/> <h1 className="text-md font-semibold font-serif">catagory</h1>
+              <ArrowUpFromLine className="group-hover:-translate-y-1 transition-transform duration-500 stroke-light dark:stroke-dark group-hover:stroke-light dark:group-hover:stroke-dark"/> <h1>catagory</h1>
               </div>
               </Link>
-              <Link href='/upload/upload-post' hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('upload/upload-post') || !activeUserSession} className="group max-md:hidden ">
+              <Link href='/upload/upload-post' hidden={pathname.includes('upload/upload-post') || !activeUserSession} className="group  ">
               <div className="flex flex-row justify-between transition-all duration-300  px-2 py-2 ">
-                 <ArrowUpFromLine className="group-hover:-translate-y-2 transition-transform duration-500 stroke-light dark:stroke-dark group-hover:stroke-light dark:group-hover:stroke-dark"/> <h1 className="text-md font-semibold font-serif">post</h1>
+                 <ArrowUpFromLine className="group-hover:-translate-y-1 transition-transform duration-500 stroke-light dark:stroke-dark group-hover:stroke-light dark:group-hover:stroke-dark"/> <h1 >post</h1>
               </div>
               </Link>
-              <Link href={`/upload/upload-profile`}  hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('upload/upload-profile') || !activeUserSession} className="group max-md:hidden ">
+              <Link href={`/upload/upload-profile`}  hidden={pathname.includes('upload/upload-profile') || !activeUserSession} className="group  ">
               <div className="flex flex-row justify-between transition-all duration-500 px-2  py-2 ">
-              <UserPen className="group-dark:hover:stroke-dark transition-transform duration-500 group-hover:-translate-y-2 group-hover:stroke-light dark:group-hover:stroke-dark stroke-light dark:stroke-dark"/><h1 className="text-md font-semibold font-serif">profile</h1>
+              <UserPen className="group-dark:hover:stroke-dark transition-transform duration-500 group-hover:-translate-y-1 group-hover:stroke-light dark:group-hover:stroke-dark stroke-light dark:stroke-dark dark:fill-dark fill-white"/><h1>profile</h1>
               </div>
               </Link>
               </div>
@@ -126,25 +126,22 @@ console.log("user is undefined ")
        
       </NavigationMenuList>
                   </NavigationMenu>
-                ):(activeUser?.role === "merchant" ? (<NavigationMenu className="max-md:hidden">
+                ):(activeUser?.role === "merchant" ? (<NavigationMenu className="max-md:ml-5 text-sm font-semibold" hidden=
+                  {activeUser?.role !== "merchant"}>
                   <NavigationMenuList>
       <NavigationMenuItem>
-        <NavigationMenuTrigger className="transition-colors rounded-sm font-mono font-semibold h-7 text-sm duration-100 text-white hover:bg-dark bg-dark hover:text-white dark:bg-slate-50 dark:text-dark hover:dark:bg-slate-50 hover:dark:text-dark data-[state=open]:bg-dark data-[state=open]:text-white dark:data-[state=open]:bg-slate-50 dark:data-[state=open]:text-dark dark:data-[active]:bg-slate-300 dark:data-[active]:text-dark data-[active]:bg-black data-[active]:text-white dark:focus:text-black dark:focus:bg-slate-100 focus:text-white focus:bg-black px-2 py-2 max-lg:w-8 max-lg:h-8"> <div className="flex gap-2 "> <h1 className="max-lg:hidden text-sm">uploads</h1> <MonitorUp /></div> </NavigationMenuTrigger>
-        <NavigationMenuContent className=" w-full flex-col gap-4 backdrop-blur-sm dark:bg-light bg-dark text-light dark:text-dark">
-          <div className="flex flex-col w-56 h-full ">
-              <Link href='/upload/upload-catagory' hidden={activeUser?.role  !== 'merchant' || pathname.includes('upload/upload-catagory') || !activeUserSession} className=" group rounded-lg max-md:hidden">
-            <div className="flex flex-row justify-between transition-all duration-300 px-2 rounded-lg py-2">
-            <ArrowUpFromLine className="group-hover:-translate-y-2 transition-all duration-500 stroke-light group-hover:stroke-light dark:group-hover:stroke-dark"/> <h1 className="text-md font-semibold font-serif">catagory</h1>
-            </div>
-            </Link>
-            <Link href='/upload/upload-post' hidden={activeUser?.role  !== 'merchant' || pathname.includes('upload/upload-post') || !activeUserSession} className="group rounded-lg max-md:hidden ">
+        <NavigationMenuTrigger className="transition-colors focus:border-black dark:focus:border-yellow-200 data-[state=open]:border-dark dark:data-[state=open]:border-light duration-150 rounded-sm font-mono border-2 border-dark dark:border-light font-semibold h-7 text-sm text-dark hover:bg-light bg-light hover:text-dark dark:bg-dark dark:text-light hover:dark:bg-dark hover:dark:text-light data-[state=open]:bg-light data-[state=open]:text-dark dark:data-[state=open]:bg-dark dark:data-[state=open]:text-light dark:data-[active]:bg-slate-300 dark:data-[active]:text-black data-[active]:bg-slate-100 data-[active]:text-black dark:focus:bg-dark focus:text-black dark:focus:text-yellow-200 focus:bg-slate-100 px-1 py-2 max-lg:w-8 max-lg:h-8" > <div className="flex gap-2 "><h1 className="max-lg:hidden text-sm">upload</h1>  
+          <MonitorUp /></div> </NavigationMenuTrigger>
+        <NavigationMenuContent className=" w-32 flex-col gap-4 backdrop-blur-sm dark:bg-light bg-dark text-light dark:text-dark">
+          <div className="flex flex-col w-32 h-full ">
+            <Link href='/upload/upload-post' hidden={activeUser?.role  !== 'merchant' || pathname.includes('upload/upload-post') || !activeUserSession} className="group rounded-lg  ">
             <div className="flex flex-row justify-between transition-all duration-300 px-2 rounded-lg py-2 ">
-               <ArrowUpFromLine className="group-hover:-translate-y-2 transition-all duration-500 dark:stroke-dark stroke-light group-hover:stroke-light dark:group-hover:stroke-dark"/> <h1 className="text-md font-semibold font-serif">post</h1>
+               <ArrowUpFromLine className="group-hover:-translate-y-1 transition-all duration-500 dark:stroke-dark stroke-light group-hover:stroke-light dark:group-hover:stroke-dark"/> <h1>post</h1>
             </div>
             </Link>
-            <Link href={`/upload/upload-profile`} hidden={activeUser?.role  !== 'merchant' || pathname.includes('upload/upload-post') || !activeUserSession} className="group rounded-lg max-md:hidden ">
+            <Link href={`/upload/upload-profile`} hidden={activeUser?.role  !== 'merchant' || pathname.includes('upload/upload-post') || !activeUserSession} className="group rounded-lg  ">
             <div className="flex flex-row justify-between transition-all duration-500 px-2 rounded-lg py-2 ">
-            <UserPen className="dark:hover:stroke-dark transition-all duration-500 group-hover:-translate-y-2 group-hover:stroke-light dark:group-hover:stroke-dark stroke-light dark:stroke-dark"/><h1 className="text-md font-semibold font-serif">profile</h1>
+            <UserPen className="dark:hover:stroke-dark transition-all duration-500 group-hover:-translate-y-1 group-hover:stroke-light dark:group-hover:stroke-dark stroke-light dark:stroke-dark"/><h1>profile</h1>
             </div>
             </Link>
             </div>
@@ -152,26 +149,28 @@ console.log("user is undefined ")
       </NavigationMenuItem>
      
     </NavigationMenuList>
-                </NavigationMenu>):"")}
-
-                <div className="cursor-pointer">
-                  <Link href={`#`}>
-                  <Users className="dark:stroke-light stroke-dark hover:stroke-black hover:fill-gray-500"/>
+                </NavigationMenu>):"") }
+                <div className="cursor-pointer max-md:hidden">
+                  <Link href={`/profile/traders`}>
+                  <Users className="dark:stroke-light stroke-dark dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark"/>
                   </Link>
                 </div>
               
          </div>
        
-            <div className='flex justify-center max-md:justify-start items-center gap-1 max-md:ml-0'>
+            <div className='flex justify-center max-md:justify-center items-center gap-1 max-md:ml-4'>
            
-                 { pathname !== "/" ? (<div className="max-md:ml-5 bg-transparent">
+                 { pathname !== "/" ? (<div className=" bg-transparent">
                     <div className="flex md:w-72 gap-1 max-sm:w-40 h-9 flex-row border-2 dark:border-light  border-dark rounded-md items-center"> 
                     <Search height={20} className="dark:stroke-light stroke-dark"/>
                       <input type="text" className="outline-none w-full bg-transparent placeholder:font-semibold placeholder:text-slate-500 font-bold font-mono text-sm text-dark dark:text-light focus:placeholder:text-transparent dark:placeholder:text-slate-400" placeholder="search..."/>
                     </div>
-                  </div>) : <div className="max-md:ml-5 flex flex-col dark:text-light text-dark items-center bg-transparent">
-                    <h1 className="font-bold font-mono text-3xl max-md:-mb-2"><span className="text-blue-500">m</span>ar<span className="text-yellow-500">k</span>a<span className="text-red-500">.</span>c<span className="text-green-500">o</span>m</h1>
-                    <p className="font-semibold text-lg max-md:mb-2">market center!</p>
+                  </div>) : <div className="flex flex-col dark:text-light text-dark items-center bg-light dark:bg-dark h-full rounded-sm px-2">
+                    <h1 className="z-20 font-bold font-mono text-3xl max-md:-mb-2"><span className="text-blue-500">m</span>ar<span className="text-yellow-500">k</span>a<span className="text-red-500">.</span>c<span className="text-green-500">o</span>m</h1>
+                    <p className="font-semibold text-lg max-md:mb-2 z-10 invisible">market center!</p>
+                    <div className="bg-cover bg-center w-20 h-2 z-0 -mt-10" >
+                    <Image src={'/green-city.png'} alt="hy" width={1000} height={100}/>
+                    </div>
                     </div>}
       
             </div>
@@ -224,8 +223,8 @@ console.log("user is undefined ")
               </div>
                 </Link> : 
                 <div className=" flex rounded-lg max-md:hidden mr-5 ">
-                <div className='text-sm duration-300 border-2 hover:bg-neutral-800 hover:text-white dark:hover:text-black dark:hover:bg-slate-200 dark:border-slate-50 dark:bg-light dark:text-dark  cursor-pointer flex gap-2 bg-dark border-dark text-light  rounded-md pr-2'>
-              <button className=' flex justify-start pl-2  font-bold text-sm py-0.5 ' onClick={() => {
+                <div className='text-sm duration-100 border-2 hover:bg-slate-100 hover:text-black dark:hover:text-white dark:hover:bg-black dark:border-slate-50 dark:bg-dark dark:text-light  cursor-pointer flex gap-2 bg-light border-dark text-dark  rounded-md pr-2'>
+              <button className=' flex justify-start pl-2  font-bold text-sm py-0.5 font-mono' onClick={() => {
                 if(!user){
                   signIN()
                 } 
@@ -241,20 +240,23 @@ console.log("user is undefined ")
               <SheetTrigger asChild>
               <div className='mr-5  max-sm:mt-2 md:hidden items-center flex justify-center cursor-pointer'>
                     <div className='w-5 h-5'>
-                      <Icons.nav className='dark:fill-slate-300 fill-dark'/>
+                      <Icons.nav className='dark:fill-light fill-dark'/>
                     </div>
                   </div>
               </SheetTrigger>
-              <SheetContent className="w-36 md:h-48  bg-inherit border-none rounded-md overflow-auto md:hidden">
+              <SheetContent className="w-36 md:h-48  bg-light text-dark font-mono border-none rounded-md overflow-auto md:hidden">
                 <SheetHeader className="flex justify-center items-start">
-                  <SheetTitle className="text-dark border-2 border-dark rounded-lg text-left ">
-                  <div className=' w-10 dark:fill-slate-300 fill-dark ml-0'>
-                      <Link href={'#'}>
-                      <Icons.Logo />
+                  <SheetTitle>
+                  <div className= 'w-10 dark:fill-slate-300 fill-dark ml-0'>
+                      <Link href={'/'} className=" flex flex-col justify-center  ">
+                      <div className="text-dark border-2 border-dark rounded-lg">
+                      <Icons.Logo className="fill-dark"/>
+                      </div>
+                      <h3 className="text-sm dark:text-slate-300 text-dark font-bold tracking-widest"><span className="text-blue-500">m</span>ar<span className="text-yellow-500">k</span>a</h3>
                       </Link>
                   </div>
                   </SheetTitle>
-                  <h3 className="pl-1.5 text-[12px] dark:text-slate-300 text-dark font-bold">N.E.B</h3>
+                  
                   <SheetDescription>
                     <h3>our platform is easy and simple to use</h3>
                   </SheetDescription>
@@ -263,7 +265,7 @@ console.log("user is undefined ")
                 <div className="mt-3 flex flex-col gap-4 py-4 md:hidden h-screen">
                   <div className="flex items-center justify-between gap-5 transition-all hover:-translate-y-1 duration-500 cursor-pointer">
                     <div>
-                      <h1 className="font-semibold font-serif text-dark dark:bg-slate-300">{darkTheme ? "Light" : "Dark"}</h1>
+                      <h1 className="font-semibold ">{darkTheme ? "Light" : "Dark"}</h1>
                     </div>
                   
                     <button className='border-2 rounded-full w-5 h-5 dark:border-slate-300 dark:text-slate-300 border-dark text-dark dark:hover:text-slate-100 transition duration-150 md:hidden '>
@@ -283,50 +285,53 @@ console.log("user is undefined ")
 
                       </button>
                   </div>
-                  <Link href="#">
-                   {activeUser && <div className='font-medium md:hidden hover:bg-dark rounded-lg'>
+                  
+                   {activeUser && <div className='font-medium md:hidden  hover:bg-slate-200 border-x-2 border-black rounded-lg'>
                     <Link href={`/profile/${activeUser.id}`} className="">
-              <div className="hover:-translate-y-1 transition-all duration-300 border-2 border-dashed border-dark dark:border-slate-300 bg-slate-300 dark:bg-dark text-dark dark:text-slate-300 px-2 rounded-lg">
-                <h1 className="text-sm font-semibold font-serif">user</h1>
+              <div className="">
+                <h1 className="text-sm text-center font-semibold">user</h1>
               </div>
               </Link>
                 </div> }
-                </Link>
                 
-                  {activeUser?.email === 'eyuealzerihun1@gmail.com' && activeUser.role === "merchant" ?<div className="flex flex-col gap-4">
-                <Link href='/upload/upload-catagory' hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('upload/upload-catagory') || !activeUserSession} className=" hover:bg-dark rounded-lg dark:hover:bg-slate-300 transition-all duration-300">
-              <div className="hover:-translate-y-1 transition-all duration-300 border-2 border-dashed border-dark dark:border-slate-300 bg-slate-300 dark:bg-dark text-dark dark:text-slate-300 px-2 rounded-lg">
-                <h1 className="text-sm font-semibold font-serif">catagory</h1>
+                
+                  {activeUser?.email === 'eyuealzerihun1@gmail.com' && activeUser.role === "merchant" ?<div className="flex flex-col text-center gap-4">
+                <Link href='/upload/upload-catagory' hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('upload/upload-catagory') || !activeUserSession} className="border-x-2 rounded-lg border-black hover:bg-slate-200">
+              <div className="">
+                <h1 className="text-sm font-semibold">catagory</h1>
               </div>
               </Link>
-              <Link href='/upload/upload-post' hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('upload/upload-post') || !activeUserSession} className="hover:bg-dark rounded-lg dark:hover:bg-slate-300 transition-all duration-300">
-              <div className="hover:-translate-y-1 transition-all duration-300 border-2 border-dashed border-dark dark:border-slate-300 bg-slate-300 dark:bg-dark text-dark dark:text-slate-300 px-2 rounded-lg">
-                <h1 className="text-sm font-semibold font-serif">post</h1>
+              <Link href='/upload/upload-post' hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('upload/upload-post') || !activeUserSession} className="border-x-2 hover:bg-slate-200 border-black rounded-lg ">
+              <div className="">
+                <h1 className="text-sm font-semibold">post</h1>
               </div>
               </Link>
-              <Link href='#' hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('upload/upload-post') || !activeUserSession} className="hover:bg-dark rounded-lg dark:hover:bg-slate-300 transition-all duration-300">
-              <div className="hover:-translate-y-1 transition-all duration-300 border-2 border-dashed border-dark dark:border-slate-300 bg-slate-300 dark:bg-dark text-dark dark:text-slate-300 px-2 rounded-lg">
-                <h1 className="text-sm font-semibold font-serif">profile</h1>
+              <Link href='/profile/traders' hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('profile/traders') || !activeUserSession} className="border-x-2 border-black hover:bg-slate-200 rounded-lg">
+              <div className="flex flex-row gap-1 justify-center">
+                <h1 className="text-sm font-semibold">Traders</h1>
+                <Users className="dark:stroke-light w-4 h-4 stroke-dark dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark"/>
+                
               </div>
               </Link>
               </div>
-              : <div className="flex flex-col gap-4">
-                <Link href='/upload/upload-post' hidden={activeUser?.role !== "merchant" ||  pathname.includes('upload/upload-post')} className="md:hidden hover:bg-dark dark:hover:bg-slate-300 rounded-lg transition-all duration-300">
-              <div className="hover:-translate-y-1 transition-all duration-300 border-2 border-dashed border-dark dark:border-slate-300 bg-slate-300 dark:bg-dark text-dark dark:text-slate-300 px-2 rounded-lg">
-                <h1 className="text-sm font-semibold font-serif">Post</h1>
+              : <div className="flex flex-col text-center gap-4">
+                <Link href='/upload/upload-post' hidden={activeUser?.role !== "merchant" ||  pathname.includes('upload/upload-post')} className="border-x-2 hover:bg-slate-200 border-black rounded-lg">
+              <div className="">
+                <h1 className="text-sm font-semibold">Post</h1>
               </div>
               </Link>
-              <Link href='/upload/upload-profile' hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('upload/upload-post') || !activeUserSession} className="hover:bg-dark rounded-lg dark:hover:bg-slate-300 transition-all duration-300">
-              <div className="hover:-translate-y-1 transition-all duration-300 border-2 border-dashed border-dark dark:border-slate-300 bg-slate-300 dark:bg-dark text-dark dark:text-slate-300 px-2 rounded-lg">
-                <h1 className="text-sm font-semibold font-serif">profile</h1>
+              <Link href='/profile/traders' hidden={activeUser?.email  === 'eyuealzerihun1@gmail.com' || pathname.includes('profile/traders') || !activeUserSession} className="border-x-2 border-black hover:bg-slate-200 rounded-lg">
+              <div className="flex flex-row gap-1 justify-center">
+                <h1 className="text-sm font-semibold">Traders</h1>
+                <Users className="dark:stroke-light w-4 h-4 stroke-dark dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark"/>
               </div>
               </Link>
               </div>
 
 }
-<div className=" dark:hover:bg-slate-300 hover:bg-dark rounded-lg flex justify-start transition-all duration-300">       
-            <div className='transition-all hover:-translate-y-1 duration-300 flex gap-2 cursor-pointer bg-slate-300 text-dark dark:text-slate-300 border-2  rounded-lg w-full dark:bg-slate-300 md:hidden border-dark'>
-            <button className=' flex justify-start pl-2 font-bold text-sm font-serif' onClick={() => {
+                 
+            <div className='flex gap-2 cursor-pointer hover:bg-slate-200 bg-light text-dark border-y-2  rounded-lg w-fullt md:hidden border-black'>
+            <button className=' flex justify-start pl-2 font-bold text-sm ' onClick={() => {
             if(!activeUser){
               signIN()
             } signOUT()
@@ -335,7 +340,7 @@ console.log("user is undefined ")
             <button>
             <FaGoogle className='pr2'/>
             </button>
-            </div>
+            
               </div>             
    </div>
 

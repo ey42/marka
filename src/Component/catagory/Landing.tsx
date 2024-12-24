@@ -2,10 +2,15 @@
 import Link from "next/link"
 import Image from "next/image"
 import MaxWidthWrapper from "../MaxWidthWrapper"
+import { useEffect } from "react"
+import { trpc } from "@/app/_trpc/client"
 
 
 const Landing = ({AllCatagory}: {AllCatagory: Catagoryprops[]}) => {
-  
+  const {refetch: fetchAgain, data: access} = trpc.database.deleteSolded.useQuery()
+  useEffect(() => {
+fetchAgain()
+  },[])
   
   return (
     <MaxWidthWrapper> 
@@ -19,11 +24,11 @@ const Landing = ({AllCatagory}: {AllCatagory: Catagoryprops[]}) => {
 <Image src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}${catagory.Imagefile as string}`} alt={`image of ${catagory.categories}...`} width={400} height={400} className=" w-52 h-40 border-b-2" loading="lazy"/>
 </div>
 <div className="flex justify-between text-slate-50 dark:text-neutral-900 font-semibold font-mono text-md text-start">
-  <h1 className=" px-2 leading-5 h-7 ">{catagory.categories}</h1>
+  <h1 className=" px-2 leading-5 h-7 ">{catagory.categories.replace(/_/g, ' ')}</h1>
   <div className="flex flex-col">
     <p className="ml-2 -mb-2 pr-2">200</p>
     <p>posts</p>
-  </div>
+  </div> 
 </div>
   </Link>
   </div>

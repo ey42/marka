@@ -15,7 +15,7 @@ export const user = pgTable("user", {
  createdAt: timestamp('createdAt').notNull(),
  updatedAt: timestamp('updatedAt').notNull(),
  role: roleEnum().default("customer"),
- customerId: text("customer_id").references(():AnyPgColumn => user.id)
+ customerId: text("customer_id").references(():AnyPgColumn => user.id),
 				});
 
 

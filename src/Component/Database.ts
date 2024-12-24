@@ -72,6 +72,16 @@ export function formatCurrency(
     throw new Error(`failed to format currency: ${error.message}`)
   }
 }
+export function FunctionDate(date: number){
+  const seconds = date / 1000;
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+  const days = Math.floor(hours / 24);
+  const remainingHours = hours % 24;
+  return{seconds, minutes, remainingSeconds, hours, remainingMinutes, days, remainingHours}
+ }
 
 
 

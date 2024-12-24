@@ -54,7 +54,7 @@ const {useSession} = Authclient
    
     }
     const handleCatagories = (e:ChangeEvent<HTMLInputElement>) => {
-      setCatagory(e.target?.value)
+      setCatagory(e.target.value)
       
     }
     const handleDescription = (e:ChangeEvent<HTMLTextAreaElement>) => {
@@ -131,7 +131,7 @@ const {useSession} = Authclient
                   <ul className="text-sm font-semibold max-md:grid-rows-10 max-sm:grid-cols-1  grid grid-cols-3 grid-flow-row gap-x-10 gap-5 dark:marker:text-white list-none items-center max-sm:justify-start max-sm:items-start justify-center">
                 { 
 access !== undefined ? access.map((n) => (
-  <li key={n} className="border-2 dark:border-slate-50 w-32 bg-slate dark:bg-dark transition-all duration-200 border-dark h-11 overflow-hidden outline-1 ring-1 rounded-md ring-green-300 text-center  px-2 "> {n} </li>
+  <li key={n} className="border-2 dark:border-slate-50 w-32 bg-slate dark:bg-dark transition-all duration-200 border-dark h-11 overflow-hidden outline-1 ring-1 rounded-md ring-green-300 text-center  px-2 "> {n.replace(/_/g, ' ')} </li>
                 )
               ) : "loading..."
                } 
