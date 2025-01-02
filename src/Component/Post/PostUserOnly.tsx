@@ -65,7 +65,7 @@ setFormSubmited(false)
                 "contrast-50": post.isSold === true,
                 // "invert": post.isSold === true,
               })}> 
-                <Image src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}${post.file as string}`} alt="image" width={200} height={200} className="w-40 h-40 rounded-lg"/>
+                <Image src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}${(post.file as string[])[0]}`} alt="image" width={200} height={200} className="w-40 h-40 rounded-lg"/>
               </div>
           <div className='text-xs flex flex-col ml-2 items-start w-40 justify-between'>
           <div>
@@ -77,7 +77,7 @@ setFormSubmited(false)
           {"text-red-500 font-bold": post.isSold === true,
           "text-lg": post.isSold === true,
             "text-green-500": post.isSold === false})}>
-              - {post.isSold === true ? "solded" : "...waiting for sold"}</p>
+              - {post.isSold === true ? "solded" : "for sell"}</p>
           {post.soldDate && (<p className="text-red-500 font-sim">- after {24 - (time.hours - (FunctionDate(Number(post.soldDate)).hours))} hours automatically this post will be deleted permanently!!</p>)}
           </div>
           <div className='flex items-end bottom-0'>

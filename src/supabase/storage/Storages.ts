@@ -48,14 +48,19 @@ try {
  
   
   }
-export async function uploadImagetoPostStorage({file, bucket, folder, title, catagory}: { 
-  file: File | undefined,
+export async function uploadImagetoPostStorage({files, bucket, folder, title, catagory}: { 
+  files: File[] | undefined,
   bucket: string;
   folder?: string,
   title: string,
   catagory: string,
 }){
+  const imageUrls: string[] = []
 try {
+  if(!files || files.length === 0){
+    return undefined
+  }
+  for (const file of files){
    if(file?.type === "image/jpeg"){
     console.log(file.type)
     if(catagory === undefined || catagory === ""){
@@ -72,12 +77,13 @@ try {
   const {data} = await storage.from(bucket).upload(path, file)
   const imageUrl = `/storage/v1/object/public/${bucket}/${data?.path}`
   console.log("successfully upload image in postImage")
-  return imageUrl
+   imageUrls.push(imageUrl)
     }
    } else{
     console.log("image type is not .jpeg")
     return 
-   }
+   } }
+    return imageUrls
 } catch (error) {
    throw new Error( `error image uploading in supabase storage catch error: ${error}`)
 }

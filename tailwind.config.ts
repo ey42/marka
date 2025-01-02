@@ -18,6 +18,9 @@ const config = {
   		}
   	},
   	extend: {
+		backgroundImage: {
+			greenCity: "url('/gifts.jpg')",
+		},
   		colors: {
   			dark: '#393535',
 			light: '#f8fafc',
@@ -88,7 +91,8 @@ const config = {
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out'
-  		}
+  		},
+	
   	}
   },
   plugins: [require("tailwindcss-animate")],

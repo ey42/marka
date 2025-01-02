@@ -1,7 +1,7 @@
 "use client"
 import { trpc } from "@/app/_trpc/client"
 
-import { convertBlobUrlToFIle } from "@/Component/Database"
+import { convertBlobUrlToFIleArray } from "@/Component/Database"
 import {  uploadImagetoPostStorage } from "@/supabase/storage/Storages"
 import { useState,  useEffect, ChangeEvent, FormEvent,  } from "react"
 
@@ -10,7 +10,6 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Images } from "../Image"
 import { Check, ChevronsUpDown } from "lucide-react"
  
 import { cn } from "@/lib/utils"
@@ -37,7 +36,7 @@ const {useSession} = Authclient
 
 
     const UploadPost = () => {
-    const [image, setImage] = useState<string>("")
+    const [image, setImage] = useState<string[]>([])
     const [description, setDescription] = useState<string>("") 
     const [title, setTitle] = useState<string>("")
     const [formSubmitted, setFormSubmited] = useState<boolean>(false)    
@@ -91,20 +90,35 @@ const {useSession} = Authclient
       
 
     const handleOnChange = async(e:ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]!
-   Images(file, e).then(imageUrl => {
-    console.log("image came from image function : "+ imageUrl)
-    setImage(imageUrl!)
-    refetch()
-    fetchAgain()
-  }).catch(error => {
-    console.error("error processing image : " + error)
-    refetch()
-    fetchAgain()
+    const files = e.target.files!
+  //  Images(file, e).then(imageUrl => {
+  //   console.log("image came from image function : "+ imageUrl)
+  //   setImage(imageUrl!)
+  //   refetch()
+  //   fetchAgain()
+  // }).catch(error => {
+  //   console.error("error processing image : " + error)
+  //   refetch()
+  //   fetchAgain()
+  // })
+  const newImages: Promise<string>[] = Array.from(files || []).map((file) => {
+    const reader = new FileReader()
+    return new Promise<string>((resolve, reject) => {
+     
+      reader.onload = () => resolve(reader.result as string)
+      reader.onerror = (error) => reject(error)
+      reader.readAsDataURL(file)
+      
+     })
   })
+  const resolvedImages = await Promise.all(newImages)
+  setImage([...image, ...resolvedImages])
+  refetch()
+  fetchAgain()
    
    
     }
+
     const handleTitle = (e:ChangeEvent<HTMLInputElement>) => {
       e.preventDefault()
       setTitle(e.target?.value)
@@ -126,18 +140,18 @@ const {useSession} = Authclient
     console.log("trigger")
     setFormSubmited(true)
     try{
-   const filePromise = convertBlobUrlToFIle(image as string)
-   const file: File | undefined = await filePromise
-   console.log(file?.name)
+   const filePromise = convertBlobUrlToFIleArray(image as string[])
+   const files: File[] | undefined = await filePromise
+   console.log(files[0]?.name)
    const bucket:string = "Images"
    const folder:string = "postImage"
    
-   const imageUrl = uploadImagetoPostStorage({file, bucket, folder, title: title, catagory: catagory})
+   const imageUrl = uploadImagetoPostStorage({files, bucket, folder, title: title, catagory: catagory})
    const url  = await imageUrl 
    upload({
     catagory: catagory as string,
     description: description as string,
-    imagefile: url as string,
+    imagefile: url as string[],
     title: title as string,
     userID: userId as string,
     prices: price as string
@@ -161,7 +175,7 @@ const {useSession} = Authclient
       setTitle("")
       setDescription("")
       setCatagory("")
-      setImage("")
+      setImage([])
       setOpen(false)
       setPrice("")
       refetch()
@@ -177,14 +191,14 @@ const {useSession} = Authclient
       <div className="flex flex-row max-lg:flex-col max-lg:justify-center justify-evenly max-lg:items-center max-lg:gap-12 w-full max-sm:ml-2 ml-4">
         <form onSubmit={onsubmit} className="flex flex-col gap-5 items-center justify-center ml-4">
           <div className="w-52 h-52 flex items-center transition-all duration-200 rounded-lg text-dark dark:text-light font-bold border-1 border-dark dark:border-slate-300">
-            <Image src={image as string} alt="post image" width={208} height={208} className="w-52 h-52 rounded-lg border-2 dark:border-slate-300 z-10 border-dark"/>
+            <Image src={image[0] as string} alt="post image" width={208} height={208} className="w-52 h-52 rounded-lg border-2 dark:border-slate-300 z-10 border-dark"/>
             <p className="text-center -ml-36 z-0">take image</p>
           </div>
           <div className="ml-0 flex gap-4 flex-col">
           <div className="w-56 cursor-pointer transition-all duration-200 rounded-md text-dark dark:text-slate-300 ">
 
          
-            <Input type="file" onChange={(e) => handleOnChange(e)} className="h-9 file:text-sm p-0 font-semibold font-mono text-dark dark:text-light border-1 rounded-md dark:border-slate-300 border-dark dark:file:text-light file:font-semibold file:text-dark file:border-1 file:border-dark dark:file:border-slate-300 file:mr-3 file:rounded-md file:h-full file:cursor-pointer cursor-pointer text-nowrap transition-all duration-200" accept="image/*" />
+            <Input type="file" onChange={(e) => handleOnChange(e)} className="h-9 file:text-sm p-0 font-semibold font-mono text-dark dark:text-light border-1 rounded-md dark:border-slate-300 border-dark dark:file:text-light file:font-semibold file:text-dark file:border-1 file:border-dark dark:file:border-slate-300 file:mr-3 file:rounded-md file:h-full file:cursor-pointer cursor-pointer text-nowrap transition-all duration-200" accept="image/*" multiple />
             </div> 
           <div className="flex gap-4 rounded-md">
            <input className= "transition-all max-sm:w-40 duration-100 dark:bg-dark placeholder:text-gray-500 focus:placeholder:text-transparent w-full h-9 p-0 dark:text-slate-300 text-dark font-bold text-sm  rounded-md border-2 border-dark dark:border-slate-300 pl-1 focus:ring-1 dark:focus:ring-slate-300 focus:ring-dark focus:outline-none dark:focus:bg-neutral-800" id="catagory" type="text" onChange={(e) => handleTitle(e)} value={title} placeholder="Post title" required/>

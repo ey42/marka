@@ -9,6 +9,7 @@ import EventEmitter, { on } from "events";
 import { asc, desc, eq } from "drizzle-orm";
 import { getStorage } from "@/supabase/storage/Storages";
 import { FunctionDate } from '@/Component/Database';
+import { sql } from 'drizzle-orm';
 
 
 // const ee = new EventEmitter();
@@ -89,7 +90,7 @@ export const DatabaseRouter = router({
       
     }),
     uploadPost: publicProcedure.input(z.object({
-        imagefile: z.string(),
+        imagefile: z.array(z.string()),
         title: z.string(),
         description: z.string(),
         catagory: z.string(),
@@ -136,11 +137,12 @@ export const DatabaseRouter = router({
    }),
    getPosts: publicProcedure.input(z.object({
     id: z.string(),
-    catagory: z.string().optional()
+    catagory: z.string().optional(),
+
 })).query(async({input}) => {
    const {id,} = input;
    try {
-
+    const postCount = await db.select({ count: sql`COUNT(*)` }).from(schema.post).where(eq(schema.post.userId, id))
     const posts = await db.query.post.findMany({
         where: (post, {eq}) => eq(post.userId, id),
        with:{
@@ -153,13 +155,27 @@ export const DatabaseRouter = router({
        orderBy: (post) => desc(post.createdAt)
     }) 
         const postCatagory: string[] = posts.map((c) => c.catagory)
-        return {posts, postCatagory,}
+        return {posts, postCatagory,postCount}
     
  
     
 } catch (error) {
     throw new TRPCError({code:"INTERNAL_SERVER_ERROR", message:'error getting post'})
 }
+   }),
+   getAllPosts: publicProcedure.query(async() => {
+    const allPosts = await db.query.post.findMany({
+       with:{
+        author : true, 
+        likeAndDislikePost: true,
+        postCatagory :true,
+        postProfile: true,
+        postSeen: true
+       },
+       orderBy: (post) => desc(post.createdAt)
+    }) 
+        return {allPosts}
+   
    }),
     getCatagoriesName: publicProcedure.query(async function ()  {
         

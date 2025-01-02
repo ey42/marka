@@ -30,6 +30,19 @@ if(url === undefined || url.length === -1) return undefined
   return file
   
 }
+export async function convertBlobUrlToFIleArray(url: string[]): Promise<File[]>{
+  const files: File[] = []
+  for (let i = 0; i < url.length; i++) {
+    const response = await fetch(url[i]);
+    const blob = await response.blob() as Blob;
+    const fileName = Math.random().toString(36).slice(2,9);
+    const mimeType = blob.type || "application/octet-stream";
+    const file = new File([blob], `${fileName}.${mimeType.split("/")[1]}`,{type: mimeType})
+    files.push(file)
+  }
+  return files
+}
+
 
 export function extractTimeAndDate(timestamp: string): { time: string; date: string } {
   const dateObject = new Date(timestamp);

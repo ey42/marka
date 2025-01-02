@@ -16,7 +16,7 @@ const Traders = () => {
           <div className="flex ">
           <Image src={profile.imageFile !== undefined ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}${profile?.imageFile as string}`:''} alt="company Image" width={50} height={50} className="w-14 h-14 border-2 dark:border-light border-dark rounded-full"/>
         </div>
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center justify-center font-bold">
             <h1>{profile.companyName}</h1>
             <h1>{profile.userContent.name}</h1>
             <h1>{profile.type}</h1>
