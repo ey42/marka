@@ -65,3 +65,55 @@ export const Images = (file: Blob, e: ChangeEvent<HTMLInputElement>) : Promise<s
     
     })
 }
+export const ImageArray = (files: Blob[], e: ChangeEvent<HTMLInputElement>) : Promise<string[] | undefined> => {
+    const newImages: Promise<string>[] = Array.from(files).map((file) => {
+        const reader = new FileReader()
+        return new Promise<string>((resolve, reject) => {
+            if (file instanceof Blob) {
+                reader.readAsDataURL(file)
+                reader.onload = () => {
+                    const image = document.createElement('img')
+                    image.src = reader.result as string
+                    image.onload = () => {
+                        const canvas = document.createElement('canvas')
+                        if (image.width >= image.height) {
+                            const Width = 800
+                            const ratio = Width / image.width
+                            canvas.width = Width
+                            canvas.height = image.height * ratio
+                            const context = canvas.getContext('2d')
+                            context?.drawImage(image, 0, 0, canvas.width, canvas.height)
+                            const newImageUrl = context?.canvas.toDataURL('image/jpeg', 90)
+                            e.preventDefault()
+                            if (typeof newImageUrl === 'undefined') {
+                                reject(new Error('Image type undefined'))
+                            } else {
+                                resolve(newImageUrl)
+                            }
+                        } else {
+                            const Height = 800
+                            const ratio = Height / image.height
+                            canvas.height = Height
+                            canvas.width = image.width * ratio
+                            const context = canvas.getContext('2d')
+                            context?.drawImage(image, 0, 0, canvas.width, canvas.height)
+                            const newImageUrl = context?.canvas.toDataURL('image/jpeg', 90)
+                            e.preventDefault()
+                            if (typeof newImageUrl === 'undefined') {
+                                reject(new Error('Image type undefined'))
+                            } else {
+                                resolve(newImageUrl)
+                            }
+                        }
+                    }
+                }
+            } else {
+                reject(new Error('Invalid file type'))
+            }
+        })
+    })
+
+   
+    return Promise.all(newImages)
+        
+}

@@ -74,7 +74,7 @@ export const DatabaseRouter = router({
             throw new TRPCError({
                 code:"UNAUTHORIZED",
                 message: "you are not the person to upload a catagory"
-            })
+            });
         }
     } catch (err) {
         const deletedFileName = Imagefile.split('/').pop() as string
@@ -95,9 +95,10 @@ export const DatabaseRouter = router({
         description: z.string(),
         catagory: z.string(),
         userID: z.string(),
-        prices: z.string()
+        prices: z.string(),
+        city: z.string(),
    })).mutation(async({input}) => {
-    const {imagefile,title,catagory,description,userID, prices} = input;
+    const {imagefile,title,catagory,description,userID, prices,city} = input;
     const profiles: profileProp[] = await db.query.profile.findMany({
         where: (profile, {eq}) => eq(profile.userId, userID)
     })
@@ -107,29 +108,33 @@ export const DatabaseRouter = router({
     console.log("starting uploading to post table...")
 
     try {
-    if(user?.role === "merchant" && (catagory !== undefined || catagory !== null || catagory !== "") ){
+    if(user?.role === "merchant" && (catagory !== undefined || catagory !== null || catagory !== "" || city !== null || city !== "")  && profile){
         console.log("the user is verified merchant and all data are right")
            const UUID:string = uuid.v4();
            const now = new Date();
-           await db.insert(schema.post).values({userId: userID ,profileId: profile.id ,title: title ,catagory: catagory.replace(/ /g, '_') ,id: UUID ,file: imagefile, description: description, createdAt: now, price: prices as string})
+           await db.insert(schema.post).values({city: city, userId: userID ,profileId: profile.id ,title: title ,catagory: catagory.replace(/ /g, '_') ,id: UUID ,file: imagefile, description: description, createdAt: now, price: prices as string})
               return {success: true}
         }else{
-            const deletedFileName = imagefile.split('/').pop() as string
+            const deletedFileName = imagefile.map(file => file.split('/').pop() as string)
             console.log(deletedFileName + " delete file name from database")
             const storage = getStorage()
-            await storage.from("Images").remove([`postImage/${deletedFileName}`])
-            console.log("unauthorized or undefined form successfully deleted this file from database " + deletedFileName)
+            for(const file of deletedFileName){
+                await storage.from("Images").remove([`postImage/${file}`])
+                console.log("unauthorized or undefined form successfully deleted this file from database " + file)
+            }
             throw new TRPCError({
                 code:"UNAUTHORIZED",
                 message:"you are not authorized for posting"})
         }
             
     } catch (error) {
-        const deletedFileName = imagefile.split('/').pop() as string
-        console.log(deletedFileName + " delete file name from database post")
-        const storage = getStorage()
-        await storage.from("Images").remove([`postImage/${deletedFileName}`])
-        console.log("catch error successfully deleted this file from database post " + deletedFileName)
+        const deletedFileName = imagefile.map(file => file.split('/').pop() as string)
+            console.log(deletedFileName + " delete file name from database")
+            const storage = getStorage()
+            for(const file of deletedFileName){
+                await storage.from("Images").remove([`postImage/${file}`])
+                console.log("unauthorized or undefined form successfully deleted this file from database " + file)
+            }
         throw new TRPCError({
             code:"UNAUTHORIZED",
             message:`server error uploading post: ${error}`})
@@ -164,6 +169,8 @@ export const DatabaseRouter = router({
 }
    }),
    getAllPosts: publicProcedure.query(async() => {
+    try{
+    const postCount = await db.select({ count: sql`COUNT(*)` }).from(schema.post)
     const allPosts = await db.query.post.findMany({
        with:{
         author : true, 
@@ -174,12 +181,14 @@ export const DatabaseRouter = router({
        },
        orderBy: (post) => desc(post.createdAt)
     }) 
-        return {allPosts}
-   
+        return {allPosts, postCount}
+} catch(error){
+    throw new TRPCError({code: "NOT_FOUND", message: "error getting all posts" })
+}
    }),
     getCatagoriesName: publicProcedure.query(async function ()  {
         
-        const AllCatagory:Catagoryprops[] =  await db.select().from(schema.catagories)
+        const AllCatagory:Catagoryprops[] =  await db.select().from(schema.catagories).orderBy(asc(schema.catagories.categories))
         const catagoryName:string[] = AllCatagory.map((name) => name.categories)
         return catagoryName as string[]
     }),
@@ -221,6 +230,7 @@ export const DatabaseRouter = router({
         const user = users.find((user) => user.id === userIds)
         const profiles = await db.select().from(schema.profile) as profileProp[]
         const profile = profiles.find((profile) => profile.userId === userIds ) as profileProp
+        const storage = getStorage()
         try {
             
         if(userIds === user?.id && user?.role === "merchant"){
@@ -228,7 +238,6 @@ export const DatabaseRouter = router({
             if((companyNames === "" || companyNames === undefined || imageFiles === "" || imageFiles === undefined) && update === false) {
                 const deletedFileName = imageFiles?.split('/').pop() as string
                 console.log(deletedFileName + " delete file name from database")
-                const storage = getStorage()
                 await storage.from("Images").remove([`profileImage/${deletedFileName}`])
                 console.log("successfully deleted this file from database " + deletedFileName)
                 throw new TRPCError({code:"NOT_FOUND", message:"company name is must to save your profile in creating mode "})
@@ -239,7 +248,7 @@ export const DatabaseRouter = router({
                const setCompany = companyNames ? companyNames : companyName;
                const setdescription = descriptions ? descriptions : description;
                const setFacebook = facebooks ? facebooks : facebook;
-               const setImageFile = imageFiles ? imageFiles : imageFile;
+               const setImageFile = imageFiles && await storage.from("Images").remove([`profileImage/${userIds}`])  ? imageFiles: imageFile;
                const setInstagram = instagrams ? instagrams : instagram;
                const setPhoneNumber1 = phoneNumber1s ? phoneNumber1s : phoneNumber1;
                const setPhoneNumber2 = phoneNumber2s ? phoneNumber2s : phoneNumber2;
@@ -455,12 +464,18 @@ throw new TRPCError({
                         console.log("end here bro")
                         await db.delete(schema.post).where(eq(schema.post.id, post.id))
                         console.log("deleted")
+
+                        const deletedFileName = post.file.map(file => file.split('/').pop() as string)
+                        console.log(deletedFileName + " delete file name from database")
+                        const storage = getStorage()
+                        for(const file of deletedFileName){
+                        await storage.from("Images").remove([`postImage/${file}`])
+                        
                         return {success: true , message: "successfully delete the post"}
                     }
                 }
 
-        })
-        return {success: true, message: "post sold not sold"}
+        }})
         } catch (error) {
             throw new TRPCError({code:"NOT_FOUND", message:"error deleting sold post"})
         }
@@ -473,5 +488,50 @@ throw new TRPCError({
             },
          })
         return profiles
+    }),
+    deletePostById: publicProcedure.input(z.object({
+        postId: z.string()
+    })).mutation(async({input}) => {
+        const {postId} = input;
+        const post = await db.query.post.findFirst({
+            where: (post, {eq}) => eq(post.id, postId)
+        }) as postProps
+
+        try {
+             await db.delete(schema.post).where(eq(schema.post.id, postId))
+             const deletedFileName = post.file.map(file => file.split('/').pop() as string)
+             console.log(deletedFileName + " delete file name from database")
+             const storage = getStorage()
+             for(const file of deletedFileName){
+             await storage.from("Images").remove([`postImage/${file}`])
+            
+         }
+             return{ success : true , message: "succussfully deleting your post "}
+        } catch (error) {
+            throw new TRPCError({code:"NOT_FOUND", message:"error deleting post"})
+        }
+       
+    }),
+    getPostWithCatagory: publicProcedure.input(z.object({
+        catagory: z.string()
+    })).query(async({input}) => {
+        const {catagory} = input;
+        try {
+        const postCount = await db.select({ count: sql`COUNT(*)` }).from(schema.post).where(eq(schema.post.catagory, catagory))
+        const posts = await db.query.post.findMany({
+            where: (post, {eq}) => eq(post.catagory, catagory),
+           with:{
+            author : true, 
+            likeAndDislikePost: true,
+            postCatagory :true,
+            postProfile: true,
+            postSeen: true
+           },
+           orderBy: (post) => desc(post.createdAt)
+        })
+        return {posts, postCount}
+    } catch (error) {
+        throw new TRPCError({code:"NOT_FOUND", message:"error getting post with catagory"})
+    }
     }),
 })

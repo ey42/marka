@@ -48,12 +48,14 @@ try {
  
   
   }
-export async function uploadImagetoPostStorage({files, bucket, folder, title, catagory}: { 
+export async function uploadImagetoPostStorage({files, bucket, folder, title, catagory, city, price}: { 
   files: File[] | undefined,
   bucket: string;
   folder?: string,
   title: string,
   catagory: string,
+  city: string,
+  price: string
 }){
   const imageUrls: string[] = []
 try {
@@ -63,8 +65,8 @@ try {
   for (const file of files){
    if(file?.type === "image/jpeg"){
     console.log(file.type)
-    if(catagory === undefined || catagory === ""){
-      console.log("error uploading image to storage due to catagory === undefined or empty string")
+    if(catagory === undefined || catagory === "" || title === undefined || title === "" || city === undefined || city === "" || price === undefined || price === "") {
+      console.log("error uploading image to storage due to required field or empty string")
       return
     }else{
     const UUID:string = uuid.v4();
@@ -115,10 +117,9 @@ try {
         return 
       } else{
        
-       const UUID:string = uuid.v4();
        const fileName = file.name;
        const fileExtension = fileName.slice(fileName.lastIndexOf(".")+1)
-       const path = `${folder ? folder + "/": ""}${UUID + company}.${fileExtension}`
+       const path = `${folder ? folder + "/": ""}${userId}.${fileExtension}`
      
        const storage = getStorage()
      

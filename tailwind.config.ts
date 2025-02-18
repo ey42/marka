@@ -20,6 +20,7 @@ const config = {
   	extend: {
 		backgroundImage: {
 			greenCity: "url('/gifts.jpg')",
+			merkato: "url('/merkato.jpg')"
 		},
   		colors: {
   			dark: '#393535',

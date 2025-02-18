@@ -3,7 +3,7 @@ import { trpc } from "@/app/_trpc/client"
 
 import { convertBlobUrlToFIleArray } from "@/Component/Database"
 import {  uploadImagetoPostStorage } from "@/supabase/storage/Storages"
-import { useState,  useEffect, ChangeEvent, FormEvent,  } from "react"
+import { useState, useRef, useEffect, ChangeEvent, FormEvent,  } from "react"
 
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
@@ -29,6 +29,7 @@ import {
 import MaxWidthWrapper from "../MaxWidthWrapper"
 import { Authclient } from "@/lib/auth-client"
 import Link from "next/link"
+import { ImageArray } from "../Image"
 
 
 const {useSession} = Authclient
@@ -42,10 +43,12 @@ const {useSession} = Authclient
     const [formSubmitted, setFormSubmited] = useState<boolean>(false)    
     const [open, setOpen] = useState(false)
     const [catagory, setCatagory] = useState<string>("")
-    const [price, setPrice] = useState<string>()
+    const [city, setCity] = useState<string>("")
+    const [price, setPrice] = useState<string>("")
     const {data } = useSession()
     const session = data?.session;
     const userId = session?.userId
+    const fileInputRef = useRef<HTMLInputElement>(null)
    
     const router = useRouter()
     const {data: success , refetch: fetchAgain} = trpc.database.getPosts.useQuery({id: userId as string})
@@ -53,7 +56,6 @@ const {useSession} = Authclient
     const {mutate: upload, isError, isSuccess, isPending} = trpc.database.uploadPost.useMutation({
       onSuccess: () => {
         console.log('Success! Uploading post...');
-        setFormSubmited(false); 
         router.refresh()
         fetchAgain(); 
       },
@@ -90,32 +92,35 @@ const {useSession} = Authclient
       
 
     const handleOnChange = async(e:ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault()
     const files = e.target.files!
-  //  Images(file, e).then(imageUrl => {
-  //   console.log("image came from image function : "+ imageUrl)
-  //   setImage(imageUrl!)
-  //   refetch()
-  //   fetchAgain()
-  // }).catch(error => {
-  //   console.error("error processing image : " + error)
-  //   refetch()
-  //   fetchAgain()
-  // })
-  const newImages: Promise<string>[] = Array.from(files || []).map((file) => {
-    const reader = new FileReader()
-    return new Promise<string>((resolve, reject) => {
-     
-      reader.onload = () => resolve(reader.result as string)
-      reader.onerror = (error) => reject(error)
-      reader.readAsDataURL(file)
-      
-     })
-  })
-  const resolvedImages = await Promise.all(newImages)
-  setImage([...image, ...resolvedImages])
-  refetch()
-  fetchAgain()
-   
+    if (files.length === 0) return
+    const newImages = Array.from(files);
+    if (image.length + newImages.length > 5) {
+     const remaining = 5 - image.length;
+     if(remaining > 0) {
+      alert(`you can only upload ${remaining} images`)
+      setImage([])
+      fileInputRef.current!.value = ""
+      return 
+     } else{
+      alert("You have reached the maximum of 5 images.");
+      setImage([])
+      fileInputRef.current!.value = "" 
+      return
+     }
+    }
+    ImageArray(Array.from(files), e).then((imageUrl) => {
+      console.log("image came from image function : "+ imageUrl)
+      if (imageUrl) {
+        setImage([...imageUrl]);
+      } else{
+        console.error("error processing")
+      }
+      refetch()
+      fetchAgain()
+    })
+
    
     }
 
@@ -123,6 +128,10 @@ const {useSession} = Authclient
       e.preventDefault()
       setTitle(e.target?.value)
       
+    }
+    const handleCity = (e:ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault()
+      setCity(e.target?.value)
     }
     const handleDescription = (e:ChangeEvent<HTMLTextAreaElement>) => {
       e.preventDefault()
@@ -144,28 +153,31 @@ const {useSession} = Authclient
    const files: File[] | undefined = await filePromise
    console.log(files[0]?.name)
    const bucket:string = "Images"
-   const folder:string = "postImage"
+   const folder:string = "postImage" 
    
-   const imageUrl = uploadImagetoPostStorage({files, bucket, folder, title: title, catagory: catagory})
+   const imageUrl = uploadImagetoPostStorage({files, bucket, folder, title: title, catagory: catagory, city: city, price: price })
    const url  = await imageUrl 
    upload({
     catagory: catagory as string,
     description: description as string,
-    imagefile: url as string[],
+    imagefile: url as string[], 
     title: title as string,
     userID: userId as string,
-    prices: price as string
+    prices: price as string,
+    city: city as string,
   
   }) 
 
     router.refresh()
     await refetch()
     fetchAgain()
+    fileInputRef.current!.value = ""
   } catch(error){
-    console.error('Error uploading categories:', error);
+    console.error('Error uploading posts:', error);
     setFormSubmited(false); // Reset form state on error
     refetch()
     fetchAgain()
+    fileInputRef.current!.value = ""
     } 
  }
    useEffect(()=>{
@@ -173,6 +185,7 @@ const {useSession} = Authclient
     return () => {
       setFormSubmited(false)
       setTitle("")
+      setCity("")
       setDescription("")
       setCatagory("")
       setImage([])
@@ -180,7 +193,6 @@ const {useSession} = Authclient
       setPrice("")
       refetch()
       fetchAgain()
-
     }
   
    },[formSubmitted])
@@ -188,7 +200,7 @@ const {useSession} = Authclient
   return (
    <MaxWidthWrapper>
     <div className="mt-4 flex items-center justify-center border-1 rounded-md dark:border-slate-300 border-dark">
-      <div className="flex flex-row max-lg:flex-col max-lg:justify-center justify-evenly max-lg:items-center max-lg:gap-12 w-full max-sm:ml-2 ml-4">
+      <div className="flex flex-row max-lg:flex-col max-lg:justify-center max-md:items-start max-md:justify-start justify-evenly max-lg:items-center max-lg:gap-12 w-full max-sm:ml-2 ml-4">
         <form onSubmit={onsubmit} className="flex flex-col gap-5 items-center justify-center ml-4">
           <div className="w-52 h-52 flex items-center transition-all duration-200 rounded-lg text-dark dark:text-light font-bold border-1 border-dark dark:border-slate-300">
             <Image src={image[0] as string} alt="post image" width={208} height={208} className="w-52 h-52 rounded-lg border-2 dark:border-slate-300 z-10 border-dark"/>
@@ -198,18 +210,26 @@ const {useSession} = Authclient
           <div className="w-56 cursor-pointer transition-all duration-200 rounded-md text-dark dark:text-slate-300 ">
 
          
-            <Input type="file" onChange={(e) => handleOnChange(e)} className="h-9 file:text-sm p-0 font-semibold font-mono text-dark dark:text-light border-1 rounded-md dark:border-slate-300 border-dark dark:file:text-light file:font-semibold file:text-dark file:border-1 file:border-dark dark:file:border-slate-300 file:mr-3 file:rounded-md file:h-full file:cursor-pointer cursor-pointer text-nowrap transition-all duration-200" accept="image/*" multiple />
+            <Input type="file" ref={fileInputRef} onChange={(e) => handleOnChange(e)} className="h-9 file:text-sm p-0 font-semibold font-mono text-dark dark:text-light border-1 rounded-md dark:border-slate-300 border-dark dark:file:text-light file:font-semibold file:text-dark file:border-1 file:border-dark dark:file:border-slate-300 file:mr-3 file:rounded-md file:h-full file:cursor-pointer cursor-pointer text-nowrap transition-all duration-200" accept="image/*" multiple />
             </div> 
-          <div className="flex gap-4 rounded-md">
+          <div className="flex flex-col gap-2 rounded-md">
+            <h1>Title</h1>
            <input className= "transition-all max-sm:w-40 duration-100 dark:bg-dark placeholder:text-gray-500 focus:placeholder:text-transparent w-full h-9 p-0 dark:text-slate-300 text-dark font-bold text-sm  rounded-md border-2 border-dark dark:border-slate-300 pl-1 focus:ring-1 dark:focus:ring-slate-300 focus:ring-dark focus:outline-none dark:focus:bg-neutral-800" id="catagory" type="text" onChange={(e) => handleTitle(e)} value={title} placeholder="Post title" required/>
             </div>
-           <div className="flex gap-4"> 
+           <div className="flex flex-col gap-2"> 
+            <h1>Description</h1>
            <Textarea className="w-80 border-2 max-sm:w-40 border-dark dark:border-slate-300 transition-all duration-200 placeholder:text-gray-500 dark:focus:placeholder:text-transparent dark:placeholder:text-gray-500 focus:placeholder:text-transparent text-dark dark:text-slate-300 font-bold text-sm focus:outline-none focus:ring-1 focus:ring-dark dark:focus:ring-slate-300 dark:focus:bg-neutral-800" id="description" onChange={(e) => handleDescription(e)} value={description} placeholder="description"/>
            </div>
-           <div>
+           <div className="flex flex-col gap-2">
+            <h1>Price</h1>
             <input type="number" className="w-80 border-2 max-sm:w-40 border-dark dark:border-slate-300 transition-all duration-300 placeholder:text-gray-500 dark:focus:placeholder:text-transparent rounded-sm h-9 dark:placeholder:text-gray-500 focus:placeholder:text-transparent text-dark dark:text-slate-300 font-bold text-sm focus:outline-none focus:ring-1 dark:bg-dark focus:ring-dark dark:focus:ring-slate-300 dark:focus:bg-neutral-800" id="description" onChange={(e) => handlePrice(e)} value={price} placeholder="price in ethiopian birr"/>
            </div>
-           <div>
+           <div className="flex flex-col gap-2 rounded-md">
+            <h1>City</h1>
+           <input className= "transition-all max-sm:w-40 duration-100 dark:bg-dark placeholder:text-gray-500 focus:placeholder:text-transparent w-full h-9 p-0 dark:text-slate-300 text-dark font-bold text-sm  rounded-md border-2 border-dark dark:border-slate-300 pl-1 focus:ring-1 dark:focus:ring-slate-300 focus:ring-dark focus:outline-none dark:focus:bg-neutral-800" id="catagory" type="text" onChange={(e) => handleCity(e)} value={city} placeholder="City" required/>
+            </div>
+           <div className="flex flex-col gap-2">
+            <h1>Choose catagories</h1>
            <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
@@ -258,7 +278,6 @@ const {useSession} = Authclient
             <Button type="submit" className="dark:bg-white w-full max-sm:w-40 bg-gray-950 font-bold text-white dark:text-gray-950 dark:hover:bg-slate-300 hover:bg-gray-900 transition-all duration-500 " disabled = {isPending}>{isPending ? "uploading..." : "upload post"}</Button>
             </div>
             </div>
-            <p>{isSuccess ? "successful uploading" : "error uploading" }</p>
         </form>
         <div className={`font-mono tracking-wide text-dark max-sm:w-40 dark:text-slate-50 text-sm flex flex-col max-lg:justify-center max-lg:items-center justify-start gap-4 lg:ml-36 max-sm:justify-start max-sm:items-start`}> <h1 className="text-center transition-all duration-500 font-semibold text-sm">
           {catagoryName !== undefined && catagoryName.length > 0 ?`you do have list of posts by  ${catagoryName?.length! <= 1 ? "this catagory" : "these catagories"} click it to see `: `catagories...`}</h1>

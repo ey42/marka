@@ -5,6 +5,7 @@ import { relations } from "drizzle-orm";
 import { pgTable, text, timestamp, boolean, uuid,  varchar, index,  pgEnum, AnyPgColumn, primaryKey, integer, jsonb, numeric,  } from "drizzle-orm/pg-core";
 			
 export const roleEnum = pgEnum('role', [ 'customer', 'merchant']);
+// const cityEnum = pgEnum('city', ['addis ababa', 'dire dawa', 'mekelle', 'gondar', 'hawassa', 'jimma', 'bahir dar', 'dessie', 'nazeret', 'sodo', 'arba minch', 'jijiga', 'shashemene', 'dilla', 'gambela', 'harar', 'nekemte', 'assosa', 'gambela', 'gode', 'asaita', 'awassa', 'bale rob', 'bati', 'bedele', 'bonga', 'dabat', 'dangla', 'debre berhan', 'debre marqos', 'debre tabor', 'debre zeit', 'dembi dolo', 'dese', 'dilla', 'finote selam', 'gambela', 'gebre guracha', 'gelemso', 'gimbi', 'goba', 'gondar zuria', 'gore', 'guder', 'gurage', 'hagere mariam', 'harar', 'hawassa zuria', 'holeta', 'hosaena', 'jijiga', 'jimma', 'kemise', 'kombolcha', 'korem', 'maji', 'mekelle', 'metu', 'mizan teferi', 'mojo', 'nazeret', 'negele boran', 'nejo', 'nekemte'])
 
 export const user = pgTable("user", {
  id: text("id").primaryKey(),
@@ -92,7 +93,8 @@ export const post = pgTable("post",{
 	isSold: boolean("isSold").default(false),
 	description : text("description"),
 	price: numeric("price").notNull(),
-	soldDate: numeric("soldDate")
+	soldDate: numeric("soldDate"),
+	city: text("city").notNull(),
 },(table) => {
 	return {
 		post_index: index("post_index").on(table.title),

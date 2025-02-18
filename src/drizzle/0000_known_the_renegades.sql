@@ -84,7 +84,8 @@ CREATE TABLE IF NOT EXISTS "post" (
 	"isSold" boolean DEFAULT false,
 	"description" text,
 	"price" numeric NOT NULL,
-	"soldDate" numeric
+	"soldDate" numeric,
+	"city" text NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "postSeen" (

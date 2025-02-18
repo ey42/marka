@@ -1,55 +1,61 @@
 "use client"
 import { trpc } from '@/app/_trpc/client';
-import { Authclient } from '@/lib/auth-client';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import React, {use, useEffect, useState } from 'react'
 import {extractTimeAndDate, FunctionDate } from '../Database';
 import { cn } from '@/lib/utils';
+import { Trash2 } from 'lucide-react';
 
 const PostUserOnly = ({catagoryName, userId} : {catagoryName: string, userId: string}) => {
-    const {useSession} = Authclient
-    const {data } = useSession()   
-     const [formSubmitted, setFormSubmited] = useState<boolean>(false)
 
-   
+  
     const router = useRouter()
     const {data: success , refetch: fetchAgain} = trpc.database.getPosts.useQuery({id: userId as string})
     const posts = success?.posts
-      
+
+    const {refetch} = trpc.database.deleteSolded.useQuery()   
+     
     const {mutate: upload } = trpc.database.soldPost.useMutation({
       onSuccess: () => {
-        console.log('Success! Uploading issold...');
-        setFormSubmited(false); // Reset form state after success
         router.refresh()
-        
-        fetchAgain(); // Navigate to categories page
+        fetchAgain()
+        refetch()
+        console.log('Success! Uploading issold...');
       },
       onError: (err) => {
         console.error('Error uploading post:', err);
         fetchAgain()
       },})
-      const {refetch, data: succe,} = trpc.database.deleteSolded.useQuery()
 
-if( succe?.success === true){
-console.log("eyukaye "+ succe.message)
-}
-      const onsubmit = (e:FormEvent<HTMLFormElement>, {sold, id}: {sold: boolean, id: string}) => {
-        e.preventDefault()
-        setFormSubmited(true)
+     
+      const {data: message, mutate: deletedId} = trpc.database.deletePostById.useMutation({
+        onSuccess: () => {
+          console.log('Success! Deleting post...');
+          router.refresh()
+          fetchAgain();
+        },
+        onError: (err) => {
+          console.error('Error deleting post:', err);
+          fetchAgain()
+        },
+      })
+
+      const handleDelete = (id: string) => {
+        const confirm = window.confirm("Are you sure you want to delete the post?")
+        if (!confirm) return
+        deletedId({postId: id})
+        router.refresh()
+        fetchAgain()
+      }
+
+      const onsubmit = ({sold, id}: {sold: boolean, id: string}) => {
         upload({id: id as string, Sold: sold as boolean})
         fetchAgain()
-        router.refresh()
         refetch()
-
       }
-      useEffect(() => {
-        
-fetchAgain
-setFormSubmited(false)
-      }, 
-    [formSubmitted])
+           
+      
     const now = new Date()
     const date = now.getTime()
    const time = FunctionDate(date)
@@ -63,7 +69,6 @@ setFormSubmited(false)
             <div className='flex flex-row '>
               <div className={cn('w-40', {
                 "contrast-50": post.isSold === true,
-                // "invert": post.isSold === true,
               })}> 
                 <Image src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}${(post.file as string[])[0]}`} alt="image" width={200} height={200} className="w-40 h-40 rounded-lg"/>
               </div>
@@ -91,17 +96,16 @@ setFormSubmited(false)
             {post.updatedAt ? (
               <h1>{extractTimeAndDate(post.updatedAt).date}-{extractTimeAndDate(post.updatedAt).time} 
               </h1>) : (
-                <h1 className='text-center text-xs '> {extractTimeAndDate(post.createdAt).date}-{extractTimeAndDate(post.createdAt).time} 
+                <h1 className='text-center text-xs '> {extractTimeAndDate(post.createdAt).date}-{extractTimeAndDate(post.createdAt).time}
               </h1>
               )
               }
             </div>
-            <form onSubmit={(e) => onsubmit(e, {id: post.id!, sold: !post.isSold as boolean})}>
-             {/* <Link className='mr-2' href={`/update/update-post/${post.id}`}> */}
-             <button className='border-2 px-1 rounded-md border-zinc-600 hover:border-dark dark:border-light  hover:dark:bg-stone-900 hover:font-semibold' type='submit'> {post.isSold ? "un-sold": "sold"} </button>
+            <div className='flex flex-row gap-2'>
+              <button className='hover:font-semibold'  onClick={() => handleDelete(post.id)} ><Trash2 width={20} height={20} className='hover:stroke-red-400'/></button>
+             <button onClick={() => onsubmit({id: post.id!, sold: !post.isSold as boolean})} className='border-2 px-1 rounded-md border-zinc-600 hover:border-dark dark:border-light  hover:dark:bg-stone-900 hover:font-semibold'> {post.isSold ? "un-sold": "sold"} </button>
              
-             {/* </Link> */}
-             </form>
+             </div>
             </div>
           </div>
           </div>

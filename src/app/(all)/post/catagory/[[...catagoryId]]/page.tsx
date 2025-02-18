@@ -25,7 +25,6 @@ const page = async({params}: PageProps) => {
   return (
     <div className="flex flex-col">
      <PostUserOnly catagoryName = {catagoryName}  userId = {userId} />
-    
     </div>
   )
 }

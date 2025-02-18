@@ -44,13 +44,16 @@ export async function convertBlobUrlToFIleArray(url: string[]): Promise<File[]>{
 }
 
 
-export function extractTimeAndDate(timestamp: string): { time: string; date: string } {
+export function extractTimeAndDate(timestamp: string): { time: string; date: string; diffInDays: number } {
+  const now = new Date();
   const dateObject = new Date(timestamp);
+  const diffInMs = now.getTime() - dateObject.getTime();
+  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24))
 
   const time = dateObject.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
   const date = dateObject.toLocaleDateString();
 
-  return { time, date };
+  return { time, date, diffInDays };
 }
   
 export function formatCurrency(

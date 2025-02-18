@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Images } from "../Image"
 import { convertBlobUrlToFIle, extractTimeAndDate } from "../Database"
+import { Icons } from "../Icons"
+import { Phone } from "lucide-react"
 
 
 
@@ -22,12 +24,9 @@ const ProfileUpload = () => {
     const [description, setDescription] = useState<string>()
     const [image, setImage] = useState<string>()
     const [company, setCompany] = useState<string>()
-    const [update, setUpdate] = useState<boolean>(false)
     const [phoneNumber1, setPhoneNumber1] = useState<string>()
     const [phoneNumber2, setPhoneNumber2] = useState<string>()
     const [formSubmitted, setFormSubmited] = useState<boolean>(false)
-    // const [success, setSuccess] = useState<boolean>(false)
-    // const [errors, setError] = useState<boolean>(false)
     const [x, setX] = useState<string>();
     const router = useRouter()
    
@@ -110,8 +109,8 @@ const ProfileUpload = () => {
             console.log(file?.name)
             const bucket:string = "Images"
             const folder:string = "profileImage"
-            if(userHasProfile && update === false){ return alert("please select update button")}
-            const imageUrl = uploadProfileImage({file, bucket, folder, update: update, company: company as string, userId: userId as string, profile: profileImage as string})
+
+            const imageUrl = uploadProfileImage({file, bucket, folder, update: profile !== undefined ? true : false, company: company as string, userId: userId as string, profile: profileImage as string})
             const url  = await imageUrl 
           
             upload({
@@ -125,7 +124,7 @@ const ProfileUpload = () => {
                 phoneNumber2s: phoneNumber2 as string,
                 telegrams: telegram as string,
                 types: type as string,
-                update: update,
+                update: profile !== undefined ? true : false,
                 xs: x as string
              }) 
          refetch()
@@ -150,7 +149,7 @@ const ProfileUpload = () => {
       setPhoneNumber2("")
       setTelegram("")
       setType("")
-      setUpdate(false)
+      // setUpdate(false)
       setX("")
       refetch()
     },[formSubmitted] )
@@ -159,8 +158,8 @@ const ProfileUpload = () => {
     }
 
   return (
-    <div className="mt-5 font-mono dark:text-light text-dark w-full flex flex-row justify-between gap-40 max-lg:gap-28 max-md:flex-col max-w-screen-sm">
-      <div className="ml-2">
+    <div className="mt-5 ml-5 font-mono dark:text-light text-dark w-full flex flex-row justify-start gap-40 max-lg:gap-28 max-md:flex-col">
+      <div className="">
      
         <form onSubmit={onsubmit} className="flex flex-col gap-4 justify-start items-start max-w-max">
           <div className="w-24 h-24 border-dark rounded-md">
@@ -174,8 +173,8 @@ const ProfileUpload = () => {
             </label>
           </div>
           <div>
-            <label htmlFor="type" className=" font-bold text-sm cursor-pointer max-sm:w-40"> Type: {update ? "" : (<span className="text-red-500">must</span>)}
-              <input id="type" type="text" onChange={handleType} placeholder="your buisness type" required = {update === false} className="h-9 font-semibold rounded-md ml-2 pl-2 border-2 required:border-red-500 dark:required:border-red-500 border-dark focus:placeholder:text-transparent focus:bg-slate-200 placeholder:text-slate-500 dark:border-slate-300 dark:focus:bg-neutral-800 dark:focus:placeholder:text-transparent w-full dark:bg-dark"/>
+            <label htmlFor="type" className=" font-bold text-sm cursor-pointer max-sm:w-40"> Type: {profile !== undefined ? "" : (<span className="text-red-500">must</span>)}
+              <input id="type" type="text" onChange={handleType} placeholder="your buisness type" required = {profile === undefined} className="h-9 font-semibold rounded-md ml-2 pl-2 border-2 required:border-red-500 dark:required:border-red-500 border-dark focus:placeholder:text-transparent focus:bg-slate-200 placeholder:text-slate-500 dark:border-slate-300 dark:focus:bg-neutral-800 dark:focus:placeholder:text-transparent w-full dark:bg-dark"/>
             </label>
           </div>
           <div>
@@ -204,32 +203,24 @@ const ProfileUpload = () => {
               </label>
           </div>
           <div>
-            <label htmlFor="company" className="max-sm:w-40 font-bold cursor-pointer text-sm "> Company Name: {update ? "" : (<span className="text-red-500">must</span>)}
-              <input id="company" type="text" onChange={handleCompany} required = {update === false} placeholder="your company name" className="required:border-red-500 dark:required:border-red-500 h-9 font-semibold rounded-md ml-2 pl-2 border-2 border-dark focus:placeholder:text-transparent dark:bg-dark focus:bg-slate-200 dark:border-light dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent w-full"/>
+            <label htmlFor="company" className="max-sm:w-40 font-bold cursor-pointer text-sm "> Company Name: {profile !== undefined ? "" : (<span className="text-red-500">must</span>)}
+              <input id="company" type="text" onChange={handleCompany} required = {profile === undefined} placeholder="your company name" className="required:border-red-500 dark:required:border-red-500 h-9 font-semibold rounded-md ml-2 pl-2 border-2 border-dark focus:placeholder:text-transparent dark:bg-dark focus:bg-slate-200 dark:border-light dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent w-full"/>
             </label>
           </div>
           <div>
-            <label htmlFor="phoneNumber1" className="max-sm:w-40 font-bold cursor-pointer text-sm "> phone number 1: {update ? "" : (<span className="text-red-500">must</span>)}
-              <input id="phoneNumber1" type="text" onChange={handlePhoneNumber1} required = {update === false} placeholder="0900000000" className="h-9 font-semibold rounded-md ml-2 pl-2 border-2 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:border-light dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent required:border-red-500 dark:bg-dark dark:required:border-red-500 w-full"/>
+            <label htmlFor="phoneNumber1" className="max-sm:w-40 font-bold cursor-pointer text-sm "> phone number 1: {profile  !== undefined  ? "" : (<span className="text-red-500">must</span>)}
+              <input id="phoneNumber1" type="text" onChange={handlePhoneNumber1} required = {profile === undefined} placeholder="0900000000" className="h-9 font-semibold rounded-md ml-2 pl-2 border-2 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:border-light dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent required:border-red-500 dark:bg-dark dark:required:border-red-500 w-full"/>
             </label>
           </div>
           <div>
             <label htmlFor="phoneNumber2" className="max-sm:w-40 font-bold cursor-pointer text-sm"> phone number 2:
-              <input id="phoneNumber2" type="text" onChange={handlePhoneNumber2} placeholder="0900000000" className="h-9 font-semibold rounded-md ml-2 pl-2 border-2 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:border-lightdark:focus:bg-neutral-800 dark:bg-dark placeholder:text-slate-500 dark:focus:placeholder:text-transparent w-full"/>
+              <input id="phoneNumber2" type="text" onChange={handlePhoneNumber2} placeholder="0900000000" className="h-9 font-semibold rounded-md ml-2 pl-2 border-2 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:border-light dark:focus:bg-neutral-800 dark:bg-dark placeholder:text-slate-500 dark:focus:placeholder:text-transparent w-full"/>
             </label>
           </div>
         </div>
-        <div className="flex flex-col gap-4 max-sm:w-40 w-[100%] ml-2">
+        <div className="flex flex-col items-center gap-4 max-sm:w-40 w-full justify-center mt-8 ml-2">
           
-        {profileImage ? (
-          <div>
-          <p className="text-xs font-mono text-center"> click to {!update ? "true" : "false"}</p>
-          <label htmlFor="check" className={` ${update ? "bg-green-500" : "bg-red-500"} dark:border-light text-center cursor-pointer w-full border-2 flex items-center border-dark px-2 py-1 rounded-md font-bold text-dark`}>update : {update ? "true" : "false"} <input  className=" appearance-none" id="check" type="checkbox" checked={update} onChange={() => 
-          {
-              setUpdate(!update)
-            console.log(update)
-          }} /> </label></div>) : ""}
-        <button type="submit"  className=" dark:border-slate-300 cursor-pointer border-2 w-full flex items-center border-dark px-2 py-1 rounded-md font-bold">{isPending ? "loading..." : "submit"} </button>
+        <button type="submit"  className=" bg-gradient-to-r dark:from-dark dark:via-light dark:to-light from-light via-dark to-black bg-[200%_auto] ease-linear transition-all duration-500 hover:bg-right dark:border-slate-300 cursor-pointer border-2 text-center w-full flex justify-center bg-dark dark:text-light hover:dark:text-black dark:bg-light hover:bg-black dark:hover:bg-slate-300 text-black hover:text-light text-lg items-center border-dark px-2 py-1 rounded-md font-bold">{isPending ? "loading..." : profile !== undefined ? "update" : "submit"} </button>
         
         
         </div>
@@ -237,41 +228,42 @@ const ProfileUpload = () => {
 <p>{isError ? "please try again it doesn't work" : isSuccess ? "successfully upload profile" : " " }</p>
       </div>
       <div>
-         <div className='flex flex-col mt-10 max-w-sm'>
+         <div className=' flex flex-col items-center gap-5 mt-10 max-w-sm'>
+          {profile !== undefined && <h1 className="text-4xl font-bold font-mono tracking-wider">user profile</h1>}
          {
           user !== undefined && profile !== undefined ? (
-          <div className="flex flex-col border-2 justify-center items-center border-dark dark:border-light rounded-lg text-wrap truncate">
-            <div><Image src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}${profile?.imageFile as string}`} alt="company name" className="w-20 h-20 my-2
-            rounded-full border-2 border-dark dark:border-light" width={200} height={200}/></div> 
-            <div className="border-t-2 w-full p-4 flex flex-col gap-3 border-dark font-semibold font dark:border-light">
+          <div className="flex flex-col border-2 justify-center items-center bg-dark dark:bg-light border-light dark:border-dark rounded-lg text-wrap truncate w-full">
+            <div className="py-4"><Image src={profile.imageFile !== undefined ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}${profile.imageFile as string}`:''} alt="company name" className="w-20 h-20 my-2
+            rounded-full border-2 border-light dark:border-dark" width={200} height={200}/></div> 
+            <div className="border-t-2 w-full p-4 flex flex-col gap-3 border-light font-semibold font dark:border-dark">
 
-            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">name: </h1> <h1>{user ? `${user.name.split(' ')[0]} ${user.name.split(' ')[1]}` : "loading..."}</h1></div>
+            <div className="flex flex-row gap-2 rounded-r-md dark:bg-dark border-b-2 dark:border-dark dark:text-light w-full bg-light text-dark border-light text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">name: </h1> <h1>{user ? `${user.name.split(' ')[0]} ${user.name.split(' ')[1]}` : "loading..."}</h1></div>
 
-            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark" >company name: </h1> <h1>{profile ? `${profile?.companyName}`: company}</h1></div>
+            <div className="flex flex-row gap-2 dark:bg-dark rounded-r-md border-b-2 dark:border-dark dark:text-light w-full bg-light text-dark border-light text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark" >company name: </h1> <h1 >{profile ? `${profile?.companyName}`: company}</h1></div>
 
-            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark" >email: </h1> <h1>{user ? `${user?.email}` : "loading..."}</h1></div>
+            <div className="flex flex-row gap-2 rounded-r-md dark:bg-dark border-b-2 dark:border-dark dark:text-light w-full bg-light text-dark border-light text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark" >email: </h1> <h1>{user ? `${user?.email}` : "loading..."}</h1></div>
 
-            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">role: </h1> <h1>{user ? `${user?.role}` : "loading..."}</h1></div>
+            <div className="flex flex-row gap-2 rounded-r-md dark:bg-dark border-b-2 dark:border-dark dark:text-light w-full bg-light text-dark border-light text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">role: </h1> <h1>{user ? `${user?.role}` : "loading..."}</h1></div>
 
-            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">type of market: </h1> <h1>{ profile ? `${profile?.type!}` : type}</h1></div>
+            <div className="flex flex-row gap-2 rounded-r-md dark:bg-dark border-b-2 dark:border-dark dark:text-light w-full bg-light text-dark border-light text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">type of market: </h1> <h1>{ profile ? `${profile?.type!}` : type}</h1></div>
 
-            <Link target="_blank" href={profile?.instagram?.includes('https://www.instagram.com/') ? profile?.instagram : `https://www.instagram.com/${profile?.instagram}`} className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">instagram account: </h1> <div >@{ profile ? `${profile?.instagram?.split("/").pop()!}` : instagram}</div></Link>
+            <Link target="_blank" href={profile ?.instagram?.includes('https://www.instagram.com/') ? profile?.instagram : `https://www.instagram.com/${profile?.instagram}`} className="group flex flex-row rounded-r-md gap-2 dark:bg-dark border-b-2 dark:border-dark dark:text-light w-full bg-light text-dark border-light text-wrap h-auto truncate overflow-auto bg-gradient-to-r dark:from-dark dark:via-dark dark:to-pink-500 from-light via-light to-pink-500 bg-[200%_auto] ease-linear hover:bg-right transition-all duration-500 group-hover:bg-left"><h1 className="bg-dark dark:bg-light w-1/4"><Icons.Instagram className='p-1 w-8 h-8 fill-light  dark:fill-black'/></h1> <div className="text-lg">@{ profile ? `${profile?.instagram?.split("/").pop()!}` : instagram}</div></Link>
 
-            <Link target="_blank" href={profile?.telegram?.includes('https://t.me/') ? profile?.telegram : `https://t.me/${profile?.telegram}`} className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">telegram account: </h1> <div>@{ profile ? `${profile?.telegram?.split("/").pop()!}` : telegram}</div></Link>
+            <Link target="_blank" href={profile?.telegram?.includes('https://t.me/') ? profile?.telegram : `https://t.me/${profile?.telegram}`} className="flex flex-row gap-2 dark:bg-dark border-b-2 rounded-r-md dark:border-dark dark:text-light w-full bg-light text-dark border-light text-wrap h-auto truncate overflow-auto bg-gradient-to-r dark:from-dark dark:via-dark dark:to-sky-500 from-light via-light to-sky-500 bg-[200%_auto] ease-linear hover:bg-right transition-all duration-500 group-hover:bg-left"><h1 className="bg-dark dark:bg-light w-1/4"><Icons.Telegram className='p-1 w-8 h-8 fill-light  dark:fill-black'/></h1>  <div className="text-lg">@{ profile ? `${profile?.telegram?.split("/").pop()!}` : telegram}</div></Link>
 
-            <Link target="_blank" href={profile?.facebook?.includes('https://www.facebook.com/') ? profile?.facebook : `https://www.facebook.com/${profile?.facebook}`} className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">facebook account: </h1> <div >@{ profile ? `${profile?.facebook?.split("/").pop()!}` : facebook}</div></Link>
+            <Link target="_blank" href={profile?.facebook?.includes('https://www.facebook.com/') ? profile?.facebook : `https://www.facebook.com/${profile?.facebook}`} className="flex flex-row gap-2 rounded-r-md dark:bg-dark border-b-2 dark:border-dark dark:text-light w-full bg-light text-dark border-light text-wrap h-auto truncate overflow-auto  bg-gradient-to-r dark:from-dark dark:via-dark dark:to-blue-800 from-light via-light to-blue-800 bg-[200%_auto] ease-linear hover:bg-right transition-all duration-500 group-hover:bg-left"><h1 className="bg-dark dark:bg-light w-1/4"><Icons.FaceBook className='p-1 w-8 h-8 fill-light  dark:fill-black'/></h1>  <div className="text-lg">@{ profile ? `${profile?.facebook?.split("/").pop()!}` : facebook}</div></Link>
 
-            <Link target="_blank" href={profile?.x?.includes('https://x.com/') ? profile.x : `https://x.com/${profile?.x}`} className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">X account: </h1> <div >@{ profile ? `${profile?.x?.split("/").pop()!}` : x}</div></Link>
+            <Link target="_blank" href={profile?.x?.includes('https://x.com/') ? profile.x : `https://x.com/${profile?.x}`} className="flex flex-row gap-2 rounded-r-md dark:bg-dark border-b-2 dark:border-dark border-light dark:text-light w-full bg-light text-dark text-wrap h-auto hover:text-white truncate overflow-auto bg-gradient-to-r dark:from-dark dark:via-dark dark:to-black from-light via-light to-black bg-[200%_auto] ease-linear hover:bg-right transition-all duration-500 group-hover:bg-left"><h1 className="bg-dark dark:bg-light w-1/4"><Icons.Tweeter className='p-1 w-8 h-8 fill-light  dark:fill-black'/></h1>  <div className="text-lg">@{ profile ? `${profile?.x?.split("/").pop()!}` : x}</div></Link>
 
-            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">phone number 1: </h1> <h1>{ profile ? `${profile?.phoneNumber1!}` : phoneNumber1}</h1></div>
+            <div className="flex rounded-r-md flex-row gap-2 border-b-2 dark:border-dark border-light dark:bg-dark   dark:text-light w-full bg-light text-dark text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark dark:bg-light w-1/4"><Phone className="fill-light dark:fill-dark"/></h1> <h1>{ profile ? `${profile?.phoneNumber1!}` : phoneNumber1}</h1></div>
 
-            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">phone number 2: </h1> <h1>{ profile ? `${profile?.phoneNumber2!}` : phoneNumber2}</h1></div>
+            <div className="flex flex-row gap-2 border-b-2 dark:border-dark border-light rounded-r-md dark:bg-dark  dark:text-light w-full bg-light text-dark text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark dark:bg-light w-1/4"><Phone className="fill-light dark:fill-dark"/></h1> <h1>{ profile ? `${profile?.phoneNumber2!}` : phoneNumber2}</h1></div>
 
-            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">description: </h1> <h1>{profile?.description!}</h1></div>
+            <div className="flex flex-row gap-2 rounded-r-md border-b-2 dark:border-dark border-light dark:bg-dark dark:text-light w-full bg-light text-dark text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">description: </h1> <h1>{profile?.description!}</h1></div>
 
-            <div className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">profile created at: </h1> <h1> {profile ? `${extractTimeAndDate(profile?.createdAt!).date} ${extractTimeAndDate(profile?.createdAt!).time}` : "loading profile created time"}</h1></div>
+            <div className="flex flex-row border-b-2 dark:border-dark border-light gap-2 rounded-r-md dark:bg-dark dark:text-light w-full bg-light text-dark text-wrap h-auto truncate overflow-auto"><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">profile created at: </h1> <h1> {profile ? `${extractTimeAndDate(profile?.createdAt!).date} ${extractTimeAndDate(profile?.createdAt!).time}` : "loading profile created time"}</h1></div>
 
-            <div hidden={!profile?.updatedAt} className="flex flex-row gap-2 dark:bg-dark border-2 dark:border-light dark:text-light w-full bg-light text-dark border-dark rounded-lg  text-wrap h-auto truncate overflow-auto "><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">profile updated at: </h1> <h1> { profile?.updatedAt ? `${extractTimeAndDate(profile?.updatedAt!).date} ${extractTimeAndDate(profile?.updatedAt!).time}` : "you arn't update you profile"}</h1></div>
+            <div hidden={!profile?.updatedAt} className="flex rounded-r-md border-b-2 dark:border-dark border-light flex-row gap-2 dark:bg-dark dark:text-light w-full bg-light text-dark text-wrap h-auto truncate overflow-auto "><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">profile updated at: </h1> <h1> { profile?.updatedAt ? `${extractTimeAndDate(profile?.updatedAt!).date} ${extractTimeAndDate(profile?.updatedAt!).time}` : "you arn't update you profile"}</h1></div>
           </div></div>) 
           :
            (<div>profile place</div>)
