@@ -85,9 +85,9 @@ const Trader = ({id}: {id: string}) => {
         <div className='flex gap-2 items-center justify-center my-16 '>  
             <h1 className='text-3xl'>{postForPage !== undefined && postForPage?.length > 1 ? "Items" : postForPage?.length === 1 ? "Item" : "no items"}</h1> <div className='dark:text-light text-dark font-bold'><ShoppingCart className='w-10 h-10'/ ></div> 
         </div>
-        <div className='grid items-center justify-center gap-10 gap-y-20  max-md:gap-5 grid-flow-row grid-cols-4 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-md:gap-y-20'>
+        <div className='grid items-center justify-center bg-zinc-200 p-10 gap-10 gap-y-20  max-md:gap-5 grid-flow-row grid-cols-4 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-md:gap-y-20'>
     {postForPage !== undefined && postForPage.map((post) => (
-        <Link href={`/product/${post.id}`} key={post.id} className=' flex-col w-[256px] gap-4 border-2 overflow-hidden rounded-xl border-b-2 border-dark dark:border-white '>
+        <Link href={`/product/${post.id}`} key={post.id} className='hover:shadow-lg hover:shadow-black transition-shadow duration-100 flex-col w-[256px] gap-4 border-2 overflow-hidden rounded-xl border-b-2 border-dark dark:border-white '>
             <div>
                 <div className={cn("",{
                 "contrast-50": post.isSold === true,

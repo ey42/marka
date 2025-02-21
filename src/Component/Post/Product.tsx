@@ -5,7 +5,7 @@ import MaxWidthWrapper from '../MaxWidthWrapper'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
-import { ClipboardCheck, Copy, Phone, Trash2 } from 'lucide-react'
+import { ClipboardCheck, Copy, Phone, ShoppingCart, Trash2 } from 'lucide-react'
 import { Icons } from '../Icons'
 import { extractTimeAndDate } from '../Database'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -194,13 +194,12 @@ const Product = ({id}: {id: string}) => {
     </MaxWidthWrapper>
 
     <div className='flex flex-col gap-10 items-center justify-center mt-10'>
-        {resultCount >= 1 &&  (<h1 className='text-4xl tracking-wide font-bold'>
-          SIMILAR {resultCount === 1 ? "ITEM" : "ITEMS"}
+        {resultCount >= 1 &&  (<h1 className='text-4xl flex gap-2 tracking-wide font-bold'>
+          SIMILAR {resultCount === 1 ? "ITEM" : "ITEMS"} <ShoppingCart className='w-10 h-10'/ >
         </h1>)}
-        <div className='grid items-center justify-center gap-10 gap-y-20  max-md:gap-5 grid-flow-row grid-cols-4 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 max-md:gap-y-20'>
+        <div className='grid bg-zinc-200 p-10 items-center justify-center gap-10 gap-y-20  max-md:gap-5 grid-flow-row grid-cols-4 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 max-md:gap-y-20'>
         {Result !== undefined && Result.map((p) => (
-          <div className='border-2 border-light dark:border-dark rounded-md' key={p.id}>
-            
+          <div className='border-2 border-dark dark:border-light rounded-md hover:shadow-lg hover:shadow-black transition-shadow duration-100' key={p.id}>
         <Link href={`/product/${p.id}`} key={p.id} className=' flex-col w-[256px] gap-4 overflow-hidden rounded-md '>
             <div>
                 <div className={cn("",{

@@ -102,8 +102,8 @@ const PostUserOnly = ({catagoryName, userId} : {catagoryName: string, userId: st
               }
             </div>
             <div className='flex flex-row gap-2'>
-              <button className='hover:font-semibold'  onClick={() => handleDelete(post.id)} ><Trash2 width={20} height={20} className='hover:stroke-red-400'/></button>
-             <button onClick={() => onsubmit({id: post.id!, sold: !post.isSold as boolean})} className='border-2 px-1 rounded-md border-zinc-600 hover:border-dark dark:border-light  hover:dark:bg-stone-900 hover:font-semibold'> {post.isSold ? "un-sold": "sold"} </button>
+              <button className='hover:font-semibold'  onClick={() => handleDelete(post.id)} ><Trash2 width={20} height={20} className='hover:stroke-red-400 dark:hover:fill-black'/></button>
+             <button onClick={() => onsubmit({id: post.id!, sold: !post.isSold as boolean})} className='border-2 px-1 rounded-md border-zinc-600 hover:border-dark hover:bg-black hover:text-light dark:border-light  hover:dark:bg-stone-900 hover:font-semibold dark:hover:bg-white dark:hover:text-black'> {post.isSold ? "un-sold": "sold"} </button>
              
              </div>
             </div>

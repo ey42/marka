@@ -213,23 +213,23 @@ const {useSession} = Authclient
             <Input type="file" ref={fileInputRef} onChange={(e) => handleOnChange(e)} className="h-9 file:text-sm p-0 font-semibold font-mono text-dark dark:text-light border-1 rounded-md dark:border-slate-300 border-dark dark:file:text-light file:font-semibold file:text-dark file:border-1 file:border-dark dark:file:border-slate-300 file:mr-3 file:rounded-md file:h-full file:cursor-pointer cursor-pointer text-nowrap transition-all duration-200" accept="image/*" multiple />
             </div> 
           <div className="flex flex-col gap-2 rounded-md">
-            <h1>Title</h1>
+            <h1 className="font-bold font-serif">Title</h1>
            <input className= "transition-all max-sm:w-40 duration-100 dark:bg-dark placeholder:text-gray-500 focus:placeholder:text-transparent w-full h-9 p-0 dark:text-slate-300 text-dark font-bold text-sm  rounded-md border-2 border-dark dark:border-slate-300 pl-1 focus:ring-1 dark:focus:ring-slate-300 focus:ring-dark focus:outline-none dark:focus:bg-neutral-800" id="catagory" type="text" onChange={(e) => handleTitle(e)} value={title} placeholder="Post title" required/>
             </div>
            <div className="flex flex-col gap-2"> 
-            <h1>Description</h1>
+            <h1 className="font-bold font-serif">Description</h1>
            <Textarea className="w-80 border-2 max-sm:w-40 border-dark dark:border-slate-300 transition-all duration-200 placeholder:text-gray-500 dark:focus:placeholder:text-transparent dark:placeholder:text-gray-500 focus:placeholder:text-transparent text-dark dark:text-slate-300 font-bold text-sm focus:outline-none focus:ring-1 focus:ring-dark dark:focus:ring-slate-300 dark:focus:bg-neutral-800" id="description" onChange={(e) => handleDescription(e)} value={description} placeholder="description"/>
            </div>
            <div className="flex flex-col gap-2">
-            <h1>Price</h1>
+            <h1 className="font-bold font-serif">Price</h1>
             <input type="number" className="w-80 border-2 max-sm:w-40 border-dark dark:border-slate-300 transition-all duration-300 placeholder:text-gray-500 dark:focus:placeholder:text-transparent rounded-sm h-9 dark:placeholder:text-gray-500 focus:placeholder:text-transparent text-dark dark:text-slate-300 font-bold text-sm focus:outline-none focus:ring-1 dark:bg-dark focus:ring-dark dark:focus:ring-slate-300 dark:focus:bg-neutral-800" id="description" onChange={(e) => handlePrice(e)} value={price} placeholder="price in ethiopian birr"/>
            </div>
            <div className="flex flex-col gap-2 rounded-md">
-            <h1>City</h1>
+            <h1 className="font-bold font-serif">City</h1>
            <input className= "transition-all max-sm:w-40 duration-100 dark:bg-dark placeholder:text-gray-500 focus:placeholder:text-transparent w-full h-9 p-0 dark:text-slate-300 text-dark font-bold text-sm  rounded-md border-2 border-dark dark:border-slate-300 pl-1 focus:ring-1 dark:focus:ring-slate-300 focus:ring-dark focus:outline-none dark:focus:bg-neutral-800" id="catagory" type="text" onChange={(e) => handleCity(e)} value={city} placeholder="City" required/>
             </div>
            <div className="flex flex-col gap-2">
-            <h1>Choose catagories</h1>
+            <h1 className="font-bold font-serif">Choose catagories</h1>
            <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
@@ -275,7 +275,7 @@ const {useSession} = Authclient
            </div>
            
            <div className="flex">
-            <Button type="submit" className="dark:bg-white w-full max-sm:w-40 bg-gray-950 font-bold text-white dark:text-gray-950 dark:hover:bg-slate-300 hover:bg-gray-900 transition-all duration-500 " disabled = {isPending}>{isPending ? "uploading..." : "upload post"}</Button>
+            <Button type="submit" className=" dark:bg-white w-full max-sm:w-40 bg-gray-950 font-bold text-white dark:text-gray-950 dark:hover:bg-slate-300 hover:bg-gray-900 transition-all duration-500 " disabled = {isPending}>{isPending ? "uploading..." : "upload post"}</Button>
             </div>
             </div>
         </form>
@@ -285,7 +285,7 @@ const {useSession} = Authclient
                   <ul className="text-sm font-semibold  max-md:grid-rows-10 max-sm:grid-flow-row grid grid-rows-5 grid-flow-col gap-x-10 gap-5 dark:marker:text-white list-none items-center justify-center">
                 { 
 uniqueNames !== undefined ? uniqueNames.map((n) => ( 
-  <Link href={`/post/catagory/${n}/${userId}`} key={n} className="border-2 dark:border-slate-50 w-auto  transition-all duration-500 border-dark h-auto bggre overflow-hidden rounded-md text-center py-2 px-2 font-semibold"> {n.replace(/_/g, ' ')} {nameCounts[n]} </Link>
+  <Link href={`/post/catagory/${n}/${userId}`} key={n} className="border-2 hover:bg-black hover:text-light hover:dark:text-black hover:dark:bg-light  dark:border-slate-50 w-auto  transition-all duration-100 border-dark h-auto bggre overflow-hidden rounded-md text-center py-2 px-2 font-semibold"> {n.replace(/_/g, ' ')} {nameCounts[n]} </Link>
                 )
               ) : "loading..."
                } 

@@ -86,7 +86,6 @@ console.log("user is undefined ")
           </div>
             <h3 className=" text-sm tracking-wider dark:text-slate-50 text-center text-dark font-bold font-mono"><span className="text-blue-500">m</span>ar<span className="text-yellow-500">k</span>a</h3>
           </div>
-
           </div>
                 {activeUser?.email === 'eyuealzerihun1@gmail.com' && activeUser.role === "merchant" ? (
                   <NavigationMenu className=" text-sm font-semibold max-md:ml-5" hidden=
@@ -143,11 +142,10 @@ console.log("user is undefined ")
                 </NavigationMenu>):"") }
                 <div className="cursor-pointer max-md:hidden">
                   <Link href={`/profile/traders`}>
-                  <Users className="dark:stroke-light stroke-dark dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark"/>
+                  <Users className="dark:stroke-light transition-colors duration-300 stroke-dark dark:hover:fill-light hover:fill-black dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark"/>
                   </Link>
                 </div>
-              
-         </div>
+                </div>
        
             <div className=' relative max-md:ml-4'>
            
@@ -197,7 +195,7 @@ console.log("user is undefined ")
                   </Link> }
 
                   {isPending === true ? " " :  <div className=" flex rounded-lg max-md:hidden mr-5 ">
-                  <div className='text-sm border-2 bg-gradient-to-r dark:from-dark dark:via-light dark:to-light dark:text-black hover:dark:text-black from-light via-dark to-dark ease-linear transition-all duration-700 hover:text-light bg-[200%_auto] hover:bg-right dark:hover:text-white dark:hover:bg-black dark:border-slate-50 dark:bg-dark cursor-pointer flex gap-2 bg-light border-dark text-dark  rounded-md pr-2'>
+                  <div className='text-sm border-2 bg-gradient-to-r dark:from-dark dark:via-light dark:to-light dark:text-black hover:dark:text-black from-light via-dark to-dark ease-linear transition-all duration-700 hover:text-light bg-[200%_auto] hover:bg-right dark:hover:text-white dark:hover:bg-black dark:border-light dark:bg-dark cursor-pointer flex gap-2 bg-light border-dark hover:border-dark text-dark  rounded-md pr-2'>
                 <button className=' flex justify-start pl-2  font-bold text-sm py-0.5 font-mono' onClick={() => {
                   if(!user){
                     signIN()
@@ -317,7 +315,7 @@ console.log("user is undefined ")
 
 }
                  
-            <div className='group flex gap-2 cursor-pointer  bg-gradient-to-r from-light via-light to-dark ease-linear bg-[200%_auto] transition-all duration-500 hover:bg-right hover:bg-slate-200 bg-light text-dark border-y-2  rounded-lg w-fullt md:hidden border-black'>
+            <div className='group flex gap-2 cursor-pointer  bg-gradient-to-r from-light via-light to-dark ease-linear bg-[200%_auto] transition-all duration-500 hover:bg-right hover:bg-slate-200 bg-light text-dark border-y-2  rounded-lg w-full md:hidden border-black'>
             <button className=' flex justify-start pl-2 font-bold text-sm ' onClick={() => {
             if(!activeUser){
               signIN()

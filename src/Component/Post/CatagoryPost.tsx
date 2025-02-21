@@ -33,7 +33,6 @@ const CatagoryPost = ({catagoryName}: {catagoryName: string}) => {
                 <div className="flex justify-between rounded-b-md bg-dark text-white dark:bg-white dark:text-black">
                     <div>
                     <h1 className="font-semibold text-sm pl-1">{post.title}</h1>
-                    <h1>hy</h1>
                     <h1 className={cn("font-semibold pl-1",{
                         "text-black font-bold px-1 rounded-md bg-red-500 text-sm ": post.isSold === true
                     })}>{post.isSold ? "solded" : `ETB ${post.price}`}</h1>

@@ -46,20 +46,20 @@ const Landing = ({AllCatagory}: {AllCatagory: Catagoryprops[]}) => {
           <div>
             
           </div>
-          <div  className={cn("Landing-image flex rounded-lg mt-6 flex-col items-center justify-center gap-6 bg-dark dark:bg-light h-60 mb-20",{
+          <div  className={cn("drop-shadow-2xl shadow-2xl dark:shadow-light  shadow-gray-800 Landing-image flex rounded-lg mt-6 flex-col items-center justify-center gap-6 bg-dark dark:bg-light h-60 mb-20",{
             "hidden": search
           })}>
-            <div className="flex flex-1 flex-col items-center justify-center px-2 bg-dark dark:bg-light text-white dark:text-black rounded-lg">
+            <div className=" flex flex-1 flex-col drop-shadow-2xl shadow-2xl shadow-black  dark:shadow-gray-800 items-center justify-center px-2 bg-dark dark:bg-light text-white dark:text-black rounded-lg">
             <h1 className="text-7xl text-center font-bold">Ethiopians</h1>
             <p className="text-lg text-center font-bold">market place</p>
             </div>
-            <Image src='/m.jpg' alt="merkato" width={800} height={200} content="cover" className="w-full flex flex-1 rounded-b-lg  h-60" priority style={{objectFit: "cover"}}/>
+            <Image src='/m.jpg' alt="merkato" width={800} height={200} content="cover" className="w-full flex flex-1 rounded-b-lg drop-shadow-xl dark:shadow-slate-400 dark:shadow-xl shadow-2xl border-2 border-dark dark:border-light shadow-dark h-60" priority style={{objectFit: "cover"}}/>
           </div>
-          <div className={cn("grid grid-cols-1 mt-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6",{
+          <div className={cn("grid grid-cols-1 bg-zinc-200 p-10 rounded-md mt-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6",{
             "hidden" : search
           })}>
             {postForPage?.map((post) => (
-                <Link href={`product/${post.id}`} key={post.id} className="border-2 bg-dark dark:bg-light border-black dark:border-light rounded-md">
+                <Link href={`product/${post.id}`} key={post.id} className="border-2 bg-dark dark:bg-light border-black dark:border-light rounded-md hover:shadow-lg hover:shadow-black transition-shadow duration-100">
                   <div className={cn("flex flex-col items-center justify-center",{
                     "contrast-50": post.isSold === true,
                   })}>
