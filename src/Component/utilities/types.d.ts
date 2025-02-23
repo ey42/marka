@@ -7,7 +7,8 @@ interface userProps {
     email: string;
     emailVerified: boolean;
     image: string | null;
-    role: "customer" | "merchant" | null;
+    role: "customer" | "merchant";
+    accepted: "accepted" | "rejected" | "none";
     customerId: string | null;
     userContent: profileProp;
 }

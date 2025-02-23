@@ -44,10 +44,21 @@ const ProfileUpload = () => {
         console.log('Success! Uploading post...');
         setFormSubmited(false); // Reset form state after success
         router.refresh()
-        refetch(); // Navigate to categories page
+        refetch();
+        setFormSubmited(false)
+        setCompany("")
+        setDescription("")
+        setFacebook("")
+        setImage("")
+        setInstagram("")
+        setPhoneNumber1("")
+        setPhoneNumber2("")
+        setTelegram("")
+        setType("")
+        setX("")
       },
       onError: async(err) => {
-        console.error('Error uploading post:', err);     
+        console.error('Error uploading profile:', err);     
          refetch()
       
       },})
@@ -110,8 +121,10 @@ const ProfileUpload = () => {
             const bucket:string = "Images"
             const folder:string = "profileImage"
 
-            const imageUrl = uploadProfileImage({file, bucket, folder, update: profile !== undefined ? true : false, company: company as string, userId: userId as string, profile: profileImage as string})
+            const imageUrl = uploadProfileImage({file, bucket, folder, update: profile !== undefined && profile !== null ? true : false, company: company as string, userId: userId as string, profile: profileImage as string})
             const url  = await imageUrl 
+            console.log('url: ', url)
+            console.log("type of url " + typeof url)
           
             upload({
                 userIds: userId as string,
@@ -124,13 +137,13 @@ const ProfileUpload = () => {
                 phoneNumber2s: phoneNumber2 as string,
                 telegrams: telegram as string,
                 types: type as string,
-                update: profile !== undefined ? true : false,
+                update: profile !== undefined && profile !== null ? true : false,
                 xs: x as string
              }) 
          refetch()
             
            } catch(error){
-             console.error('Error uploading categories:', error);
+             console.error('Error uploading profiles:', error);
              setFormSubmited(false); // Reset form state on error
              refetch()
              }finally{
@@ -139,26 +152,23 @@ const ProfileUpload = () => {
             
     }
     useEffect(() => {
+      setFormSubmited(false)
       setCompany("")
       setDescription("")
       setFacebook("")
-      setFormSubmited(true)
       setImage("")
       setInstagram("")
       setPhoneNumber1("")
       setPhoneNumber2("")
       setTelegram("")
       setType("")
-      // setUpdate(false)
       setX("")
       refetch()
     },[formSubmitted] )
-    if (isError) {
-      refetch()
-    }
+
 
   return (
-    <div className="mt-5 ml-5 font-mono dark:text-light text-dark w-full flex flex-row justify-start gap-40 max-lg:gap-28 max-md:flex-col">
+    <div className="mt-5 ml-5 mb-5 font-mono dark:text-light text-dark w-full flex flex-row justify-start gap-40 max-lg:gap-28 max-md:flex-col">
       <div className="">
      
         <form onSubmit={onsubmit} className="flex flex-col gap-4 justify-start items-start max-w-max">
@@ -173,7 +183,7 @@ const ProfileUpload = () => {
             </label>
           </div>
           <div>
-            <label htmlFor="type" className=" font-bold text-sm cursor-pointer max-sm:w-40"> Type: {profile !== undefined ? "" : (<span className="text-red-500">must</span>)}
+            <label htmlFor="type" className=" font-bold text-sm cursor-pointer max-sm:w-40"> Type: {profile !== undefined && profile !== null ? "" : (<span className="text-red-500">must</span>)}
               <input id="type" type="text" onChange={handleType} placeholder="your buisness type" required = {profile === undefined} className="h-9 font-semibold rounded-md ml-2 pl-2 border-2 required:border-red-500 dark:required:border-red-500 border-dark focus:placeholder:text-transparent focus:bg-slate-200 placeholder:text-slate-500 dark:border-slate-300 dark:focus:bg-neutral-800 dark:focus:placeholder:text-transparent w-full dark:bg-dark"/>
             </label>
           </div>
@@ -199,16 +209,16 @@ const ProfileUpload = () => {
           </div>
           <div>
             <label htmlFor="description" className="max-sm:w-40 font-bold cursor-pointer text-sm"> Description: optional?
-              <textarea id="description"  onChange={handleDescription} placeholder="description" className="h-9 font-semibold rounded-md ml-2 pl-2 border-2 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:bg-dark dark:border-light dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent w-full"/>
+              <textarea id="description"  onChange={handleDescription} placeholder="description" className="h-9 font-semibold rounded-md ml-2 pl-2 border-2 min-h-20 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:bg-dark dark:border-light dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent w-full"/>
               </label>
           </div>
           <div>
-            <label htmlFor="company" className="max-sm:w-40 font-bold cursor-pointer text-sm "> Company Name: {profile !== undefined ? "" : (<span className="text-red-500">must</span>)}
+            <label htmlFor="company" className="max-sm:w-40 font-bold cursor-pointer text-sm "> Company Name: {profile !== undefined && profile !== null ? "" : (<span className="text-red-500">must</span>)}
               <input id="company" type="text" onChange={handleCompany} required = {profile === undefined} placeholder="your company name" className="required:border-red-500 dark:required:border-red-500 h-9 font-semibold rounded-md ml-2 pl-2 border-2 border-dark focus:placeholder:text-transparent dark:bg-dark focus:bg-slate-200 dark:border-light dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent w-full"/>
             </label>
           </div>
           <div>
-            <label htmlFor="phoneNumber1" className="max-sm:w-40 font-bold cursor-pointer text-sm "> phone number 1: {profile  !== undefined  ? "" : (<span className="text-red-500">must</span>)}
+            <label htmlFor="phoneNumber1" className="max-sm:w-40 font-bold cursor-pointer text-sm "> phone number 1: {profile !== undefined && profile !== null  ? "" : (<span className="text-red-500">must</span>)}
               <input id="phoneNumber1" type="text" onChange={handlePhoneNumber1} required = {profile === undefined} placeholder="0900000000" className="h-9 font-semibold rounded-md ml-2 pl-2 border-2 border-dark focus:placeholder:text-transparent focus:bg-slate-200 dark:border-light dark:focus:bg-neutral-800 placeholder:text-slate-500 dark:focus:placeholder:text-transparent required:border-red-500 dark:bg-dark dark:required:border-red-500 w-full"/>
             </label>
           </div>
@@ -220,7 +230,7 @@ const ProfileUpload = () => {
         </div>
         <div className="flex flex-col items-center gap-4 max-sm:w-40 w-full justify-center mt-8 ml-2">
           
-        <button type="submit"  className=" bg-gradient-to-r dark:from-dark dark:via-light dark:to-light from-light via-dark to-black bg-[200%_auto] ease-linear transition-all duration-500 hover:bg-right dark:border-slate-300 cursor-pointer border-2 text-center w-full flex justify-center bg-dark dark:text-light hover:dark:text-black dark:bg-light hover:bg-black dark:hover:bg-slate-300 text-black hover:text-light text-lg items-center border-dark px-2 py-1 rounded-md font-bold">{isPending ? "loading..." : profile !== undefined ? "update" : "submit"} </button>
+        <button type="submit"  className=" bg-gradient-to-r dark:from-dark dark:via-light dark:to-light from-light via-dark to-black bg-[200%_auto] ease-linear transition-all duration-500 hover:bg-right dark:border-slate-300 cursor-pointer border-2 text-center w-full flex justify-center bg-dark dark:text-light hover:dark:text-black dark:bg-light hover:bg-black dark:hover:bg-slate-300 text-black hover:text-light text-lg items-center border-dark px-2 py-1 rounded-md font-bold">{isPending ? "loading..." : profile !== undefined && profile !== null  ? "update" : "request"} </button>
         
         
         </div>
@@ -229,11 +239,11 @@ const ProfileUpload = () => {
       </div>
       <div>
          <div className=' flex flex-col items-center gap-5 mt-10 max-w-sm'>
-          {profile !== undefined && <h1 className="text-4xl font-bold font-mono tracking-wider">user profile</h1>}
+          {profile !== undefined && profile !== null && <h1 className="text-4xl font-bold font-mono tracking-wider">user profile</h1>}
          {
-          user !== undefined && profile !== undefined ? (
+          (user !== undefined && profile !== undefined && profile !== null && user.role === "merchant") ? (
           <div className="flex flex-col border-2 justify-center items-center bg-dark dark:bg-light border-light dark:border-dark rounded-lg text-wrap truncate w-full">
-            <div className="py-4"><Image src={profile.imageFile !== undefined ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}${profile.imageFile as string}`:''} alt="company name" className="w-20 h-20 my-2
+            <div className="py-4"><Image src={profile?.imageFile !== undefined ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}${profile.imageFile as string}`:''} alt="company name" className="w-20 h-20 my-2
             rounded-full border-2 border-light dark:border-dark" width={200} height={200}/></div> 
             <div className="border-t-2 w-full p-4 flex flex-col gap-3 border-light font-semibold font dark:border-dark">
 
@@ -265,8 +275,8 @@ const ProfileUpload = () => {
 
             <div hidden={!profile?.updatedAt} className="flex rounded-r-md border-b-2 dark:border-dark border-light flex-row gap-2 dark:bg-dark dark:text-light w-full bg-light text-dark text-wrap h-auto truncate overflow-auto "><h1 className="bg-dark pl-1 text-light dark:bg-light dark:text-dark">profile updated at: </h1> <h1> { profile?.updatedAt ? `${extractTimeAndDate(profile?.updatedAt!).date} ${extractTimeAndDate(profile?.updatedAt!).time}` : "you arn't update you profile"}</h1></div>
           </div></div>) 
-          :
-           (<div>profile place</div>)
+          : profile !== undefined && profile !== null && user?.role !== "merchant"  ? (<div className="flex flex-col border-2 justify-center items-center bg-dark dark:bg-light border-light dark:border-dark rounded-lg text-wrap truncate w-full text-center font-bold text-xl"> profile request pending </div>) :
+           (<div className="flex justify-center items-center"><h1 className="text-center font-bold text-xl">This is the Place of your Profile</h1></div>)
          }
          </div>
       </div>

@@ -5,7 +5,8 @@ import { relations } from "drizzle-orm";
 import { pgTable, text, timestamp, boolean, uuid,  varchar, index,  pgEnum, AnyPgColumn, primaryKey, integer, jsonb, numeric,  } from "drizzle-orm/pg-core";
 			
 export const roleEnum = pgEnum('role', [ 'customer', 'merchant']);
-// const cityEnum = pgEnum('city', ['addis ababa', 'dire dawa', 'mekelle', 'gondar', 'hawassa', 'jimma', 'bahir dar', 'dessie', 'nazeret', 'sodo', 'arba minch', 'jijiga', 'shashemene', 'dilla', 'gambela', 'harar', 'nekemte', 'assosa', 'gambela', 'gode', 'asaita', 'awassa', 'bale rob', 'bati', 'bedele', 'bonga', 'dabat', 'dangla', 'debre berhan', 'debre marqos', 'debre tabor', 'debre zeit', 'dembi dolo', 'dese', 'dilla', 'finote selam', 'gambela', 'gebre guracha', 'gelemso', 'gimbi', 'goba', 'gondar zuria', 'gore', 'guder', 'gurage', 'hagere mariam', 'harar', 'hawassa zuria', 'holeta', 'hosaena', 'jijiga', 'jimma', 'kemise', 'kombolcha', 'korem', 'maji', 'mekelle', 'metu', 'mizan teferi', 'mojo', 'nazeret', 'negele boran', 'nejo', 'nekemte'])
+export const acceptedEnum = pgEnum('accepted', [ 'accept', 'reject', 'none']);
+
 
 export const user = pgTable("user", {
  id: text("id").primaryKey(),
@@ -15,7 +16,8 @@ export const user = pgTable("user", {
  image: text('image'),
  createdAt: timestamp('createdAt').notNull(),
  updatedAt: timestamp('updatedAt').notNull(),
- role: roleEnum().default("customer"),
+ role: roleEnum().default("customer").notNull(),
+ accepted: acceptedEnum().default("none").notNull(),
  customerId: text("customer_id").references(():AnyPgColumn => user.id),
 				});
 
@@ -32,7 +34,7 @@ export const account = pgTable("account", {
  id: text("id").primaryKey(),
  accountId: text('accountId').notNull(),
  providerId: text('providerId').notNull(),
- userId: text('userId').notNull().references(()=> user.id),
+ userId: text('userId').notNull().references(() => user.id),
  accessToken: text('accessToken'),
  refreshToken: text('refreshToken'),
  idToken: text('idToken'),
@@ -61,7 +63,8 @@ export const profile = pgTable("profile",{
 	updatedAt: timestamp("updatedAt"),
 	companyName: text("companyName"),
 	phoneNumber1: text("phoneNumber1"),
-	phoneNumber2: text("phoneNumber2")
+	phoneNumber2: text("phoneNumber2"),
+
 })
 
 export const profileSeen = pgTable("ProfileSeen",{
@@ -188,9 +191,19 @@ export const userRelation = relations(user, ({one,many}) => ({
 	likeAndDislikeUSer: many(likeAndDislike),
 	userReply: many(reply),
 	profileSeenUser: many(profileSeen),
-	userSeenPost: many(postSeen)
+	userSeenPost: many(postSeen),
+	userAccount: one(account, {
+		fields: [user.id],
+		references: [account.userId]
+	}),
 
 }))
+
+export const accountRelation = relations(account, ({one}) => ({
+	userAccount: one(user, {
+		fields: [account.userId],
+		references: [user.id]
+	})	}))
 
 export const postRelation = relations(post, ({one,many}) => ({
 	author: one(user, {

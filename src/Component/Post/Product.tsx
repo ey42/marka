@@ -197,9 +197,11 @@ const Product = ({id}: {id: string}) => {
         {resultCount >= 1 &&  (<h1 className='text-4xl flex gap-2 tracking-wide font-bold'>
           SIMILAR {resultCount === 1 ? "ITEM" : "ITEMS"} <ShoppingCart className='w-10 h-10'/ >
         </h1>)}
-        <div className='grid bg-zinc-200 p-10 items-center justify-center gap-10 gap-y-20  max-md:gap-5 grid-flow-row grid-cols-4 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 max-md:gap-y-20'>
+        <div className={cn('grid bg-zinc-200 rounded-lg dark:bg-zinc-800 p-10 items-center justify-center gap-10 gap-y-20  max-md:gap-5 grid-flow-row grid-cols-4 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 max-md:gap-y-20',{
+          "hidden": resultCount === 0 || posts === undefined
+        })}>
         {Result !== undefined && Result.map((p) => (
-          <div className='border-2 border-dark dark:border-light rounded-md hover:shadow-lg hover:shadow-black transition-shadow duration-100' key={p.id}>
+          <div className='border-2 border-dark dark:border-light rounded-md hover:shadow-lg hover:shadow-black dark:hover:shadow-zinc-400 transition-shadow duration-100' key={p.id}>
         <Link href={`/product/${p.id}`} key={p.id} className=' flex-col w-[256px] gap-4 overflow-hidden rounded-md '>
             <div>
                 <div className={cn("",{

@@ -11,16 +11,6 @@ interface PageProps {
 const page = async({params}: PageProps) => {
   const catagoryName = params.catagoryId[0]
   const userId = params.catagoryId[1]
-  const posts = await db.query.post.findMany({
-    where: (post, {eq}) => eq(post.userId, userId),
-   with:{
-    author : true,
-    likeAndDislikePost: true,
-    postCatagory :true,
-    postProfile: true,
-    postSeen: true
-   }
-}) 
 
   return (
     <div className="flex flex-col">

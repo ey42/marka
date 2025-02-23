@@ -233,7 +233,7 @@ export const DatabaseRouter = router({
         const storage = getStorage()
         try {
             
-        if(userIds === user?.id && user?.role === "merchant"){
+        if(userIds === user?.id){
           
             if((companyNames === "" || companyNames === undefined || imageFiles === "" || imageFiles === undefined) && update === false) {
                 const deletedFileName = imageFiles?.split('/').pop() as string

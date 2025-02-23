@@ -1,3 +1,4 @@
+import { message } from './../../drizzle/db/schema';
 import { createSupabaseClient } from "../client";
 import * as uuid from "uuid"
 import { db } from '@/drizzle'
@@ -101,7 +102,7 @@ try {
     update: boolean,
     userId: string,
     profile: string
-  }){
+  }): Promise<string | Error | undefined>{
     try {
       
       if(file?.type === "image/jpeg" && update === false ){
@@ -111,12 +112,7 @@ try {
          console.log("error uploading image to storage due to company === undefined or empty string")
          return new Error("error uploading image to profile")
        }else{
-     
-      if(update === false && profile){
-        console.log("error you submit with out click update")
-        return 
-      } else{
-       
+
        const fileName = file.name;
        const fileExtension = fileName.slice(fileName.lastIndexOf(".")+1)
        const path = `${folder ? folder + "/": ""}${userId}.${fileExtension}`
@@ -125,14 +121,16 @@ try {
      
        const {data} = await storage.from(bucket).upload(path, file)
        const imageUrl = `/storage/v1/object/public/${bucket}/${data?.path}`
+       console.log("successfully upload image in profile and update false")
        return imageUrl
-      }
+      
        }
       
        
       } else if(file?.type === "image/jpeg" && update === true){
           const deletedFileName = profile.split('/').pop() as string
-          console.log(deletedFileName)
+
+          console.log("deleteFileName " + deletedFileName)
           const storage = getStorage()
           await storage.from(bucket).remove([`${folder}/${deletedFileName}`])
           console.log("successfully deleted this file " + deletedFileName)
@@ -142,17 +140,18 @@ try {
           const path = `${folder ? folder + "/": ""}${UUID + company}.${fileExtension}`
           const {data} = await storage.from(bucket).upload(path, file)
           const imageUrl = `/storage/v1/object/public/${bucket}/${data?.path}`
-          console.log("file doesn't have type but update true")
+          console.log("file have type and update true")
           return imageUrl
               
       } else if(file?.type !== "image/jpeg" && update === true){
+        console.log("file doesn't have type but update true")
         return undefined
       } else{
         console.log("image type is not .jpeg or .jpg or .png")
         return 
       }
    } catch (error) {
-      return new Error("error on uploading image in upload profile catch")
+      return new Error("error on uploading image in upload profile catch " + (error as Error).message + "sss")
    }
   }
  

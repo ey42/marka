@@ -1,4 +1,10 @@
 DO $$ BEGIN
+ CREATE TYPE "public"."accepted" AS ENUM('accept', 'reject', 'none');
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
  CREATE TYPE "public"."like" AS ENUM('like', 'dislike');
 EXCEPTION
  WHEN duplicate_object THEN null;
@@ -150,7 +156,8 @@ CREATE TABLE IF NOT EXISTS "user" (
 	"image" text,
 	"createdAt" timestamp NOT NULL,
 	"updatedAt" timestamp NOT NULL,
-	"role" "role" DEFAULT 'customer',
+	"role" "role" DEFAULT 'customer' NOT NULL,
+	"accepted" "accepted" DEFAULT 'none' NOT NULL,
 	"customer_id" text,
 	CONSTRAINT "user_email_unique" UNIQUE("email")
 );

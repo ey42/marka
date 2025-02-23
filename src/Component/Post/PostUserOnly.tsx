@@ -65,7 +65,7 @@ const PostUserOnly = ({catagoryName, userId} : {catagoryName: string, userId: st
       {posts !== undefined ? posts.map((post) => (
         post.catagory === catagoryName ? (
         <div key={post.id}>
-          <div className='flex flex-col gap-2 rounded-md w-80 border-r-2 pr-2 border-dark dark:border-slate-50 text-dark dark:text-slate-50 '>
+          <div className='flex flex-col gap-2 rounded-md bg-zinc-200 dark:bg-zinc-600 pb-2 w-80 border-r-2 pr-2 border-dark dark:border-slate-50 text-dark dark:text-slate-50 '>
             <div className='flex flex-row '>
               <div className={cn('w-40', {
                 "contrast-50": post.isSold === true,
@@ -103,7 +103,7 @@ const PostUserOnly = ({catagoryName, userId} : {catagoryName: string, userId: st
             </div>
             <div className='flex flex-row gap-2'>
               <button className='hover:font-semibold'  onClick={() => handleDelete(post.id)} ><Trash2 width={20} height={20} className='hover:stroke-red-400 dark:hover:fill-black'/></button>
-             <button onClick={() => onsubmit({id: post.id!, sold: !post.isSold as boolean})} className='border-2 px-1 rounded-md border-zinc-600 hover:border-dark hover:bg-black hover:text-light dark:border-light  hover:dark:bg-stone-900 hover:font-semibold dark:hover:bg-white dark:hover:text-black'> {post.isSold ? "un-sold": "sold"} </button>
+             <button onClick={() => onsubmit({id: post.id!, sold: !post.isSold as boolean})} className='border-2 px-1 rounded-md border-zinc-600 hover:border-dark hover:bg-black hover:text-light dark:border-light  hover:dark:bg-stone-900 hover:font-semibold dark:hover:bg-white dark:hover:text-light'> {post.isSold ? "un-sold": "sold"} </button>
              
              </div>
             </div>

@@ -1,5 +1,5 @@
 {
-  "id": "40586b70-bcd2-456d-8bff-899e7fe39683",
+  "id": "8e055d6f-29a4-4a67-9615-704d38583963",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -1143,8 +1143,16 @@
           "type": "role",
           "typeSchema": "public",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "'customer'"
+        },
+        "accepted": {
+          "name": "accepted",
+          "type": "accepted",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'none'"
         },
         "customer_id": {
           "name": "customer_id",
@@ -1216,6 +1224,15 @@
     }
   },
   "enums": {
+    "public.accepted": {
+      "name": "accepted",
+      "schema": "public",
+      "values": [
+        "accept",
+        "reject",
+        "none"
+      ]
+    },
     "public.like": {
       "name": "like",
       "schema": "public",

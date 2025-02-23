@@ -29,7 +29,7 @@ import { signIN, signOUT } from "@/lib/auth-client";
 
 import { usePathname, useRouter } from "next/navigation";
 import { trpc } from "@/app/_trpc/client";
-import { ArrowUpFromLine, MonitorUp, UserPen, Users } from "lucide-react";
+import { ArrowUpFromLine, Crown, MonitorUp, Send, UserPen, Users } from "lucide-react";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
 import Search from "./Search";
 
@@ -76,36 +76,37 @@ console.log("user is undefined ")
 
     <div className='w-full backdrop-blur-3xl' >
           <div className=" flex justify-between gap-4 h-[75px] border-dark dark:border-light border-b-[0.5px] ">
-         <div className='flex flex-row font-mono justify-center gap-4 max-md:justify-start items-center pt-3 my-auto '>
-          <div className='flex justify-center gap-4 ml-2 max-md:hidden'>
+         <div className='flex flex-row font-mono justify-center gap-3 max-md:justify-start items-center pt-3 '>
+          <div className='flex justify-center gap-4 ml-2'>
           <div className="ml-3 ">
-          <div className='w-10 dark:fill-slate-50 fill-dark border-2 dark:border-slate-50 border-dark bg-light dark:bg-dark rounded-lg flex flex-col justify-center'>
+          <div className='w-10 dark:fill-slate-50 fill-dark  bg-light dark:bg-dark rounded-lg flex flex-col justify-center'>
             <Link href={'/'} className=" dark:fill-slate-50 fill-dark">
-            <Icons.Logo />
+            <Image src={'/green-city.png'} alt="hy" width={1000} height={100}/>
+            <h3 className=" text-sm tracking-wider dark:text-slate-50 text-center text-dark font-bold font-mono"><span className="text-blue-500">m</span>ar<span className="text-yellow-500">k</span>a</h3>
+
             </Link> 
           </div>
-            <h3 className=" text-sm tracking-wider dark:text-slate-50 text-center text-dark font-bold font-mono"><span className="text-blue-500">m</span>ar<span className="text-yellow-500">k</span>a</h3>
           </div>
           </div>
                 {activeUser?.email === 'eyuealzerihun1@gmail.com' && activeUser.role === "merchant" ? (
-                  <NavigationMenu className=" text-sm font-semibold max-md:ml-5" hidden=
+                  <NavigationMenu className=" text-sm font-semibold" hidden=
                   {activeUser?.role !== "merchant"}>
                     <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="transition-colors focus:border-black dark:focus:border-light data-[state=open]:border-black dark:data-[state=open]:border-light duration-150 rounded-sm font-mono border-2 border-dark dark:border-light font-semibold h-7 text-sm text-dark hover:bg-black bg-light hover:text-light dark:bg-dark dark:text-light hover:dark:bg-light hover:dark:text-black data-[state=open]:bg-black data-[state=open]:text-light dark:data-[state=open]:bg-light dark:data-[state=open]:text-black dark:data-[active]:bg-light dark:data-[active]:text-black data-[active]:bg-black data-[active]:text-light dark:focus:bg-light focus:text-light dark:focus:text-black focus:bg-black px-1 py-2 max-lg:w-8 max-lg:h-8"> <div className="flex gap-2 "><h1 className="max-lg:hidden text-sm">upload</h1> <MonitorUp /></div> </NavigationMenuTrigger>
+          <NavigationMenuTrigger className="transition-colors focus:border-black dark:focus:border-light data-[state=open]:border-black dark:data-[state=open]:border-light duration-500 rounded-sm font-mono border-2 border-dark dark:border-light font-semibold h-7 text-sm text-dark hover:bg-black bg-light hover:text-light dark:bg-dark dark:text-light hover:dark:bg-light hover:dark:text-black data-[state=open]:bg-black data-[state=open]:text-light dark:data-[state=open]:bg-light dark:data-[state=open]:text-black dark:data-[active]:bg-light dark:data-[active]:text-black data-[active]:bg-black data-[active]:text-light dark:focus:bg-light focus:text-light dark:focus:text-black focus:bg-black px-1 py-2 max-lg:w-8 max-lg:h-8"> <div className="flex gap-2 "><h1 className="max-lg:hidden text-sm">uploads</h1> <MonitorUp /></div> </NavigationMenuTrigger>
           <NavigationMenuContent className=" transition-all duration-150 w-32 flex-col gap-2 backdrop-blur-sm dark:bg-light bg-dark dark:text-dark text-light">
             <div className="flex flex-col w-32 h-full">
-                <Link href='/upload/upload-catagory' hidden={pathname.includes('upload/upload-catagory') || !activeUserSession} className=" group  ">
+                <Link href='/upload/upload-catagory' hidden={pathname.includes('upload/upload-catagory') || !activeUserSession} className=" group hover:bg-black dark:hover:bg-zinc-300">
               <div className="flex flex-row justify-between transition-all duration-300 px-2 py-2">
               <ArrowUpFromLine className="group-hover:-translate-y-1 transition-transform duration-500 stroke-light dark:stroke-dark group-hover:stroke-light dark:group-hover:stroke-dark"/> <h1>catagory</h1>
               </div>
               </Link>
-              <Link href='/upload/upload-post' hidden={pathname.includes('upload/upload-post') || !activeUserSession} className="group  ">
+              <Link href='/upload/upload-post' hidden={pathname.includes('upload/upload-post') || !activeUserSession} className="group hover:bg-black dark:hover:bg-zinc-300">
               <div className="flex flex-row justify-between transition-all duration-300  px-2 py-2 ">
                  <ArrowUpFromLine className="group-hover:-translate-y-1 transition-transform duration-500 stroke-light dark:stroke-dark group-hover:stroke-light dark:group-hover:stroke-dark"/> <h1 >post</h1>
               </div>
               </Link>
-              <Link href={`/upload/upload-profile`}  hidden={pathname.includes('upload/upload-profile') || !activeUserSession} className="group  ">
+              <Link href={`/upload/upload-profile`}  hidden={pathname.includes('upload/upload-profile') || !activeUserSession} className="group hover:bg-black dark:hover:bg-zinc-300 ">
               <div className="flex flex-row justify-between transition-all duration-500 px-2  py-2 ">
               <UserPen className="group-dark:hover:stroke-dark transition-transform duration-500 group-hover:-translate-y-1 group-hover:stroke-light dark:group-hover:stroke-dark stroke-light dark:stroke-dark dark:fill-dark fill-white"/><h1>profile</h1>
               </div>
@@ -120,16 +121,16 @@ console.log("user is undefined ")
                   {activeUser?.role !== "merchant"}>
                   <NavigationMenuList>
       <NavigationMenuItem>
-        <NavigationMenuTrigger className="transition-colors focus:border-black dark:focus:border-light data-[state=open]:border-black dark:data-[state=open]:border-light duration-150 rounded-sm font-mono border-2 border-dark dark:border-light font-semibold h-7 text-sm text-dark hover:bg-black bg-light hover:text-light dark:bg-dark dark:text-light hover:dark:bg-light hover:dark:text-black data-[state=open]:bg-black data-[state=open]:text-light dark:data-[state=open]:bg-light dark:data-[state=open]:text-black dark:data-[active]:bg-light dark:data-[active]:text-black data-[active]:bg-black data-[active]:text-light dark:focus:bg-light focus:text-light dark:focus:text-black focus:bg-black px-1 py-2 max-lg:w-8 max-lg:h-8" > <div className="flex gap-2 "><h1 className="max-lg:hidden text-sm">upload</h1>  
+        <NavigationMenuTrigger className="transition-colors focus:border-black dark:focus:border-light data-[state=open]:border-black dark:data-[state=open]:border-light duration-500 rounded-sm font-mono border-2 border-dark dark:border-light font-semibold h-7 text-sm text-dark hover:bg-black bg-light hover:text-light dark:bg-dark dark:text-light hover:dark:bg-light hover:dark:text-black data-[state=open]:bg-black data-[state=open]:text-light dark:data-[state=open]:bg-light dark:data-[state=open]:text-black dark:data-[active]:bg-light dark:data-[active]:text-black data-[active]:bg-black data-[active]:text-light dark:focus:bg-light focus:text-light dark:focus:text-black focus:bg-black px-1 py-2 max-lg:w-8 max-lg:h-8" > <div className="flex gap-2 "><h1 className="max-lg:hidden text-sm">uploads</h1>  
           <MonitorUp /></div> </NavigationMenuTrigger>
         <NavigationMenuContent className=" w-32 flex-col gap-4 backdrop-blur-sm dark:bg-light bg-dark text-light dark:text-dark">
           <div className="flex flex-col w-32 h-full ">
-            <Link href='/upload/upload-post' hidden={activeUser?.role  !== 'merchant' || pathname.includes('upload/upload-post') || !activeUserSession} className="group rounded-lg  ">
-            <div className="flex flex-row justify-between transition-all duration-300 px-2 rounded-lg py-2 ">
+            <Link href='/upload/upload-post' hidden={activeUser?.role  !== 'merchant' || pathname.includes('upload/upload-post') || !activeUserSession} className="group hover:bg-black dark:hover:bg-zinc-300 ">
+            <div className="flex  flex-row justify-between transition-all duration-300 px-2 rounded-lg py-2 ">
                <ArrowUpFromLine className="group-hover:-translate-y-1 transition-all duration-500 dark:stroke-dark stroke-light group-hover:stroke-light dark:group-hover:stroke-dark"/> <h1>post</h1>
             </div>
             </Link>
-            <Link href={`/upload/upload-profile`} hidden={activeUser?.role  !== 'merchant' || pathname.includes('upload/upload-profile') || !activeUserSession} className="group rounded-lg  ">
+            <Link href={`/upload/upload-profile`} hidden={activeUser?.role  !== 'merchant' || pathname.includes('upload/upload-profile') || !activeUserSession} className="group hover:bg-black dark:hover:bg-zinc-300">
             <div className="flex flex-row justify-between transition-all duration-500 px-2 rounded-lg py-2 ">
             <UserPen className="dark:hover:stroke-dark transition-all duration-500 group-hover:-translate-y-1 group-hover:stroke-light dark:group-hover:stroke-dark stroke-light dark:stroke-dark"/><h1>profile</h1>
             </div>
@@ -145,6 +146,12 @@ console.log("user is undefined ")
                   <Users className="dark:stroke-light transition-colors duration-300 stroke-dark dark:hover:fill-light hover:fill-black dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark"/>
                   </Link>
                 </div>
+                <div hidden={pathname.includes('/send') || (activeUser?.role === "merchant" && activeUser?.email !== 'eyuealzerihun1@gmail.com') || activeUser === undefined} className="">
+                    <Link href={activeUser?.email === 'eyuealzerihun1@gmail.com' && activeUser.role === "merchant" ? `/send/response/${activeUser?.id}` : `/send/request/${activeUser?.id}`} className="">
+                    {activeUser?.email === 'eyuealzerihun1@gmail.com' && activeUser.role === "merchant" ? <Crown className="stroke-dark dark:stroke-light dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark dark:hover:fill-light hover:fill-black cursor-pointer transition-all duration-300"/> : <Send className="stroke-dark dark:stroke-light dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark dark:hover:fill-light hover:fill-black cursor-pointer transition-all duration-300" />}  </Link>
+                   
+                </div>
+               
                 </div>
        
             <div className=' relative max-md:ml-4'>
@@ -224,8 +231,8 @@ console.log("user is undefined ")
                   <SheetTitle>
                   <div className= 'w-10 dark:fill-slate-300 fill-dark ml-0'>
                       <Link href={'/'} className=" flex flex-col justify-center  ">
-                      <div className="text-dark border-2 border-dark rounded-lg">
-                      <Icons.Logo className="fill-dark"/>
+                      <div className="text-dark rounded-lg">
+                      <Image src={'/green-city.png'} alt="hy" width={1000} height={100}/>
                       </div>
                       <h3 className="text-sm dark:text-slate-300 text-dark font-bold tracking-widest"><span className="text-blue-500">m</span>ar<span className="text-yellow-500">k</span>a</h3>
                       </Link>

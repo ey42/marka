@@ -26,7 +26,7 @@ if(url === undefined || url.length === -1) return undefined
   const fileName = Math.random().toString(36).slice(2,9);
   const mimeType = blob.type || "application/octet-stream";
   const file = new File([blob], `${fileName}.${mimeType.split("/")[1]}`,{type: mimeType})
-  console.log(file.name)
+  console.log('convert profile image to File ' + file.name)
   return file
   
 }
