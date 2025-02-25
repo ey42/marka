@@ -1,4 +1,5 @@
-import { post } from './../../drizzle/db/schema';
+import { user } from './../../../auth-schema';
+import { post, profile } from './../../drizzle/db/schema';
 import { publicProcedure, router } from "../trpc";
 import { db } from '@/drizzle'
 import * as schema from "@/drizzle/db/schema"
@@ -299,7 +300,7 @@ export const DatabaseRouter = router({
                 userId: userIds,
                 id: UUID,        
             })
-           
+           await db.update(schema.user).set({role: "merchant"}).where(eq(schema.user.id, userIds))
             return{success : true , message: "succussfully inserting your profile"}
         } else{
             const deletedFileName = imageFiles?.split('/').pop() as string
@@ -482,12 +483,19 @@ throw new TRPCError({
        
     }),
     getProfiles: publicProcedure.query(async() => {
-        const profiles = await db.query.profile.findMany({
-            with:{
-                userContent: true
-            },
-         })
-        return profiles
+        try {
+            const acceptedCount = await db.select({ count: sql`COUNT(*)` }).from(schema.user).where(eq(schema.user.accepted, "accept"))  
+            const rejectedCount = await db.select({ count: sql`COUNT(*)` }).from(schema.user).where(eq(schema.user.accepted, "reject"))
+            const profiles = await db.query.profile.findMany({
+                with:{
+                    userContent: true
+                },
+             })
+            return {profiles, acceptedCount, rejectedCount}
+        } catch (error) {
+            throw new TRPCError({code:"NOT_FOUND", message:"error getting profiles"})
+        }
+      
     }),
     deletePostById: publicProcedure.input(z.object({
         postId: z.string()
@@ -534,4 +542,34 @@ throw new TRPCError({
         throw new TRPCError({code:"NOT_FOUND", message:"error getting post with catagory"})
     }
     }),
+    updateUser: publicProcedure.input(z.object({
+        id: z.string(),
+        value: z.string(),
+        imageFiles: z.string(),
+    })).mutation(async({input}) => {
+        const {id, value, imageFiles} = input
+        const users = await db.select().from(schema.user)
+        const user = users.find((user) => user.id === id)
+        try {
+            if(id === user?.id && user.role === "merchant" && value === "accept"){
+                console.log("accepting the user for merchant")
+            await db.update(schema.user).set({accepted: "accept"}).where(eq(schema.user.id, id))
+            return {success: true, message: "successfully accepted the user"}
+            } else if(id === user?.id && user.role === "merchant" && value === "reject"){
+                console.log("rejecting the user for merchant")
+                await db.delete(schema.profile).where(eq(schema.profile.userId, id))
+                await db.update(schema.user).set({accepted: "reject", role: "customer"}).where(eq(schema.user.id, id))
+                const deletedFileName = imageFiles?.split('/').pop() as string
+                const storage = getStorage()
+                await storage.from("Images").remove([`profileImage/${deletedFileName}`])
+                console.log(" delete " + deletedFileName + " file name from storage by rejecting the user")
+
+                return {success: true, message: "successfully rejected the user"}
+            } else{
+                throw new TRPCError({code:"UNAUTHORIZED", message:"you are not the owner of this user"})
+            }
+        } catch (error) {
+            throw new TRPCError({code:"NOT_FOUND", message:"error accepting the user"})
+        }
+        })
 })

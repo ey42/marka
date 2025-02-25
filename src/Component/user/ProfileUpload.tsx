@@ -1,6 +1,6 @@
 "use client"
 
-import { ChangeEvent, FormEvent, useEffect, useState } from "react"
+import { ChangeEvent, FormEvent, useEffect, useState, useRef } from "react"
 import {uploadProfileImage } from "@/supabase/storage/Storages"
 import { trpc } from "@/app/_trpc/client"
 import { Authclient } from "@/lib/auth-client"
@@ -28,6 +28,7 @@ const ProfileUpload = () => {
     const [phoneNumber2, setPhoneNumber2] = useState<string>()
     const [formSubmitted, setFormSubmited] = useState<boolean>(false)
     const [x, setX] = useState<string>();
+    const fileInputRef = useRef<HTMLInputElement>(null)
     const router = useRouter()
    
 
@@ -35,7 +36,6 @@ const ProfileUpload = () => {
     const session = data?.session;
     const userId = session?.userId
     const {data: success, refetch } = trpc.database.getProfile.useQuery({id: userId as string})
-    const userHasProfile = success?.user?.userContent?.userId === userId;
     const profile = success?.user?.userContent 
     const user = success?.user
     const profileImage = success?.user?.userContent?.imageFile as string
@@ -56,6 +56,7 @@ const ProfileUpload = () => {
         setTelegram("")
         setType("")
         setX("")
+        fileInputRef.current!.value = ""
       },
       onError: async(err) => {
         console.error('Error uploading profile:', err);     
@@ -68,6 +69,7 @@ const ProfileUpload = () => {
         Images(file, e).then(imageUrl => {
          console.log("image came from image function : "+ imageUrl)
          setImage(imageUrl!)
+         fileInputRef.current!.value = ""
        }).catch(error => {
          console.error("error processing image : " + error)
         
@@ -148,6 +150,7 @@ const ProfileUpload = () => {
              refetch()
              }finally{
               refetch()
+              fileInputRef.current!.value = ""
              }
             
     }
@@ -164,6 +167,7 @@ const ProfileUpload = () => {
       setType("")
       setX("")
       refetch()
+      fileInputRef.current!.value = ""
     },[formSubmitted] )
 
 
@@ -178,7 +182,7 @@ const ProfileUpload = () => {
         <div className="flex flex-col gap-6 w-full max-sm:w-40">
           <div>
             <label htmlFor="image" className="flex flex-col font-bold text-sm text-dark dark:text-slate-300 cursor-pointer gap-2 ">
-              <input id="image" type="file" onChange={handleImage} className=" h-9 file:text-sm p-0 font-bold text-dark dark:text-slate-300 border-1 rounded-md dark:border-slate-300 border-dark dark:file:text-light file:font-bold file:text-dark file:border-1 file:border-dark dark:file:border-slate-300  file:mr-3 file:rounded-md file:h-full dark:file:bg-dark file:cursor-pointer cursor-pointer text-nowrap file:duration-150 file:transition-all" accept="image/*"/>
+              <input id="image" type="file" ref={fileInputRef} onChange={handleImage} className=" h-9 file:text-sm p-0 font-bold text-dark dark:text-slate-300 border-1 rounded-md dark:border-slate-300 border-dark dark:file:text-light file:font-bold file:text-dark file:border-1 file:border-dark dark:file:border-slate-300  file:mr-3 file:rounded-md file:h-full dark:file:bg-dark file:cursor-pointer cursor-pointer text-nowrap file:duration-150 file:transition-all" accept="image/*"/>
               <h1>select .jpeg image for your company profile</h1>
             </label>
           </div>

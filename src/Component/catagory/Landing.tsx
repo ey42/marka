@@ -34,7 +34,7 @@ const Landing = ({AllCatagory}: {AllCatagory: Catagoryprops[]}) => {
         <div className="flex flex-col gap-10 items-center justify-center">
           <div className=" flex flex-wrap mb-5 justify-start items-start mt-4 gap-3 w-full">
             {AllCatagory.map((catagory) => (
-                <Link href={`post/catagory-post/${catagory.categories}`} className=" bg-dark text-light dark:bg-light tracking-wider dark:text-dark border-2 border-dark dark:border-light rounded-md py-1 px-2" key={catagory.id}>
+                <Link href={`post/catagory-post/${catagory.categories}`} className=" bg-dark hover:bg-black dark:hover:bg-zinc-200 text-light dark:bg-light tracking-wider dark:text-dark border-2 border-dark dark:border-light rounded-md py-1 px-2" key={catagory.id}>
                  <h1 className="font-semibold">{catagory.categories.replace(/_/g, ' ')}</h1>
                 </Link>
             ))}
@@ -60,14 +60,14 @@ const Landing = ({AllCatagory}: {AllCatagory: Catagoryprops[]}) => {
 
           })}>
             {postForPage?.map((post) => (
-                <Link href={`product/${post.id}`} key={post.id} className="border-2 bg-dark dark:bg-light border-black dark:border-light rounded-md hover:shadow-lg hover:shadow-black dark:hover:shadow-zinc-400 transition-shadow duration-100">
+                <Link href={`product/${post.id}`} key={post.id} className="border-2 group bg-dark dark:bg-light border-black dark:border-light rounded-md hover:shadow-lg hover:shadow-black dark:hover:shadow-zinc-400 transition-shadow duration-100">
                   <div className={cn("flex flex-col items-center justify-center",{
                     "contrast-50": post.isSold === true,
                   })}>
                     <Image src={post !== undefined ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}${(post.file as string[])[0]}`:''} width={600} height={450} alt={post.title} className="w-60 h-48 rounded-t-sm border-b-2 border-light dark:border-black" loading="lazy"/>
                    
                   </div>
-                  <div className="flex justify-between bg-dark rounded-b-sm dark:bg-light text-light dark:text-black">
+                  <div className="flex justify-between bg-dark transition-all duration-100 group-hover:bg-black group-hover:dark:bg-zinc-200 rounded-b-sm dark:bg-light text-light dark:text-black">
                   <div className="flex flex-col ml-1 justify-between">
                   <h1 className="font-semibold">{post.title}</h1>
                   <h1 className={cn("font-semibold",{

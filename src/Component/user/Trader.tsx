@@ -5,32 +5,59 @@ import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React,{useState} from 'react'
 import PaginationComponent from '../paginationComponent'
-import { ShoppingCart } from 'lucide-react'
+import { ShoppingCart, Star } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { Eyueal } from '../Database'
+import { Authclient } from "@/lib/auth-client";
+
 
 const Trader = ({id}: {id: string}) => {
-    const {data: access} = trpc.database.getProfile.useQuery({id: id as string}) 
+    const router = useRouter()
+    const {data: access, refetch} = trpc.database.getProfile.useQuery({id: id as string}) 
     const { data: data} = trpc.database.getPosts.useQuery({id: id as string})
+    const {mutate: update} = trpc.database.updateUser.useMutation(
+        {
+            onSuccess: () => {
+                console.log('Success! Updating user...');
+                refetch()
+                router.push('/send/response')
+            },
+            onError: (err) => {
+                console.error('Error updating user:', err);
+                refetch()
+            },
+        }
+    )
     const user = access?.user
     const profile = user?.userContent;
     const posts = data?.posts
     const postsCount: number = (data?.postCount[0].count) as number
-    const router = useRouter()
+    
     const searchParams = useSearchParams()
     const currentPage = Number(searchParams.get('page')) || 1
     const totalPages = Math.ceil(postsCount / 10)
     const postForPage = posts?.slice((currentPage - 1) * 10, currentPage * 10)
+    const {useSession} = Authclient
+    const {data : Eyu, } = useSession()
+    const activeUserEmail = Eyu?.user.email
+    const handleUpdate = (userId: string, imageFile: string, status: string) => {
+        // handle the rejection logic here
+        update({id: userId, imageFiles: imageFile, value: status})
+
+    }
 
      
   return (
     <div className='dark:text-light flex flex-col gap-10 font-semibold font-mono text-dark'>
       <div className="flex flex-col items-center justify-center tracking-wider gap-4">
-        {(user !== undefined && profile !== undefined)  && (
+        {(user !== undefined && profile !== undefined && profile !== null)  && (
             <div className='flex flex-col justify-center  border-4 dark:border-light border-dark w-1/2 max-md:w-full overflow-hidden rounded-xl '>
                 <div className='flex items-center w-full justify-evenly gap-4 border-b-2 dark:border-light border-dark '>
-                    <h1></h1>
-                    <Image src={profile.imageFile !== undefined ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}${profile.imageFile as string}`:''} alt="company Image" width={112} height={112} className="w-28 h-28 my-2 border-4 dark:border-light border-dark rounded-full"/>
-                    <h1 className='text-green-500 text-lg font-bold'>approved</h1>
+                    {activeUserEmail === Eyueal && user.accepted !== 'reject' ? <button onClick={() => handleUpdate(profile.userId as string, profile.imageFile as string, "reject")} className='border-2 bg-dark hover:bg-red-500 outline-2 outline-dark outline-offset-2 outline-double ring-2 ring-offset-2 ring-red-500 fill-ring text-zinc-200 hover:text-black dark:bg-light transition-all duration-200 dark:hover:bg-red-500 dark:text-black p-1 px-4 rounded-md'> Reject </button> : <h1> {user.accepted === 'reject' ? "admin rejected" : ""}</h1>}
+
+                    <Image src={profile.imageFile !== undefined || profile.imageFile !== null  ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}${profile.imageFile as string}`:'#'} alt="company Image" width={112} height={112} className="w-28 h-28 my-2 border-4 dark:border-light border-dark rounded-full"/>
+
+                    {activeUserEmail === Eyueal && user.accepted !== 'accept' ? <button className='border-2 bg-dark hover:bg-green-500 outline-2 outline-dark outline-offset-2 outline-double ring-2 ring-offset-2 ring-green-500 fill-ring text-zinc-200 hover:text-black dark:bg-light dark:hover:bg-green-500 dark:text-black p-1 transition-all duration-200 px-4 rounded-md' onClick={() => handleUpdate(profile.userId as string, profile.imageFile as string, "accept")}> Accept </button> : <h1 >{user.accepted === 'accept' ? <Star className='fill-green-500'/> : ""}</h1>}
                 </div>
                 <div className='flex flex-row justify-between bg-dark dark:bg-light dark:text-dark text-light gap-4'>
                 <div className='flex flex-col gap-2 px-2'>

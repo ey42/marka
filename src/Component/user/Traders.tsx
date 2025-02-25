@@ -3,7 +3,8 @@ import { trpc } from "@/app/_trpc/client"
 import Image from "next/image"
 import Link from "next/link"
 const Traders = () => {
-  const {data: access} = trpc.database.getProfiles.useQuery()
+  const {data: accesses} = trpc.database.getProfiles.useQuery()
+  const access = accesses?.profiles
   return (
     <div className="flex items-center justify-center  rounded-md mx-auto">
       <div className="flex dark:text-light w-full text-dark flex-col gap-10 font-mono items-center justify-center">
@@ -12,7 +13,7 @@ const Traders = () => {
         <div className="flex flex-col  items-center w-full gap-10 p-20">
        {access !== undefined && access.map((profile) =>( 
         profile.userContent.accepted === "accept" ?
-        <Link href={`traders/${profile.userContent.id}`} key={profile.id} passHref className="flex hover:shadow-lg hover:shadow-black transition-all duration-100 text-light dark:text-dark border-2 bg-dark hover:bg-black hover:dark:bg-black hover:dark:text-light dark:bg-light dark:border-light hover:dark:border-black border-dark w-1/2 max-md:w-full overflow-hidden rounded-xl flex-col p-2 gap-4">
+        <Link href={`traders/${profile.userContent.id}`} key={profile.id} passHref className="flex  transition-all duration-200 text-light dark:text-dark border-2 bg-dark hover:bg-black hover:dark:bg-zinc-200  dark:bg-light dark:border-light hover:dark:border-black border-dark w-1/2 max-md:w-full overflow-hidden rounded-xl flex-col p-2 gap-4">
        
           <div className="flex flex-row items-center justify-between w-full rounded-lg">
           <div className="flex ">

@@ -16,7 +16,7 @@ export interface Catagoryprops {
   }
 
 
- 
+ export const Eyueal = "eyuealzerihun1@gmail.com"
   
 export async function convertBlobUrlToFIle(url: string){
 

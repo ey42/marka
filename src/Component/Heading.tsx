@@ -32,6 +32,7 @@ import { trpc } from "@/app/_trpc/client";
 import { ArrowUpFromLine, Crown, MonitorUp, Send, UserPen, Users } from "lucide-react";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
 import Search from "./Search";
+import { Eyueal } from "./Database";
 
 
 
@@ -88,7 +89,7 @@ console.log("user is undefined ")
           </div>
           </div>
           </div>
-                {activeUser?.email === 'eyuealzerihun1@gmail.com' && activeUser.role === "merchant" ? (
+                {activeUser?.email === Eyueal ? (
                   <NavigationMenu className=" text-sm font-semibold" hidden=
                   {activeUser?.role !== "merchant"}>
                     <NavigationMenuList>
@@ -146,9 +147,9 @@ console.log("user is undefined ")
                   <Users className="dark:stroke-light transition-colors duration-300 stroke-dark dark:hover:fill-light hover:fill-black dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark"/>
                   </Link>
                 </div>
-                <div hidden={pathname.includes('/send') || (activeUser?.role === "merchant" && activeUser?.email !== 'eyuealzerihun1@gmail.com') || activeUser === undefined} className="">
-                    <Link href={activeUser?.email === 'eyuealzerihun1@gmail.com' && activeUser.role === "merchant" ? `/send/response/${activeUser?.id}` : `/send/request/${activeUser?.id}`} className="">
-                    {activeUser?.email === 'eyuealzerihun1@gmail.com' && activeUser.role === "merchant" ? <Crown className="stroke-dark dark:stroke-light dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark dark:hover:fill-light hover:fill-black cursor-pointer transition-all duration-300"/> : <Send className="stroke-dark dark:stroke-light dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark dark:hover:fill-light hover:fill-black cursor-pointer transition-all duration-300" />}  </Link>
+                <div hidden={pathname.includes('/send') || (activeUser?.role === "merchant" && activeUser?.email !== Eyueal) || activeUser === undefined} className="">
+                    <Link href={activeUser?.email === Eyueal ? `/send/response` : `/send/request`} className="">
+                    {activeUser?.email === Eyueal? <Crown className="stroke-dark dark:stroke-light dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark dark:hover:fill-light hover:fill-black cursor-pointer transition-all duration-300"/> : <Send className="stroke-dark dark:stroke-light dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark dark:hover:fill-light hover:fill-black cursor-pointer transition-all duration-300" />}  </Link>
                    
                 </div>
                
@@ -277,23 +278,23 @@ console.log("user is undefined ")
                 </div> }
                 
                 
-                  {activeUser?.email === 'eyuealzerihun1@gmail.com' && activeUser.role === "merchant" ?<div className="flex flex-col text-center gap-4">
+                  {activeUser?.email === Eyueal ? <div className="flex flex-col text-center gap-4">
                 <Link href='/upload/upload-catagory' hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('upload/upload-catagory') || !activeUserSession} className="border-x-2 rounded-lg border-black bg-gradient-to-r from-dark via-light to-dark ease-linear bg-[200%_auto] transition-all duration-500 hover:bg-right hover:bg-slate-200">
               <div className="">
                 <h1 className="text-sm font-semibold">catagory</h1>
               </div>
               </Link>
-              <Link href='/upload/upload-profile' hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('/upload/upload-profile') || !activeUserSession} className="border-x-2 bg-gradient-to-r from-dark via-light to-dark ease-linear bg-[200%_auto] transition-all duration-500 hover:bg-right hover:bg-slate-200 border-black rounded-lg ">
+              <Link href='/upload/upload-profile' hidden={activeUser?.email  !== Eyueal || pathname.includes('/upload/upload-profile') || !activeUserSession} className="border-x-2 bg-gradient-to-r from-dark via-light to-dark ease-linear bg-[200%_auto] transition-all duration-500 hover:bg-right hover:bg-slate-200 border-black rounded-lg ">
               <div className="">
                 <h1 className="text-sm font-semibold">profile</h1>
               </div>
               </Link>
-              <Link href='/upload/upload-post' hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('upload/upload-post') || !activeUserSession} className="bg-gradient-to-r from-dark via-light to-dark ease-linear bg-[200%_auto] transition-all duration-500 hover:bg-right border-x-2 hover:bg-slate-200 border-black rounded-lg ">
+              <Link href='/upload/upload-post' hidden={activeUser?.email  !== Eyueal || pathname.includes('upload/upload-post') || !activeUserSession} className="bg-gradient-to-r from-dark via-light to-dark ease-linear bg-[200%_auto] transition-all duration-500 hover:bg-right border-x-2 hover:bg-slate-200 border-black rounded-lg ">
               <div className="">
                 <h1 className="text-sm font-semibold">post</h1>
               </div>
               </Link>
-              <Link href='/profile/traders' hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('profile/traders') || !activeUserSession} className="border-x-2 bg-gradient-to-r from-dark via-light to-dark ease-linear bg-[200%_auto] transition-all duration-500 hover:bg-right border-black hover:bg-slate-200 rounded-lg">
+              <Link href='/profile/traders' hidden={activeUser?.email  !== Eyueal || pathname.includes('profile/traders') || !activeUserSession} className="border-x-2 bg-gradient-to-r from-dark via-light to-dark ease-linear bg-[200%_auto] transition-all duration-500 hover:bg-right border-black hover:bg-slate-200 rounded-lg">
               <div className="flex flex-row gap-1 justify-center">
                 <h1 className="text-sm font-semibold">Traders</h1>
                 <Users className="dark:stroke-light w-4 h-4 stroke-dark dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark"/>
@@ -312,7 +313,7 @@ console.log("user is undefined ")
                 <h1 className="text-sm font-semibold">profile</h1>
               </div>
               </Link>
-              <Link href='/profile/traders' hidden={activeUser?.email  === 'eyuealzerihun1@gmail.com' || pathname.includes('profile/traders') || !activeUserSession} className="bg-gradient-to-r from-dark via-light to-dark ease-linear bg-[200%_auto] transition-all duration-500 hover:bg-right border-x-2 border-black hover:bg-slate-200 rounded-lg">
+              <Link href='/profile/traders' hidden={activeUser?.email  === Eyueal || pathname.includes('profile/traders') || !activeUserSession} className="bg-gradient-to-r from-dark via-light to-dark ease-linear bg-[200%_auto] transition-all duration-500 hover:bg-right border-x-2 border-black hover:bg-slate-200 rounded-lg">
               <div className="flex flex-row gap-1 justify-center">
                 <h1 className="text-sm font-semibold">Traders</h1>
                 <Users className="dark:stroke-light w-4 h-4 stroke-dark dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark"/>

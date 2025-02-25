@@ -1,7 +1,7 @@
 "use client"
 import { trpc } from '@/app/_trpc/client';
 import { useState, useEffect, useRef, useContext } from 'react';
-import { Search as SearchIcon } from "lucide-react";
+import { Frown, Search as SearchIcon } from "lucide-react";
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -88,8 +88,8 @@ const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         "border-dark rounded-b-lg max-h-[500px] overflow-y-scroll max-w-7xl  border-4 dark:border-light": pathname !== "/"
       })}>
       <h2 className='font-mono text-3xl font-bold mb-4 px-4'>Search Results of <span className="text-blue-500">m</span>ar<span className="text-yellow-500">k</span>a:</h2>
-      {searchResults?.length === 0 && searchTerm !== "" ? (
-        <p className='text-xl font-mono font-thin px-4'>No results found.</p>
+      {searchResults?.length === 0 && searchTerm !== "" ? ( <div className='flex'> <p className='text-xl font-mono font-thin pl-4'>No results found.</p> <Frown /></div>
+       
       ) : (
         <ul className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-4'>
           {searchResults && searchResults.map((post) => (
