@@ -1,6 +1,6 @@
-import { undefinedTable, text, integer, timestamp, boolean } from "drizzle-orm/undefined-core";
+import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
 			
-export const user = undefinedTable("user", {
+export const user = pgTable("user", {
 					id: text("id").primaryKey(),
 					name: text('name').notNull(),
  email: text('email').notNull().unique(),
@@ -10,7 +10,7 @@ export const user = undefinedTable("user", {
  updatedAt: timestamp('updatedAt').notNull()
 				});
 
-export const session = undefinedTable("session", {
+export const session = pgTable("session", {
 					id: text("id").primaryKey(),
 					expiresAt: timestamp('expiresAt').notNull(),
  ipAddress: text('ipAddress'),
@@ -18,7 +18,7 @@ export const session = undefinedTable("session", {
  userId: text('userId').notNull().references(()=> user.id)
 				});
 
-export const account = undefinedTable("account", {
+export const account = pgTable("account", {
 					id: text("id").primaryKey(),
 					accountId: text('accountId').notNull(),
  providerId: text('providerId').notNull(),
@@ -30,7 +30,7 @@ export const account = undefinedTable("account", {
  password: text('password')
 				});
 
-export const verification = undefinedTable("verification", {
+export const verification = pgTable("verification", {
 					id: text("id").primaryKey(),
 					identifier: text('identifier').notNull(),
  value: text('value').notNull(),
