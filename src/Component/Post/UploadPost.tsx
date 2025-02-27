@@ -52,7 +52,8 @@ const {useSession} = Authclient
    
     const router = useRouter()
     const {data: success , refetch: fetchAgain} = trpc.database.getPosts.useQuery({id: userId as string})
-    const {data : access , refetch} = trpc.database.getCatagoriesName.useQuery()
+    const {data : Catagory , refetch} = trpc.database.getCatagoriesName.useQuery()
+    const access = Catagory?.catagoryName
     const {mutate: upload, isError, isSuccess, isPending} = trpc.database.uploadPost.useMutation({
       onSuccess: () => {
         console.log('Success! Uploading post...');

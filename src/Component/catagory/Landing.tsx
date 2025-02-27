@@ -12,9 +12,11 @@ import ThemeContext from '@/context/themeContext'
 
 
 
-const Landing = ({AllCatagory}: {AllCatagory: Catagoryprops[]}) => {
+const Landing = () => {
   const {refetch} = trpc.database.deleteSolded.useQuery()  
   const {data : data , refetch: fetchAgain} = trpc.database.getAllPosts.useQuery()  
+  const {data: Catagory } = trpc.database.getCatagoriesName.useQuery()
+  const AllCatagory = Catagory?.AllCatagory
   const posts = data?.allPosts
   const postsCount: number = (data?.postCount[0].count) as number
   const router = useRouter()
@@ -33,11 +35,11 @@ fetchAgain()
        <div className="text-sm text-black dark:text-light font-mono ">
         <div className="flex flex-col gap-10 items-center justify-center">
           <div className=" flex flex-wrap mb-5 justify-start items-start mt-4 gap-3 w-full">
-            {AllCatagory.map((catagory) => (
+            {AllCatagory !== undefined && AllCatagory !== null ? AllCatagory.map((catagory) => (
                 <Link href={`post/catagory-post/${catagory.categories}`} className=" bg-dark hover:bg-black dark:hover:bg-zinc-200 text-light dark:bg-light tracking-wider dark:text-dark border-2 border-dark dark:border-light rounded-md py-1 px-2" key={catagory.id}>
                  <h1 className="font-semibold">{catagory.categories.replace(/_/g, ' ')}</h1>
                 </Link>
-            ))}
+            )): <h1>no catagories</h1>}
           </div>
           <div className="z-10 ">
              <Search/>

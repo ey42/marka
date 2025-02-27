@@ -28,7 +28,8 @@ const {useSession} = Authclient
     const session = data?.session;
     const userId = session?.userId
     // const [isPending, startTransition] = useTransition()
-    const {data : access , error, status, refetch} = trpc.database.getCatagoriesName.useQuery()
+    const {data : Catagory , error, status, refetch} = trpc.database.getCatagoriesName.useQuery()
+    const access = Catagory?.catagoryName
     const {mutate: upload, } = trpc.database.uploadCatagories.useMutation({
       onSuccess: () => {
         console.log('Success! Uploading categories...');

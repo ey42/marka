@@ -191,7 +191,7 @@ export const DatabaseRouter = router({
         
         const AllCatagory:Catagoryprops[] =  await db.select().from(schema.catagories).orderBy(asc(schema.catagories.categories))
         const catagoryName:string[] = AllCatagory.map((name) => name.categories)
-        return catagoryName as string[]
+        return {catagoryName, AllCatagory}
     }),
     getUsers: publicProcedure.input(z.object({id: z.string()})).query(async({input}) => {
         const id = input.id
