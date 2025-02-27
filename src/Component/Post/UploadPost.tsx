@@ -195,7 +195,7 @@ const {useSession} = Authclient
       fetchAgain()
     }
   
-   },[formSubmitted])
+   },[refetch, fetchAgain, formSubmitted])
 
   return (
    <MaxWidthWrapper>

@@ -44,7 +44,6 @@ const Heading = () => {
   
   const {refetch} = trpc.database.deleteSolded.useQuery()
   const pathname = usePathname()
-  console.log(pathname.includes('post/upload-catagory') + " pathname")
   
   const {data, error} = useSession()
   
@@ -57,7 +56,7 @@ const Heading = () => {
   
   useEffect(() => {
     refetch()
-  },[])
+  },[refetch])
 
 
   const usersImage: (string | null)[] = []

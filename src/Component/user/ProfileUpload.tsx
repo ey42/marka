@@ -168,7 +168,7 @@ const ProfileUpload = () => {
       setX("")
       refetch()
       fileInputRef.current!.value = ""
-    },[formSubmitted] )
+    },[formSubmitted, refetch] )
 
 
   return (

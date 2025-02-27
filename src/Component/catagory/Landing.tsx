@@ -23,11 +23,11 @@ const Landing = ({AllCatagory}: {AllCatagory: Catagoryprops[]}) => {
   const totalPages = Math.ceil(postsCount / 50)
   const postForPage = posts?.slice((currentPage - 1) * 50, currentPage * 50)
   const {search} = useContext(ThemeContext)
+
   useEffect(() => {
-    refetch()
-    fetchAgain()
-  }, [])
-  
+refetch()
+fetchAgain()
+  }, [posts, refetch, fetchAgain])
   return (
     <MaxWidthWrapper> 
        <div className="text-sm text-black dark:text-light font-mono ">

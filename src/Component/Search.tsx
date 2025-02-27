@@ -37,7 +37,7 @@ export default function Search() {
     });
     setSearchResults(results);
 
-  }, [searchTerm]);
+  }, [posts ,searchTerm]);
   
   
 
@@ -62,7 +62,7 @@ export default function Search() {
       document.removeEventListener('mousedown', handleClickOutside)
     }
     
-  },[searchInputRef, resultsContainerRef])
+  },[setSearch, searchInputRef, resultsContainerRef])
 
 const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
