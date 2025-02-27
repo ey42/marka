@@ -1,7 +1,7 @@
 import {createAuthClient} from "better-auth/react"
 
 export const Authclient = createAuthClient({
-    baseURL: process.env.NODE_ENV === "production" ? `https://https://marka-sell.vercel.app` : `http://localhost:3000`,
+    baseURL: process.env.NODE_ENV === "production" ? `https://marka-sell.vercel.app` : `http://localhost:3000`,
 })
 
 export const {signIn,signOut,} = Authclient
