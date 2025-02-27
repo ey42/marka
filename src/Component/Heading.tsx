@@ -89,7 +89,7 @@ console.log("user is undefined ")
           </div>
           </div>
                 {activeUser?.email === Eyueal ? (
-                  <NavigationMenu className=" text-sm font-semibold" hidden=
+                  <NavigationMenu className=" text-sm font-semibold max-md:hidden" hidden=
                   {activeUser?.role !== "merchant"}>
                     <NavigationMenuList>
         <NavigationMenuItem>
@@ -117,7 +117,7 @@ console.log("user is undefined ")
        
       </NavigationMenuList>
                   </NavigationMenu>
-                ):(activeUser?.role === "merchant" ? (<NavigationMenu className="max-md:ml-5 text-sm font-semibold" hidden=
+                ):(activeUser?.role === "merchant" ? (<NavigationMenu className="max-md:hidden text-sm font-semibold" hidden=
                   {activeUser?.role !== "merchant"}>
                   <NavigationMenuList>
       <NavigationMenuItem>
