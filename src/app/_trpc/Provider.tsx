@@ -13,10 +13,10 @@ export default function Provider({children}: {children: ReactNode}) {
           // uses the httpSubscriptionLink for subscriptions
           condition: (op) => op.type === 'subscription',
           true: unstable_httpSubscriptionLink({
-            url: `https://https://marka-sell.vercel.app/api/trpc`,
+            url: `https://marka-sell.vercel.app/api/trpc`,
           }),
           false: httpBatchLink({
-            url: `https://https://marka-sell.vercel.app/api/trpc`,
+            url: `https://marka-sell.vercel.app/api/trpc`,
           }),
         }),
       ],
