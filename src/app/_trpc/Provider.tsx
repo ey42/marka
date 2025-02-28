@@ -13,11 +13,11 @@ export default function Provider({children}: {children: ReactNode}) {
           // uses the httpSubscriptionLink for subscriptions
           condition: (op) => op.type === 'subscription',
           true: unstable_httpSubscriptionLink({
-            url: process.env.NODE_ENV === "production" ? `https://marka-sell.vercel.app` : `http://localhost:3000`,
+            url:`https://marka-sell.vercel.app`,
 
           }),
           false: httpBatchLink({
-             url: process.env.NODE_ENV === "production" ? `https://marka-sell.vercel.app` : `http://localhost:3000`,
+             url:`https://marka-sell.vercel.app`,
 
           }),
         }),
