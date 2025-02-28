@@ -145,7 +145,9 @@ console.log("user is undefined ")
      
     </NavigationMenuList>
                 </NavigationMenu>):"") }
-                <div className="cursor-pointer max-md:hidden">
+                <div className={cn("cursor-pointer max-md:hidden",{
+                  "ml-4": user === undefined
+                })}>
                   <Link href={`/profile/traders`}>
                   <Users className="dark:stroke-light transition-colors duration-300 stroke-dark dark:hover:fill-light hover:fill-black dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark"/>
                   </Link>
