@@ -112,7 +112,7 @@ const Trader = ({id}: {id: string}) => {
         <div className='flex gap-2 items-center justify-center my-16 '>  
             <h1 className='text-3xl'>{postForPage !== undefined && postForPage?.length > 1 ? "Items" : postForPage?.length === 1 ? "Item" : "no items"}</h1> <div className='dark:text-light text-dark font-bold'><ShoppingCart className='w-10 h-10'/ ></div> 
         </div>
-        <div className={cn('grid items-center justify-center bg-zinc-200 dark:bg-zinc-800  p-10 gap-10 gap-y-20  max-md:gap-5 grid-flow-row grid-cols-4 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-md:gap-y-20',{
+        <div className={cn('grid items-center justify-center bg-zinc-200 dark:bg-zinc-800  p-10 gap-10 gap-y-20  max-md:gap-5 grid-flow-row grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 max-md:gap-y-20',{
             "hidden": posts === undefined || posts.length === 0
         })}>
     {postForPage !== undefined && postForPage.map((post) => (
@@ -122,7 +122,7 @@ const Trader = ({id}: {id: string}) => {
                 "contrast-50": post.isSold === true,
 
                 })}>
-                    <Image src={post.file !== undefined ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}${(post.file as string)[0]}`:''} alt="company Image" width={256} height={208} className="w-64 h-52 rounded-sm"/>
+                    <Image src={post.file !== undefined ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}${(post.file as string)[0]}`:''} alt="company Image" width={256} height={208} className="w-full h-52 rounded-sm"/>
                 </div>
             </div>
             <div className='flex text-sm justify-between gap-2 px-2 bg-dark text-light dark:bg-light dark:text-dark font-semibold '>
@@ -133,8 +133,8 @@ const Trader = ({id}: {id: string}) => {
             <div className='flex flex-col justify-between'>
                 <h1 className={cn("mt-1",{
                     "text-red-500 font-bold": post.isSold
-                })}>{post.isSold ? "solded" : "for sell"}</h1>
-                <h1>{post.price}</h1>
+                })}>{post.isSold ? "solded" : post.price}</h1>
+               
             </div>
             </div>
         </Link>

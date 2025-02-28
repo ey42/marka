@@ -33,6 +33,7 @@ import { ArrowUpFromLine, Crown, MonitorUp, Send, UserPen, Users } from "lucide-
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
 import Search from "./Search";
 import { Eyueal } from "./Database";
+import { cn } from "@/lib/utils";
 
 
 
@@ -48,7 +49,7 @@ const Heading = () => {
   const {data, error} = useSession()
   
   const session = data?.session;
-  const {data: success , isPending, isError, isFetching} = trpc.database.getUsers.useQuery({id: session?.userId as string})
+  const {data: success , isPending, isError} = trpc.database.getUsers.useQuery({id: session?.userId as string})
 
   const activeUserSession = success?.activeSessions
   const activeUser = success?.activeUser
@@ -71,18 +72,19 @@ console.log("user is undefined ")
 
   const {darkTheme, setDarkTheme} = useContext(ThemeContext)
 
- console.log(pathname)
   return (
 
     <div className='w-full backdrop-blur-3xl' >
-          <div className=" flex justify-between gap-4 h-[75px] border-dark dark:border-light border-b-[0.5px] ">
-         <div className='flex flex-row font-mono justify-center gap-3 max-md:justify-start items-center pt-3 '>
-          <div className='flex justify-center gap-4 ml-2'>
-          <div className="ml-3 ">
-          <div className='w-10 dark:fill-slate-50 fill-dark  bg-light dark:bg-dark rounded-lg flex flex-col justify-center'>
-            <Link href={'/'} className=" dark:fill-slate-50 fill-dark">
-            <Image src={'/green-city.png'} alt="hy" width={1000} height={100}/>
-            <h3 className=" text-sm tracking-wider dark:text-slate-50 text-center text-dark font-bold font-mono"><span className="text-blue-500">m</span>ar<span className="text-yellow-500">k</span>a</h3>
+          <div className=" flex justify-between items-end gap-4 h-[75px] border-dark dark:border-light border-b-[0.5px] ">
+         <div className='flex flex-row font-mono justify-center gap-3 max-md:justify-start items-end '>
+          <div className={cn('flex justify-center gap-4',{
+            "hidden": pathname === "/"
+          })}>
+          <div>
+          <div className='w-full h-full dark:fill-slate-50 fill-dark  bg-light dark:bg-dark rounded-r-md flex flex-col justify-center'>
+            <Link href={'/'} className=" dark:fill-slate-50 -mb-6 fill-dark">
+            <Image src={'/green-city.png'} alt="hy" width={60} height={50}/>
+            <h3 className=" bg-light dark:bg-dark text-sm rounded-md tracking-wider dark:text-slate-50 text-center text-dark font-bold font-mono"><span className="text-blue-500">m</span>ar<span className="text-yellow-500">k</span>a</h3>
 
             </Link> 
           </div>
@@ -117,7 +119,9 @@ console.log("user is undefined ")
        
       </NavigationMenuList>
                   </NavigationMenu>
-                ):(activeUser?.role === "merchant" ? (<NavigationMenu className="max-md:hidden text-sm font-semibold" hidden=
+                ):(activeUser?.role === "merchant" ? (<NavigationMenu className={cn("max-md:hidden text-sm font-semibold",{
+                  "ml-4": pathname === "/"
+                })} hidden=
                   {activeUser?.role !== "merchant"}>
                   <NavigationMenuList>
       <NavigationMenuItem>
@@ -146,7 +150,9 @@ console.log("user is undefined ")
                   <Users className="dark:stroke-light transition-colors duration-300 stroke-dark dark:hover:fill-light hover:fill-black dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark"/>
                   </Link>
                 </div>
-                <div hidden={pathname.includes('/send') || (activeUser?.role === "merchant" && activeUser?.email !== Eyueal) || activeUser === undefined} className="">
+                <div hidden={pathname.includes('/send') || (activeUser?.role === "merchant" && activeUser?.email !== Eyueal) || activeUser === undefined} className={cn("",{
+                  "max-md:ml-4": pathname === "/"
+                })}>
                     <Link href={activeUser?.email === Eyueal ? `/send/response` : `/send/request`} className="">
                     {activeUser?.email === Eyueal? <Crown className="stroke-dark dark:stroke-light dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark dark:hover:fill-light hover:fill-black cursor-pointer transition-all duration-300"/> : <Send className="stroke-dark dark:stroke-light dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark dark:hover:fill-light hover:fill-black cursor-pointer transition-all duration-300" />}  </Link>
                    
@@ -157,11 +163,12 @@ console.log("user is undefined ")
             <div className=' relative max-md:ml-4'>
            
                  { pathname !== "/" ? (<div className="mt-5"><Search/></div>) : <div className="flex flex-col dark:text-light text-dark items-center bg-light dark:bg-dark h-full rounded-sm px-2">
-                    <h1 className="z-20 font-bold font-mono text-3xl max-md:-mb-2"><span className="text-blue-500">m</span>ar<span className="text-yellow-500">k</span>a<span className="text-red-500">.</span>c<span className="text-green-500">o</span>m</h1>
-                    <p className="font-semibold text-lg max-md:mb-2 z-10 invisible">market center!</p>
-                    <div className="bg-cover bg-center w-20 h-2 z-0 -mt-10" >
-                    <Image src={'/green-city.png'} alt="hy" width={1000} height={100}/>
+                    <h1 className="z-20 font-bold font-mono text-3xl"><span className="text-blue-500">m</span>ar<span className="text-yellow-500">k</span>a<span className="text-red-500">.</span>c<span className="text-green-500">o</span>m</h1>
+                   <Link href={'/'} className=" flex flex-col justify-center items-center z-10"> 
+                    <div className="bg-cover bg-center w-20 h-2 z-0 " >
+                    <Image src={'/green-city.png'} alt="hy" width={100} height={100}/>
                     </div>
+                    </Link>
                     </div>}
       
             </div>
@@ -201,9 +208,11 @@ console.log("user is undefined ")
               </div>
                   </Link> }
 
-                  {isPending === true ? " " :  <div className=" flex rounded-lg max-md:hidden mr-5 ">
-                  <div className='text-sm border-2 bg-gradient-to-r dark:from-dark dark:via-light dark:to-light dark:text-black hover:dark:text-black from-light via-dark to-dark ease-linear transition-all duration-700 hover:text-light bg-[200%_auto] hover:bg-right dark:hover:text-white dark:hover:bg-black dark:border-light dark:bg-dark cursor-pointer flex gap-2 bg-light border-dark hover:border-dark text-dark  rounded-md pr-2'>
-                <button className=' flex justify-start pl-2  font-bold text-sm py-0.5 font-mono' onClick={() => {
+                <div className=" flex rounded-lg max-md:hidden mr-5 ">
+                <div className={cn("rounded-md pr-2 text-sm border-2 text-dark dark:bg-dark bg-light dark:border-light  dark:text-light border-dark flex gap-2",{
+                'text-sm border-2 bg-gradient-to-r dark:from-dark cursor-pointer dark:via-light dark:to-light from-light via-dark to-dark ease-linear transition-all duration-700 hover:text-light bg-[200%_auto] hover:bg-right dark:hover:text-black dark:hover:bg-black   hover:border-dark ': !isPending
+                })}>
+                <button disabled ={isPending}  className=' flex justify-start pl-2  font-bold text-sm py-0.5 font-mono' onClick={() => {
                   if(!user){
                     signIN()
                   } else{
@@ -212,12 +221,12 @@ console.log("user is undefined ")
 
                   }}
                   > {user ? "Log-out" : "Log-in"}</button>
-                <button>
+                <button disabled ={isPending} >
                 <FaGoogle className='fill-light dark:fill-black'/>
                 </button>
                 </div>
                 </div>
-}
+
                 <Sheet >
               <SheetTrigger asChild>
               <div className='mr-5  max-sm:mt-2 md:hidden items-center flex justify-center cursor-pointer'>

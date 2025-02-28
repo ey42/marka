@@ -71,15 +71,15 @@ const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   return (
     <div className='flex flex-col justify-center items-center'>
       <div className=" bg-transparent">
-                    <div  className={cn("flex w-72 gap-1 max-sm:w-40 h-9 flex-row border-2  transition-colors duration-150 bg-dark dark:bg-light dark:border-light  border-dark rounded-lg items-center",{
-                      "w-[500px] h-20 border-4" : pathname === '/'
+                    <div  className={cn("flex w-72 gap-1 max-md:w-40 h-9 flex-row border-2  transition-colors duration-150 bg-dark dark:bg-light dark:border-light  border-dark rounded-lg items-center",{
+                      "w-full h-12 border-4 max-md:w-full" : pathname === '/'
                     })}> 
-                    <SearchIcon height={pathname === "/" ? 40 : 20} className="dark:stroke-dark w-20 stroke-light"/>
+                    <SearchIcon height={pathname === "/" ? 30 : 20} className="dark:stroke-dark w-20 stroke-light"/>
                       <input type="text" onClick={() => {
                        setSearch(true);
                        localStorage.setItem("search", "true")
                       }} className={cn("outline-none w-full bg-transparent placeholder:font-semibold placeholder:text-slate-300 font-bold font-mono text-sm text-light dark:text-black focus:placeholder:text-transparent dark:focus:placeholder:text-transparent dark:placeholder:text-slate-400",{
-                        "placeholder:text-2xl text-2xl": pathname === "/"
+                        "placeholder:text-2xl text-xl": pathname === "/"
                       })} onChange={handleChange} placeholder="search...on marka" value={searchTerm} ref={searchInputRef}/>
                     </div>
       </div>

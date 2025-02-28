@@ -9,13 +9,14 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { cn } from "@/lib/utils"
 import Search from "../Search"
 import ThemeContext from '@/context/themeContext'
+import { Frown } from "lucide-react"
 
 
 
 const Landing = () => {
   const {refetch} = trpc.database.deleteSolded.useQuery()  
   const {data : data , refetch: fetchAgain} = trpc.database.getAllPosts.useQuery()  
-  const {data: Catagory } = trpc.database.getCatagoriesName.useQuery()
+  const {data: Catagory, isLoading: loading } = trpc.database.getCatagoriesName.useQuery()
   const AllCatagory = Catagory?.AllCatagory
   const posts = data?.allPosts
   const postsCount: number = (data?.postCount[0].count) as number
@@ -32,23 +33,21 @@ fetchAgain()
   }, [posts, refetch, fetchAgain])
   return (
     <MaxWidthWrapper> 
-       <div className="text-sm text-black dark:text-light font-mono ">
+       <div className="text-sm mt-16 text-black dark:text-light font-mono ">
         <div className="flex flex-col gap-10 items-center justify-center">
-          <div className=" flex flex-wrap mb-5 justify-start items-start mt-4 gap-3 w-full">
+          <div className=" flex flex-wrap mb-5 justify-center items-start mt-4 gap-3 w-full">
             {AllCatagory !== undefined && AllCatagory !== null ? AllCatagory.map((catagory) => (
                 <Link href={`post/catagory-post/${catagory.categories}`} className=" bg-dark hover:bg-black dark:hover:bg-zinc-200 text-light dark:bg-light tracking-wider dark:text-dark border-2 border-dark dark:border-light rounded-md py-1 px-2" key={catagory.id}>
                  <h1 className="font-semibold">{catagory.categories.replace(/_/g, ' ')}</h1>
                 </Link>
-            )): <h1>no catagories</h1>}
+            )): loading ? <h1 className="text-lg font-bold">loading... catagories </h1> : <div className="flex gap-2"><h1 className="text-lg font-bold">no catagories found </h1><Frown /></div> }
           </div>
-          <div className="z-10 ">
+          <div className="z-10 mb-10 max-md:w-full">
              <Search/>
           </div>
          
-          <div>
-            
-          </div>
-          <div  className={cn("drop-shadow-2xl shadow-2xl dark:shadow-light  shadow-gray-800 Landing-image flex rounded-lg mt-6 flex-col items-center justify-center gap-6 bg-dark dark:bg-light h-60 mb-20",{
+
+          <div  className={cn("drop-shadow-2xl shadow-2xl dark:shadow-light  shadow-gray-800 Landing-image flex rounded-lg mt-6 flex-col items-center justify-center gap-6 bg-dark dark:bg-light mx-4 h-60 mb-20",{
             "hidden": search
           })}>
             <div className=" flex flex-1 flex-col drop-shadow-2xl shadow-2xl shadow-black  dark:shadow-gray-800 items-center justify-center px-2 bg-dark dark:bg-light text-white dark:text-black rounded-lg">
@@ -66,20 +65,20 @@ fetchAgain()
                   <div className={cn("flex flex-col items-center justify-center",{
                     "contrast-50": post.isSold === true,
                   })}>
-                    <Image src={post !== undefined ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}${(post.file as string[])[0]}`:''} width={600} height={450} alt={post.title} className="w-60 h-48 rounded-t-sm border-b-2 border-light dark:border-black" loading="lazy"/>
+                    <Image src={post !== undefined ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}${(post.file as string[])[0]}`:''} width={600} height={450} alt={post.title} className="w-full h-48 rounded-t-sm border-b-2 border-light dark:border-black" loading="lazy"/>
                    
                   </div>
                   <div className="flex justify-between bg-dark transition-all duration-100 group-hover:bg-black group-hover:dark:bg-zinc-200 rounded-b-sm dark:bg-light text-light dark:text-black">
                   <div className="flex flex-col ml-1 justify-between">
-                  <h1 className="font-semibold">{post.title}</h1>
+                  <h1 className="font-semibold overflow-hidden text-ellipsis">{post.title}</h1>
                   <h1 className={cn("font-semibold",{
                     "text-black bg-red-500 rounded-md bottom-0 px-1 font-bold": post.isSold === true
                   })}>{post.isSold ? "solded" : ''}</h1>
                   <h1>{!post.isSold && `ETB ${post.price}`}</h1>
                   </div>
                   <div className="flex flex-col justify-between mr-2">
-                  <h1>{post.author.name}</h1>
-                  <h1>{post.postProfile.companyName}</h1>
+                  <h1 className="overflow-hidden text-ellipsis">{post.author.name.split(' ')[0]}</h1>
+                  <h1 className="overflow-hidden text-ellipsis">{post.postProfile.companyName}</h1>
                   </div>
                   </div>
                  
