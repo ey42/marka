@@ -24,22 +24,22 @@ const CatagoryPost = ({catagoryName}: {catagoryName: string}) => {
     <MaxWidthWrapper className='flex items-center justify-center'>
     <div className='flex bg-zinc-200 dark:bg-zinc-800 text-black rounded-md dark:text-light p-10 flex-col items-center justify-center'>
             {postForPage !== undefined && posts && posts.length > 0 ?  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"> {postForPage.map((post) => (
-            <Link href={post ? `/product/${post.id}` : '/'} key={post.id} className="border-2 group border-dark dark:border-light hover:shadow-lg hover:shadow-black transition-all duration-100 dark:hover:shadow-zinc-400 rounded-md">
+            <Link href={post ? `/product/${post.id}` : '/'} key={post.id} className="border-2 bg-dark group-hover:bg-black group-hover:dark:bg-zinc-200 text-white dark:bg-white dark:text-black group border-dark dark:border-light hover:shadow-lg hover:shadow-black transition-all duration-100 dark:hover:shadow-zinc-400 rounded-md">
                 <div className={cn("flex items-center justify-center",{
                     "contrast-50": post.isSold === true
                 })}>
-                    <Image src={post !== undefined ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}${(post.file as string[])[0]}`:''} width={600} height={450} alt={post.title} className="w-60 h-48 rounded-sm border-b-2 border-light dark:border-black" loading="lazy"/>
+                    <Image src={post !== undefined ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}${(post.file as string[])[0]}`:''} width={600} height={450} alt={post.title} className="w-full h-48 rounded-sm border-b-2 border-light dark:border-black" loading="lazy"/>
                   
                 </div>
-                <div className="flex justify-between  bg-dark transition-colors duration-100 group-hover:bg-black group-hover:dark:bg-zinc-200 text-white dark:bg-white dark:text-black">
+                <div className="flex justify-between">
                     <div>
-                    <h1 className="font-semibold text-sm pl-1">{post.title}</h1>
+                    <h1 className="font-semibold text-sm pl-1">{post.title}...</h1>
                     <h1 className={cn("font-semibold pl-1",{
                         "text-black font-bold px-1 rounded-md bg-red-500 text-sm ": post.isSold === true
                     })}>{post.isSold ? "solded" : `ETB ${post.price}`}</h1>
                     </div>
                     <div className='flex flex-col mr-2 '>
-                    <h1 className="text-sm font-semibold pl-1">{post.author.name}</h1>
+                    <h1 className="text-sm font-semibold pl-1">{post.author.name.split(" ")[0]}</h1>
                     </div>
                 </div>
                 

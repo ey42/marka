@@ -172,7 +172,7 @@ const ProfileUpload = () => {
 
 
   return (
-    <div className="mt-5 ml-5 mb-5 font-mono dark:text-light text-dark w-full flex flex-row justify-start gap-40 max-lg:gap-28 max-md:flex-col">
+    <div className="mt-5 ml-5 mb-5 font-mono dark:text-light text-dark w-full flex flex-row justify-start max-md:justify-center max-md:items-center gap-40 max-lg:gap-28 max-md:flex-col">
       <div className="">
      
         <form onSubmit={onsubmit} className="flex flex-col gap-4 justify-start items-start max-w-max">

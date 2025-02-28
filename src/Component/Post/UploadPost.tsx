@@ -201,7 +201,7 @@ const {useSession} = Authclient
   return (
    <MaxWidthWrapper>
     <div className="mt-4 flex items-center justify-center border-1 rounded-md dark:border-slate-300 border-dark">
-      <div className="flex flex-row max-lg:flex-col max-lg:justify-center max-md:items-start max-md:justify-start justify-evenly max-lg:items-center max-lg:gap-12 w-full max-sm:ml-2 ml-4">
+      <div className="flex flex-row max-lg:flex-col max-lg:justify-center max-md:items-center max-md:justify-center  justify-evenly max-lg:items-center max-lg:gap-12 w-full max-sm:ml-2 ml-4">
         <form onSubmit={onsubmit} className="flex flex-col gap-5 items-center justify-center ml-4">
           <div className="w-52 h-52 flex items-center transition-all duration-200 rounded-lg text-dark dark:text-light font-bold border-1 border-dark dark:border-slate-300">
             <Image src={image[0] as string} alt="post image" width={208} height={208} className="w-52 h-52 rounded-lg border-2 dark:border-slate-300 z-10 border-dark"/>

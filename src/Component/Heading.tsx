@@ -75,8 +75,8 @@ console.log("user is undefined ")
   return (
 
     <div className='w-full backdrop-blur-3xl' >
-          <div className=" flex justify-between items-end gap-4 h-[75px] border-dark dark:border-light border-b-[0.5px] ">
-         <div className='flex flex-row font-mono justify-center gap-3 max-md:justify-start items-end '>
+          <div className=" flex justify-between pb-1 items-end gap-4 h-[75px] border-dark dark:border-light border-b-[0.5px] ">
+         <div className='flex flex-row font-mono ml-4 justify-center gap-3 max-md:justify-start items-end '>
           <div className={cn('flex justify-center gap-4',{
             "hidden": pathname === "/"
           })}>
@@ -84,7 +84,7 @@ console.log("user is undefined ")
           <div className='w-full h-full dark:fill-slate-50 fill-dark  bg-light dark:bg-dark rounded-r-md flex flex-col justify-center'>
             <Link href={'/'} className=" dark:fill-slate-50 -mb-6 fill-dark">
             <Image src={'/green-city.png'} alt="hy" width={60} height={50}/>
-            <h3 className=" bg-light dark:bg-dark text-sm rounded-md tracking-wider dark:text-slate-50 text-center text-dark font-bold font-mono"><span className="text-blue-500">m</span>ar<span className="text-yellow-500">k</span>a</h3>
+            <h3 className="  text-sm rounded-md tracking-wider dark:text-slate-50 text-center text-dark font-bold font-mono"><span className="text-blue-500">m</span>ar<span className="text-yellow-500">k</span>a</h3>
 
             </Link> 
           </div>
@@ -145,16 +145,12 @@ console.log("user is undefined ")
      
     </NavigationMenuList>
                 </NavigationMenu>):"") }
-                <div className={cn("cursor-pointer max-md:hidden",{
-                  "ml-4": user === undefined
-                })}>
+                <div className="cursor-pointer max-md:hidden">
                   <Link href={`/profile/traders`}>
                   <Users className="dark:stroke-light transition-colors duration-300 stroke-dark dark:hover:fill-light hover:fill-black dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark"/>
                   </Link>
                 </div>
-                <div hidden={pathname.includes('/send') || (activeUser?.role === "merchant" && activeUser?.email !== Eyueal) || activeUser === undefined} className={cn("",{
-                  "max-md:ml-4": pathname === "/"
-                })}>
+                <div hidden={pathname.includes('/send') || (activeUser?.role === "merchant" && activeUser?.email !== Eyueal) || activeUser === undefined} >
                     <Link href={activeUser?.email === Eyueal ? `/send/response` : `/send/request`} className="">
                     {activeUser?.email === Eyueal? <Crown className="stroke-dark dark:stroke-light dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark dark:hover:fill-light hover:fill-black cursor-pointer transition-all duration-300"/> : <Send className="stroke-dark dark:stroke-light dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark dark:hover:fill-light hover:fill-black cursor-pointer transition-all duration-300" />}  </Link>
                    
@@ -167,7 +163,7 @@ console.log("user is undefined ")
                  { pathname !== "/" ? (<div className="mt-5"><Search/></div>) : <div className="flex flex-col dark:text-light text-dark items-center bg-light dark:bg-dark h-full rounded-sm px-2">
                     <h1 className="z-20 font-bold font-mono text-3xl"><span className="text-blue-500">m</span>ar<span className="text-yellow-500">k</span>a<span className="text-red-500">.</span>c<span className="text-green-500">o</span>m</h1>
                    <Link href={'/'} className=" flex flex-col justify-center items-center z-10"> 
-                    <div className="bg-cover bg-center w-20 h-2 z-0 " >
+                    <div className="bg-cover bg-center w-20 h-0 z-0 " >
                     <Image src={'/green-city.png'} alt="hy" width={100} height={100}/>
                     </div>
                     </Link>

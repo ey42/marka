@@ -48,10 +48,10 @@ const Trader = ({id}: {id: string}) => {
 
      
   return (
-    <div className='dark:text-light flex flex-col gap-10 font-semibold font-mono text-dark'>
+    <div className='dark:text-light flex flex-col mt-10 gap-10 font-semibold font-mono text-dark'>
       <div className="flex flex-col items-center justify-center tracking-wider gap-4">
         {(user !== undefined && profile !== undefined && profile !== null)  && (
-            <div className='flex flex-col justify-center  border-4 dark:border-light border-dark w-1/2 max-md:w-full overflow-hidden rounded-xl '>
+            <div className='flex flex-col justify-center  border-4 dark:border-light border-dark w-4/5 xl:w-1/2 max-md:w-full overflow-hidden rounded-xl '>
                 <div className='flex items-center w-full justify-evenly gap-4 border-b-2 dark:border-light border-dark '>
                     {activeUserEmail === Eyueal && user.accepted !== 'reject' ? <button onClick={() => handleUpdate(profile.userId as string, profile.imageFile as string, "reject")} className='border-2 bg-dark hover:bg-red-500 outline-2 outline-dark outline-offset-2 outline-double ring-2 ring-offset-2 ring-red-500 fill-ring text-zinc-200 hover:text-black dark:bg-light transition-all duration-200 dark:hover:bg-red-500 dark:text-black p-1 px-4 rounded-md'> Reject </button> : <h1> {user.accepted === 'reject' ? "admin rejected" : ""}</h1>}
 
@@ -59,44 +59,44 @@ const Trader = ({id}: {id: string}) => {
 
                     {activeUserEmail === Eyueal && user.accepted !== 'accept' ? <button className='border-2 bg-dark hover:bg-green-500 outline-2 outline-dark outline-offset-2 outline-double ring-2 ring-offset-2 ring-green-500 fill-ring text-zinc-200 hover:text-black dark:bg-light dark:hover:bg-green-500 dark:text-black p-1 transition-all duration-200 px-4 rounded-md' onClick={() => handleUpdate(profile.userId as string, profile.imageFile as string, "accept")}> Accept </button> : <h1 >{user.accepted === 'accept' ? <Star className='fill-green-500'/> : ""}</h1>}
                 </div>
-                <div className='flex flex-row justify-between bg-dark dark:bg-light dark:text-dark text-light gap-4'>
-                <div className='flex flex-col gap-2 px-2'>
+                <div className='flex flex-row justify-between bg-dark dark:bg-light dark:text-dark text-light '>
+                <div className='flex flex-col gap-2 '>
                     <div>
                         <h1 className='text-lg text-center gap-2 font-bold'>
                             user info
                         </h1>
                     </div>
-                    <h1>company name : {profile.companyName ? profile.companyName : "sorry i don't have company name"}</h1>
-                    <h1>trader name : {user.name ? user.name : "sorry i don't have a name"}</h1>
-                    <h1>Type of Buisness : {profile.type ? profile.type : "sorry i dont have type of buisness"}</h1>
-                    <h1>phone number : {profile.phoneNumber1 ? profile.phoneNumber1 : "sorry i dont have phone number"}</h1>
-                    <h1>phone number : {profile.phoneNumber2 ? profile.phoneNumber2 : "sorry i dont have phone number"}</h1>
-                    <h1>email : {user.email ? user.email : "sorry no email"}</h1>
+                    <h1 className='max-md:border-b-2 border-light dark:border-dark w-auto'>company name : {profile.companyName ? profile.companyName : "don't have company name"}</h1>
+                    <h1 className='max-md:border-b-2 border-light dark:border-dark w-auto'>trader name : {user.name ? user.name : "sorry i don't have a name"}</h1>
+                    <h1 className='max-md:border-b-2 border-light dark:border-dark w-auto'>Type of Buisness : {profile.type ? profile.type : "sorry i dont have type of buisness"}</h1>
+                    <h1 className='max-md:border-b-2 border-light dark:border-dark w-auto'>phone number : {profile.phoneNumber1 ? profile.phoneNumber1 : "sorry i dont have phone number"}</h1>
+                    <h1 className='max-md:border-b-2 border-light dark:border-dark w-auto'>phone number : {profile.phoneNumber2 ? profile.phoneNumber2 : "sorry i dont have phone number"}</h1>
+                    <h1 className='max-md:border-b-2 border-light dark:border-dark w-auto'>email : {user.email ? user.email : "sorry no email"}</h1>
                 </div>
-                <div className='flex flex-col gap-2 px-2 w-1/2'>
+                <div className='flex flex-col max-md:border-l-2 border-light gap-2  w-1/2'>
                     <div>
                         <h1  className='text-lg text-center font-bold'>
                             user accounts
                         </h1>
                     </div>
                   
-                    <Link target='_blank' className='flex gap-1 truncate' href={profile.instagram ? profile?.instagram?.includes('https://www.instagram.com/') ? profile?.instagram : `https://www.instagram.com/${profile?.instagram}` : "#"}>
-                    <h2>instagram :</h2>
+                    <Link target='_blank' className='flex gap-1 max-md:border-b-2 border-light dark:border-dark w-auto truncate' href={profile.instagram ? profile?.instagram?.includes('https://www.instagram.com/') ? profile?.instagram : `https://www.instagram.com/${profile?.instagram}` : "#"}>
+                    <h2 className='pl-2'>instagram :</h2>
                      {profile.instagram ? profile.instagram.includes('https://www.instagram.com') ? `@${profile.instagram.split('/').pop()}` : `@${profile.instagram}` : "no instagram account"}
                     </Link>
 
-                    <Link target='_blank' className='flex gap-1' href={profile.telegram ? profile?.telegram?.includes('https://t.me/') ? profile?.telegram : `https://t.me/${profile?.telegram}` : "#"}>
-                    <h2>telegram :</h2>
+                    <Link target='_blank' className='flex max-md:border-b-2 border-light dark:border-dark w-auto gap-1' href={profile.telegram ? profile?.telegram?.includes('https://t.me/') ? profile?.telegram : `https://t.me/${profile?.telegram}` : "#"}>
+                    <h2 className='pl-2'>telegram :</h2>
                      {profile.telegram ? profile.telegram.includes('https://t.me/') ? `@${profile.telegram.split('/').pop()}` : `@${profile.telegram}` : "no telegram account"}
                     </Link>
 
-                    <Link target='_blank' className='flex gap-1' href={profile.facebook ? profile?.facebook?.includes('https://www.facebook.com/') ? profile?.facebook : `https://www.facebook.com/${profile?.facebook}` : "#"}>
-                    <h2>facebook :</h2>
+                    <Link target='_blank' className='flex max-md:border-b-2 border-light dark:border-dark w-auto gap-1' href={profile.facebook ? profile?.facebook?.includes('https://www.facebook.com/') ? profile?.facebook : `https://www.facebook.com/${profile?.facebook}` : "#"}>
+                    <h2 className='pl-2'>facebook :</h2>
                      {profile.facebook ? profile.facebook.includes('https://www.facebook.com') ? `@${profile.facebook.split('/').pop()}` : `@${profile.facebook}` : "no facebook account"}
                     </Link>
 
-                    <Link target='_blank' className='flex gap-1' href={profile.x ? profile?.x?.includes('https://x.com/') ? profile?.x : `https://x.com/${profile?.x}` : "#"}>
-                    <h2>x :</h2> 
+                    <Link target='_blank' className='flex max-md:border-b-2 border-light dark:border-dark w-auto gap-1' href={profile.x ? profile?.x?.includes('https://x.com/') ? profile?.x : `https://x.com/${profile?.x}` : "#"}>
+                    <h2 className='pl-2'>x :</h2> 
                      {profile.x ? profile.x.includes('https://x.com') ? `@${profile.x.split('/').pop()}` : `@${profile.x}` : "no x account"}
                     </Link>
                     
@@ -125,9 +125,9 @@ const Trader = ({id}: {id: string}) => {
                     <Image src={post.file !== undefined ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}${(post.file as string)[0]}`:''} alt="company Image" width={256} height={208} className="w-full h-52 rounded-sm"/>
                 </div>
             </div>
-            <div className='flex text-sm justify-between gap-2 px-2 bg-dark text-light dark:bg-light dark:text-dark font-semibold '>
+            <div className='flex text-sm justify-between gap-6 px-2 bg-dark text-light dark:bg-light dark:text-dark font-semibold '>
             <div className='flex flex-col gap-[2px] mt-[2px]'>
-                <h1>{post.title}</h1>
+                <h1>{post.title.split(" ")[0]}...</h1>
                 <h1>{post.catagory}</h1>
             </div>
             <div className='flex flex-col justify-between'>

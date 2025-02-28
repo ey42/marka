@@ -65,7 +65,7 @@ const PostUserOnly = ({catagoryName, userId} : {catagoryName: string, userId: st
       {posts !== undefined ? posts.map((post) => (
         post.catagory === catagoryName ? (
         <div key={post.id}>
-          <div className='flex flex-col gap-2 rounded-md bg-zinc-200 dark:bg-zinc-600 pb-2 w-80 border-r-2 pr-2 border-dark dark:border-slate-50 text-dark dark:text-slate-50 '>
+          <div className='flex flex-col gap-2 rounded-md mt-10 bg-zinc-300 dark:bg-zinc-600 pb-2 w-80 border-x-2 pr-2 border-dark dark:border-slate-50 text-dark dark:text-slate-50 '>
             <div className='flex flex-row '>
               <div className={cn('w-40', {
                 "contrast-50": post.isSold === true,
