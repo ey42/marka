@@ -294,8 +294,8 @@ if(user !== undefined){
                 </div> }
                 
                 
-                  {activeUser?.email === Eyueal ? <div className="flex flex-col bg-black w-full text-center">
-                <Link href='/upload/upload-catagory' hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('upload/upload-catagory') || !activeUserSession} className="w-full ransition-all duration-200 hover:border-black hover:text-black hover:bg-light border-b-2 flex items-center justify-center  border-light bg-black">
+                  {activeUser !== undefined && activeUser !== null && activeUser?.email === Eyueal ? <div hidden={activeUser !== undefined && activeUser !== null && activeUser.email !== Eyueal} className="flex flex-col bg-black w-full text-center">
+                <Link href='/upload/upload-catagory' hidden={activeUser?.email  !== Eyueal || pathname.includes('upload/upload-catagory') || !activeUserSession} className="w-full ransition-all duration-200 hover:border-black hover:text-black hover:bg-light border-b-2 flex items-center justify-center  border-light bg-black">
               <div className="py-1">
                 <h1 className="text-sm font-semibold">catagory</h1>
               </div>
@@ -318,8 +318,8 @@ if(user !== undefined){
               </div>
               </Link>
               </div>
-              : <div  className="flex flex-col bg-black w-full text-center">
-                <Link href='/upload/upload-post' hidden={activeUser?.role !== "merchant" ||  pathname.includes('upload/upload-post')} className="w-full border-b-2 flex items-center ransition-all duration-200 justify-center hover:bg-light hover:text-black bg-black hover:border-black border-light">
+              : activeUser !== undefined && activeUser !== null && <div hidden={activeUser !== undefined && activeUser !== null && activeUser?.role !== "merchant"}  className="flex flex-col bg-black w-full text-center">
+                <Link href='/upload/upload-post' hidden={activeUser?.role !== "merchant" ||  pathname.includes('upload/upload-post')} className="w-full border-y-2 flex items-center ransition-all duration-200 justify-center hover:bg-light hover:text-black bg-black hover:border-black border-light">
               <div className="py-1">
                 <h1 className="text-sm font-semibold">Post</h1>
               </div>
