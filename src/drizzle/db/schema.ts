@@ -77,7 +77,7 @@ export const profileSeen = pgTable("ProfileSeen",{
 export const catagories = pgTable("catagories",{
 	id: uuid("id").primaryKey().notNull(),
 	categories: text("categories").notNull().unique(),
-	Imagefile: varchar("Imagefile"),
+	Imagefile: varchar("Imagefile").notNull(),
 	description: text("description"),
 	createdAt: timestamp("createdAt").notNull().defaultNow(),
 	updatedAt: timestamp("updatedAt")
