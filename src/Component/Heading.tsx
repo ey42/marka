@@ -302,7 +302,7 @@ if(user !== undefined){
                 </div> }
                 
                 
-                  {activeUser !== undefined && activeUser !== null && activeUser.email === Eyueal ? <div hidden={activeUser !== undefined || activeUser !== null || activeUser.email !== Eyueal} className="flex flex-col bg-black w-full text-center">
+                  {activeUser !== undefined && activeUser !== null && activeUser.email === Eyueal ? <div hidden={ activeUser.email !== Eyueal} className="flex flex-col bg-black w-full text-center">
                 <Link href='/upload/upload-catagory' hidden={activeUser?.email  !== Eyueal || pathname.includes('upload/upload-catagory') || !activeUserSession} className="w-full ransition-all duration-200 hover:border-black hover:text-black hover:bg-light border-b-2 flex items-center justify-center  border-light bg-black">
               <div className="py-1">
                 <h1 className="text-sm font-semibold">catagory</h1>
