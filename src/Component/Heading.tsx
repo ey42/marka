@@ -240,13 +240,13 @@ if(user !== undefined){
 
                 <Sheet >
               <SheetTrigger asChild>
-              <div className='mr-5  max-sm:mt-2 md:hidden items-center flex justify-center cursor-pointer'>
+              <div className='mr-5  max-sm:mt-2 md:hidden items-center flex cursor-pointer'>
                     <div className='w-5 h-5'>
                       <Icons.nav className='dark:fill-light fill-dark'/>
                     </div>
                   </div>
               </SheetTrigger>
-              <SheetContent className="w-36 md:h-48  bg-light text-dark font-mono border-none rounded-md overflow-auto md:hidden">
+              <SheetContent className="w-full md:h-48  bg-light text-dark font-mono border-none rounded-md overflow-auto md:hidden">
                 <SheetHeader className="flex justify-center items-start">
                   <SheetTitle>
                   <div className= 'w-10 dark:fill-slate-300 fill-dark ml-0'>
@@ -265,7 +265,7 @@ if(user !== undefined){
                 </SheetHeader>
                 
                 <div className="mt-3 flex flex-col w-full bg-black py-4 md:hidden h-screen">
-                  <div className="flex hover:bg-zinc-200 bg-light w-full items-center justify-between gap-5 transition-all duration-200 cursor-pointer">
+                  <div className="flex hover:bg-zinc-200 bg-light w-full items-center border-b-2 border-black justify-between gap-5 transition-all duration-200 cursor-pointer">
                     <div>
                       <h1 className="font-semibold text-black text-sm">{darkTheme ? "light" : "dark"}</h1>
                     </div>
@@ -342,7 +342,7 @@ if(user !== undefined){
 
 }
                  
-            <div className='group flex gap-2 cursor-pointer hover:bg-slate-200 bg-light text-dark border-b-2 transition-all duration-200 rounded-lg w-full md:hidden border-dark'>
+            <div className='group flex gap-2 cursor-pointer hover:bg-slate-200 bg-light text-dark border-b-2 transition-all duration-200 w-full md:hidden border-dark'>
             <button className=' flex justify-start pl-2 font-bold text-sm ' onClick={() => {
             if(!activeUser){
               signIN()
