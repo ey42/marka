@@ -52,10 +52,8 @@ const Heading = () => {
   const {data: success , isPending} = trpc.database.getUsers.useQuery({id: session?.userId as string})
 
   const activeUserSession = success?.activeSessions
-
-  
-  const activeUser = success?.activeUser 
-  const user = success?.user 
+  const activeUser = success?.activeUser
+  const user = success?.user
   
   useEffect(() => {
     refetch()
@@ -255,12 +253,6 @@ if(user !== undefined){
                   <SheetTitle>
                   <div className= 'w-10 dark:fill-slate-300 fill-dark ml-0'>
                       <Link href={'/'} className=" flex flex-col justify-center  ">
-                      Image
-                      marka.com
-                      hy
-                      
-                      no catagories found
-                      
                       <div className="text-dark rounded-lg">
                       <Image src={'/green-city.png'} alt="hy" width={1000} height={100}/>
                       </div>
@@ -275,7 +267,7 @@ if(user !== undefined){
                 </SheetHeader>
                 
                 <div className="mt-3 flex flex-col w-full  text-light md:hidden h-screen">
-                  <div className="flex w-full border-y-2 border-black mb-4">
+                  <div className="flex w-full border-t-2 border-black mb-4">
 
                     {darkTheme ? <div  className=" flex px-2 py-1 group hover:bg-black text-black hover:text-light bg-light w-full items-center justify-between gap-5 transition-all duration-200 cursor-pointer" onClick={() => {
                       setDarkTheme(false);
@@ -302,8 +294,8 @@ if(user !== undefined){
                 </div> }
                 
                 
-                  {activeUser !== undefined && activeUser !== null && activeUser.email === Eyueal ? <div hidden={ activeUser.email !== Eyueal} className="flex flex-col bg-black w-full text-center">
-                <Link href='/upload/upload-catagory' hidden={activeUser?.email  !== Eyueal || pathname.includes('upload/upload-catagory') || !activeUserSession} className="w-full ransition-all duration-200 hover:border-black hover:text-black hover:bg-light border-b-2 flex items-center justify-center  border-light bg-black">
+                  {activeUser !== undefined && activeUser.email === Eyueal ? <div className="flex flex-col bg-black w-full text-center">
+                <Link href='/upload/upload-catagory' hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('upload/upload-catagory') || !activeUserSession} className="w-full ransition-all duration-200 hover:border-black hover:text-black hover:bg-light border-b-2 flex items-center justify-center  border-light bg-black">
               <div className="py-1">
                 <h1 className="text-sm font-semibold">catagory</h1>
               </div>
@@ -319,14 +311,14 @@ if(user !== undefined){
               </div>
               </Link>
               <Link href='/profile/traders' hidden={activeUser?.email  !== Eyueal || pathname.includes('profile/traders') || !activeUserSession}  className="w-full group ransition-all duration-200 border-b-2 flex items-center justify-center hover:bg-light hover:text-black bg-black hover:border-black border-light">
-              : <div hidden={activeUser.role !== "merchant" || activeUser.accepted !== "accept"}  className="flex flex-col bg-black w-full text-center">
+              <div className="flex flex-row gap-1 justify-center py-1">
                 <h1 className="text-sm font-semibold">Traders</h1>
                 <Users className="dark:stroke-light w-4 h-4 stroke-dark dark:hover:stroke-slate-200 hover:stroke-black fill-light group-hover:fill-zinc-400  dark:fill-dark"/>
                 
               </div>
               </Link>
               </div>
-              : (activeUser !== undefined && activeUser !== null) && <div hidden={ activeUser.role !== "merchant" || activeUser.accepted !== "accept"}  className="flex flex-col bg-black w-full text-center">
+              : activeUser !== undefined && activeUser.accepted !== "accept" ?  <div  className="flex flex-col bg-black w-full text-center">
                 <Link href='/upload/upload-post' hidden={activeUser?.role !== "merchant" ||  pathname.includes('upload/upload-post')} className="w-full border-y-2 flex items-center ransition-all duration-200 justify-center hover:bg-light hover:text-black bg-black hover:border-black border-light">
               <div className="py-1">
                 <h1 className="text-sm font-semibold">Post</h1>
@@ -343,11 +335,11 @@ if(user !== undefined){
                 <Users className="dark:stroke-light w-4 h-4 group-hover:fill-zinc-400 stroke-dark dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark"/>
               </div>
               </Link>
-              </div>
+              </div> : " "
 
 }
                  
-            <div className='group flex gap-2 items-center justify-center mt-10 cursor-pointer hover:text-light hover:bg-black bg-light text-black border-y-2 transition-all duration-200 w-full md:hidden border-black'>
+            <div className='group flex gap-2 items-center justify-center mt-10 cursor-pointer hover:text-light hover:bg-black bg-light text-black border-b-2 transition-all duration-200 w-full md:hidden border-black'>
             <button className=' flex justify-start pl-2 py-1 font-bold text-sm ' onClick={() => {
             if(!activeUser){
               signIN()
