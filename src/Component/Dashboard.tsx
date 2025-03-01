@@ -39,7 +39,7 @@ const  Dashboard = ({profile_id,user}: DashboardProps) => {
 
   
   return (
-    <div className="flex justify-center items-start h-screen">
+    <div className="flex justify-center items-start mt-10 h-screen">
     <div className="flex w-1/3 max-lg:w-1/2 max-md:w-auto items-center justify-center flex-col px-2 gap-6 bg-dark dark:bg-light dark:text-dark text-light rounded-sm">
     <div className="mt-4 ml-4 flex items-center justify-center ">
    

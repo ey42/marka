@@ -9,14 +9,14 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { cn } from "@/lib/utils"
 import Search from "../Search"
 import ThemeContext from '@/context/themeContext'
-import { Frown } from "lucide-react"
+import { Frown, RefreshCw } from "lucide-react"
 
 
 
 const Landing = () => {
   const {refetch} = trpc.database.deleteSolded.useQuery()  
   const {data : data , refetch: fetchAgain} = trpc.database.getAllPosts.useQuery()  
-  const {data: Catagory, isLoading: loading } = trpc.database.getCatagoriesName.useQuery()
+  const {data: Catagory, isPending: loading } = trpc.database.getCatagoriesName.useQuery()
   const AllCatagory = Catagory?.AllCatagory
   const posts = data?.allPosts
   const postsCount: number = (data?.postCount[0].count) as number
@@ -33,14 +33,14 @@ fetchAgain()
   }, [posts, refetch, fetchAgain])
   return (
     <MaxWidthWrapper> 
-       <div className="text-sm mt-16 text-black dark:text-light font-mono ">
+       <div className="text-sm mt-16 bg-light dark:bg-dark text-black dark:text-light font-mono ">
         <div className="flex flex-col gap-10 items-center justify-center">
-          <div className=" flex flex-wrap mb-5 justify-start items-start mt-4 gap-3 w-full">
+          <div className="flex px-2 flex-wrap mb-5 justify-start items-start mt-4 gap-3 w-full">
             {AllCatagory !== undefined && AllCatagory !== null ? AllCatagory.map((catagory) => (
                 <Link href={`post/catagory-post/${catagory.categories}`} className=" bg-dark hover:bg-black dark:hover:bg-zinc-200 text-light dark:bg-light tracking-wider dark:text-dark border-2 border-dark dark:border-light rounded-md py-1 px-2" key={catagory.id}>
                  <h1 className="font-semibold">{catagory.categories.replace(/_/g, ' ')}</h1>
                 </Link>
-            )): loading ? <h1 className="text-lg font-bold self-center">loading... catagories </h1> : <div className="flex gap-2"><h1 className="text-lg font-bold self-center">no catagories found </h1><Frown /></div> }
+            )): loading ? <div className="text-lg flex gap-2 font-bold justify-center items-center self-center"><h1>loading... catagories </h1> <RefreshCw /> </div> : <div className="flex justify-center items-center gap-2"><h1 className="text-lg font-bold self-center">no catagories found </h1><Frown /></div> }
           </div>
           <div className="z-10 mb-10 max-md:w-full">
              <Search/>
@@ -56,12 +56,12 @@ fetchAgain()
             </div>
             <Image src='/m.jpg' alt="merkato" width={800} height={200} content="cover" className="w-full flex flex-1 rounded-b-lg drop-shadow-xl dark:shadow-slate-400 dark:shadow-xl shadow-2xl border-2 border-dark dark:border-light shadow-dark h-60" priority style={{objectFit: "cover"}}/>
           </div>
-          <div className={cn("grid grid-cols-2 bg-zinc-200 dark:bg-zinc-800 p-10 rounded-md mt-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 max-md:w-full gap-6",{
+          <div className={cn("grid grid-cols-2 bg-zinc-200 dark:bg-zinc-800 p-5 rounded-md mt-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 max-md:w-full gap-6",{
             "hidden": search || posts === undefined || posts.length === 0
 
           })}>
             {postForPage?.map((post) => (
-                <Link href={`product/${post.id}`} key={post.id} className="border-2 group bg-dark dark:bg-light border-black dark:border-light rounded-md hover:shadow-lg min-w-52 max-md:w-full px-2 hover:shadow-black dark:hover:shadow-zinc-400 transition-shadow duration-100">
+                <Link href={`product/${post.id}`} key={post.id} className="border-2 group bg-dark dark:bg-light border-black dark:border-light rounded-md hover:shadow-lg min-w-52 max-md:w-full hover:shadow-black dark:hover:shadow-zinc-400 transition-shadow duration-100">
                   <div className={cn("flex flex-col items-center justify-center",{
                     "contrast-50": post.isSold === true,
                   })}>

@@ -72,7 +72,7 @@ if(user !== undefined){
 
   return (
 
-    <div className='w-full backdrop-blur-3xl' >
+    <div className='w-full bg-light dark:bg-dark' >
           <div className=" flex justify-between pb-1 items-end gap-4 h-[75px] border-dark dark:border-light border-b-[0.5px] ">
          <div className='flex flex-row font-mono ml-4 justify-center gap-3 max-md:justify-start items-end '>
           <div className={cn('flex justify-center gap-4',{
@@ -185,7 +185,7 @@ if(user !== undefined){
             </div>
            
             <div className="flex flex-row justify-center items-center">
-            <div className='flex max-md:hidden justify-center items-center'>
+            <div className='flex justify-center items-center'>
               <button className='z-10  w-10 h-6 text-dark text-xl '>
              {darkTheme ? <MdOutlineLightMode className='cursor-pointer text-slate-50 ' 
              onClick={() => {
@@ -233,21 +233,23 @@ if(user !== undefined){
                   }}
                   > {user ? "Log-out" : "Log-in"}</button>
                 <button disabled ={isPending} >
-                <FaGoogle className='fill-light dark:fill-black'/>
+                <FaGoogle className={cn('fill-light dark:fill-black',{
+                  "fill-black dark:fill-light": isPending
+                })}/>
                 </button>
                 </div>
                 </div>
 
                 <Sheet >
               <SheetTrigger asChild>
-              <div className='mr-5  max-sm:mt-2 md:hidden items-center flex cursor-pointer'>
+              <div className='mr-5  max-sm:mt-2 md:hidden items-center flex justify-center cursor-pointer'>
                     <div className='w-5 h-5'>
                       <Icons.nav className='dark:fill-light fill-dark'/>
                     </div>
                   </div>
               </SheetTrigger>
-              <SheetContent className="w-full md:h-48  bg-light text-dark font-mono border-none rounded-md overflow-auto md:hidden">
-                <SheetHeader className="flex justify-center items-start">
+              <SheetContent className="w-36 md:h-48 flex flex-col bg-light text-dark font-mono border-none rounded-md overflow-auto md:hidden">
+                <SheetHeader className="flex justify-center pl-2 items-start">
                   <SheetTitle>
                   <div className= 'w-10 dark:fill-slate-300 fill-dark ml-0'>
                       <Link href={'/'} className=" flex flex-col justify-center  ">
@@ -264,32 +266,27 @@ if(user !== undefined){
                   </SheetDescription>
                 </SheetHeader>
                 
-                <div className="mt-3 flex flex-col w-full bg-black py-4 md:hidden h-screen">
-                  <div className="flex hover:bg-zinc-200 bg-light w-full items-center border-b-2 border-black justify-between gap-5 transition-all duration-200 cursor-pointer">
-                    <div>
-                      <h1 className="font-semibold text-black text-sm">{darkTheme ? "light" : "dark"}</h1>
-                    </div>
-                  
-                    <button className='border-2 rounded-full w-5 h-5 dark:border-slate-300 dark:text-slate-300 border-dark text-dark dark:hover:text-slate-100 transition-all duration-200 md:hidden '>
-                      
-                    {darkTheme ? <MdOutlineLightMode className='cursor-pointer '
-                    onClick={() => {
+                <div className="mt-3 flex flex-col w-full  text-light md:hidden h-screen">
+                  <div className="flex w-full border-t-2 border-black mb-4">
+
+                    {darkTheme ? <div  className=" flex px-2 py-1 group hover:bg-black text-black hover:text-light bg-light w-full items-center justify-between gap-5 transition-all duration-200 cursor-pointer" onClick={() => {
                       setDarkTheme(false);
                       localStorage.removeItem("theme")
-                    }}/> 
+                    }}> <h1 className="font-semibold text-sm" >light</h1>  <button className='border-2 rounded-full w-5 h-5 group-hover:border-light dark:border-light dark:text-slate-300 border-black text-dark dark:hover:text-slate-100 transition-all duration-200 md:hidden '><MdOutlineLightMode className='cursor-pointer fill-black group-hover:fill-light'
+                   /> </button> </div>  
                     :
-                      <MdDarkMode className='cursor-pointer '
-                      onClick={()=>{
-                        setDarkTheme(true);
-                        localStorage.setItem('theme', "true")
-                      }}
-                      />}
+                    <div className=" flex px-2 py-1 hover:bg-black group text-black hover:text-light bg-light w-full items-center justify-between gap-5 transition-all duration-200 cursor-pointer"onClick={()=>{
+                      setDarkTheme(true);
+                      localStorage.setItem('theme', "true")
+                    }}> <h1 className="font-semibold text-sm" >dark</h1>  <button className='border-2 group-hover:border-light rounded-full w-5 h-5 dark:border-light dark:text-slate-300 border-black text-dark dark:hover:text-slate-100 transition-all duration-200 md:hidden '><MdDarkMode className='cursor-pointer group-hover:fill-light fill-black'
+                   /> </button> </div> 
+                      }
 
-                      </button>
+                     
                   </div>
                   
-                   {activeUser && <div className='font-medium md:hidden hover:bg-zinc-200 bg-light ransition-all duration-200 flex items-center justify-center text-black border-b-2 border-black w-full'>
-                    <Link href={`/profile/${activeUser.id}`} className="">
+                   {activeUser && <div className='font-medium md:hidden hover:bg-zinc-200  hover:border-black hover:text-black bg-black ransition-all duration-200 flex items-center justify-center border-y-2 border-light w-full'>
+                    <Link href={`/profile/${activeUser.id}`} className="py-1">
               <div className="">
                 <h1 className="text-sm text-center font-semibold">user</h1>
               </div>
@@ -297,43 +294,43 @@ if(user !== undefined){
                 </div> }
                 
                 
-                  {activeUser?.email === Eyueal ? <div className="flex flex-col bg-dark w-full text-center">
-                <Link href='/upload/upload-catagory' hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('upload/upload-catagory') || !activeUserSession} className="w-full ransition-all duration-200 hover:bg-light border-b-2 flex items-center justify-center  border-dark bg-zinc-200">
-              <div className="">
+                  {activeUser?.email === Eyueal ? <div className="flex flex-col bg-black w-full text-center">
+                <Link href='/upload/upload-catagory' hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('upload/upload-catagory') || !activeUserSession} className="w-full ransition-all duration-200 hover:border-black hover:text-black hover:bg-light border-b-2 flex items-center justify-center  border-light bg-black">
+              <div className="py-1">
                 <h1 className="text-sm font-semibold">catagory</h1>
               </div>
               </Link>
-              <Link href='/upload/upload-profile' hidden={activeUser?.email  !== Eyueal || pathname.includes('/upload/upload-profile') || !activeUserSession} className="w-full ransition-all duration-200 hover:bg-light border-b-2 flex items-center justify-center  border-dark bg-zinc-200">
-              <div>
+              <Link href='/upload/upload-profile' hidden={activeUser?.email  !== Eyueal || pathname.includes('/upload/upload-profile') || !activeUserSession} className="w-full ransition-all duration-200 hover:bg-light border-b-2 flex items-center justify-center hover:text-black bg-black hover:border-black border-light">
+              <div className="py-1">
                 <h1 className="text-sm font-semibold">profile</h1>
               </div>
               </Link>
-              <Link href='/upload/upload-post' hidden={activeUser?.email  !== Eyueal || pathname.includes('upload/upload-post') || !activeUserSession} className="w-full ransition-all duration-200 hover:bg-light border-b-2 flex items-center justify-center  border-dark bg-zinc-200">
-              <div>
+              <Link href='/upload/upload-post' hidden={activeUser?.email  !== Eyueal || pathname.includes('upload/upload-post') || !activeUserSession} className="w-full ransition-all duration-200 hover:bg-light border-b-2 flex items-center justify-center hover:text-black bg-black hover:border-black border-light">
+              <div className="py-1">
                 <h1 className="text-sm font-semibold">post</h1>
               </div>
               </Link>
-              <Link href='/profile/traders' hidden={activeUser?.email  !== Eyueal || pathname.includes('profile/traders') || !activeUserSession}  className="w-full group ransition-all duration-200 border-b-2 flex items-center justify-center hover:bg-light border-dark bg-zinc-200">
-              <div className="flex flex-row gap-1 justify-center">
+              <Link href='/profile/traders' hidden={activeUser?.email  !== Eyueal || pathname.includes('profile/traders') || !activeUserSession}  className="w-full group ransition-all duration-200 border-b-2 flex items-center justify-center hover:bg-light hover:text-black bg-black hover:border-black border-light">
+              <div className="flex flex-row gap-1 justify-center py-1">
                 <h1 className="text-sm font-semibold">Traders</h1>
                 <Users className="dark:stroke-light w-4 h-4 stroke-dark dark:hover:stroke-slate-200 hover:stroke-black fill-light group-hover:fill-zinc-400  dark:fill-dark"/>
                 
               </div>
               </Link>
               </div>
-              : <div  className="flex flex-col bg-dark w-full text-center">
-                <Link href='/upload/upload-post' hidden={activeUser?.role !== "merchant" ||  pathname.includes('upload/upload-post')} className="w-full border-b-2 flex items-center ransition-all duration-200 justify-center hover:bg-light border-dark bg-zinc-200">
-              <div>
+              : <div  className="flex flex-col bg-black w-full text-center">
+                <Link href='/upload/upload-post' hidden={activeUser?.role !== "merchant" ||  pathname.includes('upload/upload-post')} className="w-full border-b-2 flex items-center ransition-all duration-200 justify-center hover:bg-light hover:text-black bg-black hover:border-black border-light">
+              <div className="py-1">
                 <h1 className="text-sm font-semibold">Post</h1>
               </div>
               </Link>
-                <Link href='/upload/upload-profile' hidden={activeUser?.role !== "merchant" ||  pathname.includes('/upload/upload-profile')} className="w-full ransition-all duration-200 border-b-2 flex items-center justify-center hover:bg-light border-dark bg-zinc-200">
-              <div className="">
+                <Link href='/upload/upload-profile' hidden={activeUser?.role !== "merchant" ||  pathname.includes('/upload/upload-profile')} className="w-full ransition-all duration-200 border-b-2 flex items-center justify-center hover:bg-light hover:text-black bg-black hover:border-black border-light">
+              <div className="py-1">
                 <h1 className="text-sm font-semibold">profile</h1>
               </div>
               </Link>
-              <Link href='/profile/traders' hidden={activeUser?.email  === Eyueal || pathname.includes('profile/traders') || !activeUserSession} className="w-full group border-b-2 ransition-all duration-200 flex items-center justify-center hover:bg-light border-dark bg-zinc-200">
-              <div className="flex flex-row gap-1 justify-center">
+              <Link href='/profile/traders' hidden={activeUser?.email  === Eyueal || pathname.includes('profile/traders') || !activeUserSession} className="w-full group border-b-2 ransition-all duration-200 flex items-center justify-center hover:bg-light hover:text-black bg-black hover:border-black border-light">
+              <div className="flex flex-row gap-1 py-1 justify-center">
                 <h1 className="text-sm font-semibold">Traders</h1>
                 <Users className="dark:stroke-light w-4 h-4 group-hover:fill-zinc-400 stroke-dark dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark"/>
               </div>
@@ -342,15 +339,15 @@ if(user !== undefined){
 
 }
                  
-            <div className='group flex gap-2 cursor-pointer hover:bg-slate-200 bg-light text-dark border-b-2 transition-all duration-200 w-full md:hidden border-dark'>
-            <button className=' flex justify-start pl-2 font-bold text-sm ' onClick={() => {
+            <div className='group flex gap-2 items-center justify-center mt-10 cursor-pointer hover:text-light hover:bg-black bg-light text-black border-b-2 transition-all duration-200 w-full md:hidden border-black'>
+            <button className=' flex justify-start pl-2 py-1 font-bold text-sm ' onClick={() => {
             if(!activeUser){
               signIN()
             } signOUT()
             }}
             >{activeUser ? "Logout" : "Login"}</button>
-            <button>
-            <FaGoogle className='group-hover:fill-black fill-dark'/>
+            <button className="py-1">
+            <FaGoogle className='group-hover:fill-light fill-black'/>
             </button>
             
               </div>             

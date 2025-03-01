@@ -38,7 +38,7 @@ export const DatabaseRouter = router({
     })).mutation(async({input}) => {
         
         const {Imagefile,categories,description, userId} = input;
-        const AllCatagory:Catagoryprops[] =  await db.select().from(schema.catagories)
+        const AllCatagory: (Omit<Catagoryprops, 'Imagefile'> & { Imagefile: string | null })[] = await db.select().from(schema.catagories)
         const catagoryName:string[] = AllCatagory.map((name) => name.categories)
         const indexCatagory = catagoryName.indexOf(categories!);
         const users = await db.select().from(schema.user)
@@ -189,7 +189,7 @@ export const DatabaseRouter = router({
    }),
     getCatagoriesName: publicProcedure.query(async function ()  {
         
-        const AllCatagory:Catagoryprops[] =  await db.select().from(schema.catagories).orderBy(asc(schema.catagories.categories))
+        const AllCatagory:(Omit<Catagoryprops, 'Imagefile'> & {Imagefile : string | null})[] =  await db.select().from(schema.catagories).orderBy(asc(schema.catagories.categories))
         const catagoryName:string[] = AllCatagory.map((name) => name.categories)
         return {catagoryName, AllCatagory}
     }),

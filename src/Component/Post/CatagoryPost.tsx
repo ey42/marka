@@ -7,10 +7,10 @@ import MaxWidthWrapper from '../MaxWidthWrapper';
 import PaginationComponent from '../paginationComponent';
 import {useRouter, useSearchParams } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { Frown } from 'lucide-react';
+import { Frown, RefreshCw } from 'lucide-react';
 
 const CatagoryPost = ({catagoryName}: {catagoryName: string}) => {
-    const {data: data, isFetching: fetching} = trpc.database.getPostWithCatagory.useQuery({catagory : catagoryName as string}) 
+    const {data: data, isPending} = trpc.database.getPostWithCatagory.useQuery({catagory : catagoryName as string}) 
     const posts = data?.posts
 
     const postsCount: number = (data?.postCount[0].count) as number
@@ -21,7 +21,7 @@ const CatagoryPost = ({catagoryName}: {catagoryName: string}) => {
     const postForPage = posts?.slice((currentPage - 1) * 50, currentPage * 50)
     
   return (
-    <MaxWidthWrapper className='flex items-center justify-center'>
+    <MaxWidthWrapper className='flex items-center justify-center mt-10'>
     <div className='flex bg-zinc-200 dark:bg-zinc-800 text-black rounded-md dark:text-light p-10 flex-col items-center justify-center'>
             {postForPage !== undefined && posts && posts.length > 0 ?  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"> {postForPage.map((post) => (
             <Link href={post ? `/product/${post.id}` : '/'} key={post.id} className="border-2 bg-dark group-hover:bg-black group-hover:dark:bg-zinc-200 text-white dark:bg-white dark:text-black group min-w-52 border-dark dark:border-light hover:shadow-lg hover:shadow-black transition-all duration-100 dark:hover:shadow-zinc-400 rounded-md">
@@ -46,7 +46,7 @@ const CatagoryPost = ({catagoryName}: {catagoryName: string}) => {
             </Link>
              
             ))}
-            </div> : fetching ? <h1 className='text-lg font-bold self-center'>Loading... for posts</h1> :
+            </div> : isPending ?<div className='flex gap-2'> <h1 className='text-lg font-bold self-center'>Loading... for posts </h1><RefreshCw /></div> :
             <div className='flex justify-center gap-2 items-center w-full h-full'> 
             <h1 className='text-2xl font-bold'>No Post Found</h1> <Frown />
             </div>}

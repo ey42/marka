@@ -22,7 +22,7 @@ const Product = ({id}: {id: string}) => {
   const user = sess?.user
   const router = useRouter()
   const {refetch} = trpc.database.deleteSolded.useQuery()  
-  const {data: data, refetch: fetchAgain, isFetching: fetching} = trpc.database.getAllPosts.useQuery()
+  const {data: data, refetch: fetchAgain, isPending: fetching} = trpc.database.getAllPosts.useQuery()
   const posts = data?.allPosts
   const post = posts?.find((post) => post.id === id)
   const [isCopied, setIsCopied] = useState(false)
@@ -117,8 +117,8 @@ const Product = ({id}: {id: string}) => {
       </button> <button className='border-2 border-light font-bold bg-dark px-4 h-8 text-lg text-light font-mono rounded-md dark:border-dark dark:bg-light hover:dark:bg-slate-400 dark:text-black hover:bg-black transition-colors duration-200' onClick={() => handleSold({id: post?.id!, sold: !post?.isSold as boolean})}>{post?.isSold === true ? "un-sold" : "sold"}</button></div> }
         </div>
       <MaxWidthWrapper className = 'flex bg-dark border-4 rounded-md border-dark dark:bg-light dark:border-light flex-col gap-10'>
-      <div className='flex flex-row max-md:flex-col justify-center gap-10 text-sm font-mono p-5'>
-        <div className=' border-r-4 pr-4 dark:border-dark border-light flex flex-col  gap-10'> 
+      <div className='flex flex-row max-md:flex-col justify-center gap-10 text-sm mx-2 font-mono p-5'>
+        <div className=' max-md:border-none border-r-4 pr-4 dark:border-dark border-light flex flex-col  gap-10'> 
           <div className='flex justify-center dark:text-black  text-3xl text-light tracking-wider font-bold'><h1>{(post?.title)?.toUpperCase()}</h1></div>
           <div className='flex justify-center border-b-4 dark:border-dark border-light'>
             <div className={cn('pb-5 ',{

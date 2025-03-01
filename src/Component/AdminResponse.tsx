@@ -28,11 +28,6 @@ const AdminResponse = () => {
           <div className="flex ">
           <Image src={profile.imageFile !== undefined ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}${profile?.imageFile as string}`:''} alt="company Image" width={50} height={50} className="w-20 h-20 border-2 dark:border-dark border-light rounded-full"/>
         </div>
-          <div className="flex flex-col items-center text-lg justify-center font-bold">
-            <h1>{profile.companyName}</h1>
-            <h1>{profile.userContent.name}</h1>
-            <h1>{profile.type}</h1>
-          </div>
           <div>
             <h1 className="text-green-500 font-bold">approved</h1>
           </div>
