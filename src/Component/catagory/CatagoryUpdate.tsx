@@ -4,6 +4,7 @@ import { trpc } from "@/app/_trpc/client"
 import { convertBlobUrlToFIle } from "@/Component/Database"
 import {  uploadImagetoCatagoryStorage} from "@/supabase/storage/Storages"
 import { useState,  useEffect, ChangeEvent, FormEvent, useRef } from "react"
+import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
@@ -32,14 +33,14 @@ const {useSession} = Authclient
     const access = Catagory?.catagoryName
     const {mutate: upload, } = trpc.database.uploadCatagories.useMutation({
       onSuccess: () => {
-        console.log('Success! Uploading categories...');
         setFormSubmited(false); // Reset form state after success
         router.refresh()
         refetch(); // Navigate to categories page
         imageRef.current!.value = "" // Reset image preview
+        toast.success("Catagory uploaded successfully");
       },
       onError: (err) => {
-        console.error('Error uploading categories:', err);
+        toast.error('Error uploading categories');
       },})
       
         

@@ -6,6 +6,7 @@ import ThemeProvider from "@/Component/ThemeProvider/ThemeProvider";
 import NavBar from "@/Component/NavBar";
 import Footer from "@/Component/Footer";
 import Provider from "./_trpc/Provider";
+import { Toaster } from "@/components/ui/sonner";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -26,6 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("dark:bg-dark min-h-screen sm:w-screen box-border absolute bg-light text-dark",inter.className)}>
+        <Toaster richColors />
       <ThemeProvider>
           <Provider>
             <div className="w-full h-full dark:bg-dark bg-light ">

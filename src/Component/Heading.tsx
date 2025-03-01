@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sheet"
 import ThemeContext from '@/context/themeContext'
 import Link from 'next/link';
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect} from 'react'
 import { FaGoogle } from 'react-icons/fa';
 import { MdDarkMode, MdOutlineLightMode } from 'react-icons/md'
 import { Icons } from './Icons';
@@ -46,10 +46,10 @@ const Heading = () => {
   const {refetch} = trpc.database.deleteSolded.useQuery()
   const pathname = usePathname()
   
-  const {data, error} = useSession()
+  const {data} = useSession()
   
   const session = data?.session;
-  const {data: success , isPending, isError} = trpc.database.getUsers.useQuery({id: session?.userId as string})
+  const {data: success , isPending} = trpc.database.getUsers.useQuery({id: session?.userId as string})
 
   const activeUserSession = success?.activeSessions
   const activeUser = success?.activeUser
@@ -63,9 +63,7 @@ const Heading = () => {
   const usersImage: (string | null)[] = []
   const userImage = activeUser?.image as string
 
-if(user === undefined){
-console.log("user is undefined ")
-}else{
+if(user !== undefined){
   user.map((user) => usersImage.push(user.image))
   usersImage.map((image) => image!)
 }
@@ -155,6 +153,21 @@ console.log("user is undefined ")
                     {activeUser?.email === Eyueal? <Crown className="stroke-dark dark:stroke-light dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark dark:hover:fill-light hover:fill-black cursor-pointer transition-all duration-300"/> : <Send className="stroke-dark dark:stroke-light dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark dark:hover:fill-light hover:fill-black cursor-pointer transition-all duration-300" />}  </Link>
                    
                 </div>
+                {activeUser && <Link href={`/profile/${activeUser?.id}`} className="mr-5">
+              <div className=' dark:text-slate-300 text-dark md:hidden'>
+
+                <div className="w-8 h-8 border-2 rounded-full border-dark dark:border-light">  
+                <Image
+               alt="Image"
+               src={userImage}
+               width={40}
+               height={40}
+               className="rounded-full"
+               />
+                </div>
+
+              </div>
+                  </Link> }
                
                 </div>
        
@@ -251,13 +264,13 @@ console.log("user is undefined ")
                   </SheetDescription>
                 </SheetHeader>
                 
-                <div className="mt-3 flex flex-col gap-4 py-4 md:hidden h-screen">
-                  <div className="flex items-center justify-between gap-5 transition-all hover:-translate-y-1 duration-500 cursor-pointer">
+                <div className="mt-3 flex flex-col w-full bg-black py-4 md:hidden h-screen">
+                  <div className="flex hover:bg-zinc-200 bg-light w-full items-center justify-between gap-5 transition-all duration-200 cursor-pointer">
                     <div>
-                      <h1 className="font-semibold ">{darkTheme ? "Light" : "Dark"}</h1>
+                      <h1 className="font-semibold text-black text-sm">{darkTheme ? "light" : "dark"}</h1>
                     </div>
                   
-                    <button className='border-2 rounded-full w-5 h-5 dark:border-slate-300 dark:text-slate-300 border-dark text-dark dark:hover:text-slate-100 transition duration-150 md:hidden '>
+                    <button className='border-2 rounded-full w-5 h-5 dark:border-slate-300 dark:text-slate-300 border-dark text-dark dark:hover:text-slate-100 transition-all duration-200 md:hidden '>
                       
                     {darkTheme ? <MdOutlineLightMode className='cursor-pointer '
                     onClick={() => {
@@ -275,61 +288,61 @@ console.log("user is undefined ")
                       </button>
                   </div>
                   
-                   {activeUser && <div className='font-medium md:hidden  hover:bg-slate-200 border-x-2 border-black  bg-gradient-to-r from-dark via-light to-dark ease-linear bg-[200%_auto] transition-all duration-500 hover:bg-right rounded-lg'>
+                   {activeUser && <div className='font-medium md:hidden hover:bg-zinc-200 bg-light ransition-all duration-200 flex items-center justify-center text-black border-b-2 border-black w-full'>
                     <Link href={`/profile/${activeUser.id}`} className="">
               <div className="">
                 <h1 className="text-sm text-center font-semibold">user</h1>
               </div>
-              </Link>
+              </Link> 
                 </div> }
                 
                 
-                  {activeUser?.email === Eyueal ? <div className="flex flex-col text-center gap-4">
-                <Link href='/upload/upload-catagory' hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('upload/upload-catagory') || !activeUserSession} className="border-x-2 rounded-lg border-black bg-gradient-to-r from-dark via-light to-dark ease-linear bg-[200%_auto] transition-all duration-500 hover:bg-right hover:bg-slate-200">
+                  {activeUser?.email === Eyueal ? <div className="flex flex-col bg-dark w-full text-center">
+                <Link href='/upload/upload-catagory' hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('upload/upload-catagory') || !activeUserSession} className="w-full ransition-all duration-200 hover:bg-light border-b-2 flex items-center justify-center  border-dark bg-zinc-200">
               <div className="">
                 <h1 className="text-sm font-semibold">catagory</h1>
               </div>
               </Link>
-              <Link href='/upload/upload-profile' hidden={activeUser?.email  !== Eyueal || pathname.includes('/upload/upload-profile') || !activeUserSession} className="border-x-2 bg-gradient-to-r from-dark via-light to-dark ease-linear bg-[200%_auto] transition-all duration-500 hover:bg-right hover:bg-slate-200 border-black rounded-lg ">
-              <div className="">
+              <Link href='/upload/upload-profile' hidden={activeUser?.email  !== Eyueal || pathname.includes('/upload/upload-profile') || !activeUserSession} className="w-full ransition-all duration-200 hover:bg-light border-b-2 flex items-center justify-center  border-dark bg-zinc-200">
+              <div>
                 <h1 className="text-sm font-semibold">profile</h1>
               </div>
               </Link>
-              <Link href='/upload/upload-post' hidden={activeUser?.email  !== Eyueal || pathname.includes('upload/upload-post') || !activeUserSession} className="bg-gradient-to-r from-dark via-light to-dark ease-linear bg-[200%_auto] transition-all duration-500 hover:bg-right border-x-2 hover:bg-slate-200 border-black rounded-lg ">
-              <div className="">
+              <Link href='/upload/upload-post' hidden={activeUser?.email  !== Eyueal || pathname.includes('upload/upload-post') || !activeUserSession} className="w-full ransition-all duration-200 hover:bg-light border-b-2 flex items-center justify-center  border-dark bg-zinc-200">
+              <div>
                 <h1 className="text-sm font-semibold">post</h1>
               </div>
               </Link>
-              <Link href='/profile/traders' hidden={activeUser?.email  !== Eyueal || pathname.includes('profile/traders') || !activeUserSession} className="border-x-2 bg-gradient-to-r from-dark via-light to-dark ease-linear bg-[200%_auto] transition-all duration-500 hover:bg-right border-black hover:bg-slate-200 rounded-lg">
+              <Link href='/profile/traders' hidden={activeUser?.email  !== Eyueal || pathname.includes('profile/traders') || !activeUserSession}  className="w-full group ransition-all duration-200 border-b-2 flex items-center justify-center hover:bg-light border-dark bg-zinc-200">
               <div className="flex flex-row gap-1 justify-center">
                 <h1 className="text-sm font-semibold">Traders</h1>
-                <Users className="dark:stroke-light w-4 h-4 stroke-dark dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark"/>
+                <Users className="dark:stroke-light w-4 h-4 stroke-dark dark:hover:stroke-slate-200 hover:stroke-black fill-light group-hover:fill-zinc-400  dark:fill-dark"/>
                 
               </div>
               </Link>
               </div>
-              : <div className="flex flex-col text-center gap-4">
-                <Link href='/upload/upload-post' hidden={activeUser?.role !== "merchant" ||  pathname.includes('upload/upload-post')} className="bg-gradient-to-r from-dark via-light to-dark ease-linear bg-[200%_auto] transition-all duration-500 hover:bg-right border-x-2 hover:bg-slate-200 border-black rounded-lg">
-              <div className="">
+              : <div  className="flex flex-col bg-dark w-full text-center">
+                <Link href='/upload/upload-post' hidden={activeUser?.role !== "merchant" ||  pathname.includes('upload/upload-post')} className="w-full border-b-2 flex items-center ransition-all duration-200 justify-center hover:bg-light border-dark bg-zinc-200">
+              <div>
                 <h1 className="text-sm font-semibold">Post</h1>
               </div>
               </Link>
-                <Link href='/upload/upload-profile' hidden={activeUser?.role !== "merchant" ||  pathname.includes('/upload/upload-profile')} className="bg-gradient-to-r from-dark via-light to-dark ease-linear bg-[200%_auto] transition-all duration-500 hover:bg-right border-x-2 hover:bg-slate-200 border-black rounded-lg">
+                <Link href='/upload/upload-profile' hidden={activeUser?.role !== "merchant" ||  pathname.includes('/upload/upload-profile')} className="w-full ransition-all duration-200 border-b-2 flex items-center justify-center hover:bg-light border-dark bg-zinc-200">
               <div className="">
                 <h1 className="text-sm font-semibold">profile</h1>
               </div>
               </Link>
-              <Link href='/profile/traders' hidden={activeUser?.email  === Eyueal || pathname.includes('profile/traders') || !activeUserSession} className="bg-gradient-to-r from-dark via-light to-dark ease-linear bg-[200%_auto] transition-all duration-500 hover:bg-right border-x-2 border-black hover:bg-slate-200 rounded-lg">
+              <Link href='/profile/traders' hidden={activeUser?.email  === Eyueal || pathname.includes('profile/traders') || !activeUserSession} className="w-full group border-b-2 ransition-all duration-200 flex items-center justify-center hover:bg-light border-dark bg-zinc-200">
               <div className="flex flex-row gap-1 justify-center">
                 <h1 className="text-sm font-semibold">Traders</h1>
-                <Users className="dark:stroke-light w-4 h-4 stroke-dark dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark"/>
+                <Users className="dark:stroke-light w-4 h-4 group-hover:fill-zinc-400 stroke-dark dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark"/>
               </div>
               </Link>
               </div>
 
 }
                  
-            <div className='group flex gap-2 cursor-pointer  bg-gradient-to-r from-light via-light to-dark ease-linear bg-[200%_auto] transition-all duration-500 hover:bg-right hover:bg-slate-200 bg-light text-dark border-y-2  rounded-lg w-full md:hidden border-black'>
+            <div className='group flex gap-2 cursor-pointer hover:bg-slate-200 bg-light text-dark border-b-2 transition-all duration-200 rounded-lg w-full md:hidden border-dark'>
             <button className=' flex justify-start pl-2 font-bold text-sm ' onClick={() => {
             if(!activeUser){
               signIN()
@@ -337,7 +350,7 @@ console.log("user is undefined ")
             }}
             >{activeUser ? "Logout" : "Login"}</button>
             <button>
-            <FaGoogle className='group-hover:fill-light transition-colors duration-500'/>
+            <FaGoogle className='group-hover:fill-black fill-dark'/>
             </button>
             
               </div>             

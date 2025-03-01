@@ -52,7 +52,7 @@ const Trader = ({id}: {id: string}) => {
       <div className="flex flex-col items-center justify-center tracking-wider gap-4">
         {(user !== undefined && profile !== undefined && profile !== null)  && (
             <div className='flex flex-col justify-center  border-4 dark:border-light border-dark w-4/5 xl:w-1/2 max-md:w-full overflow-hidden rounded-xl '>
-                <div className='flex items-center w-full justify-evenly gap-4 border-b-2 dark:border-light border-dark '>
+                <div className='flex items-center w-full justify-evenly gap-4 border-b-2 dark:border-light border-dark'>
                     {activeUserEmail === Eyueal && user.accepted !== 'reject' ? <button onClick={() => handleUpdate(profile.userId as string, profile.imageFile as string, "reject")} className='border-2 bg-dark hover:bg-red-500 outline-2 outline-dark outline-offset-2 outline-double ring-2 ring-offset-2 ring-red-500 fill-ring text-zinc-200 hover:text-black dark:bg-light transition-all duration-200 dark:hover:bg-red-500 dark:text-black p-1 px-4 rounded-md'> Reject </button> : <h1> {user.accepted === 'reject' ? "admin rejected" : ""}</h1>}
 
                     <Image src={profile.imageFile !== undefined || profile.imageFile !== null  ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}${profile.imageFile as string}`:'#'} alt="company Image" width={112} height={112} className="w-28 h-28 my-2 border-4 dark:border-light border-dark rounded-full"/>

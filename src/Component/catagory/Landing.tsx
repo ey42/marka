@@ -56,12 +56,12 @@ fetchAgain()
             </div>
             <Image src='/m.jpg' alt="merkato" width={800} height={200} content="cover" className="w-full flex flex-1 rounded-b-lg drop-shadow-xl dark:shadow-slate-400 dark:shadow-xl shadow-2xl border-2 border-dark dark:border-light shadow-dark h-60" priority style={{objectFit: "cover"}}/>
           </div>
-          <div className={cn("grid grid-cols-1 bg-zinc-200 dark:bg-zinc-800 p-10 rounded-md mt-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6",{
+          <div className={cn("grid grid-cols-2 bg-zinc-200 dark:bg-zinc-800 p-10 rounded-md mt-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 max-md:w-full gap-6",{
             "hidden": search || posts === undefined || posts.length === 0
 
           })}>
             {postForPage?.map((post) => (
-                <Link href={`product/${post.id}`} key={post.id} className="border-2 group bg-dark dark:bg-light border-black dark:border-light rounded-md hover:shadow-lg min-w-52 hover:shadow-black dark:hover:shadow-zinc-400 transition-shadow duration-100">
+                <Link href={`product/${post.id}`} key={post.id} className="border-2 group bg-dark dark:bg-light border-black dark:border-light rounded-md hover:shadow-lg min-w-52 max-md:w-full px-2 hover:shadow-black dark:hover:shadow-zinc-400 transition-shadow duration-100">
                   <div className={cn("flex flex-col items-center justify-center",{
                     "contrast-50": post.isSold === true,
                   })}>

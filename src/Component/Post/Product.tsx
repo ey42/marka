@@ -11,6 +11,8 @@ import { extractTimeAndDate } from '../Database'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Authclient } from "@/lib/auth-client";
 import PaginationComponent from '../paginationComponent'
+import { toast } from "sonner"
+
 
 
 
@@ -20,7 +22,7 @@ const Product = ({id}: {id: string}) => {
   const user = sess?.user
   const router = useRouter()
   const {refetch} = trpc.database.deleteSolded.useQuery()  
-  const {data: data, refetch: fetchAgain} = trpc.database.getAllPosts.useQuery()
+  const {data: data, refetch: fetchAgain, isFetching: fetching} = trpc.database.getAllPosts.useQuery()
   const posts = data?.allPosts
   const post = posts?.find((post) => post.id === id)
   const [isCopied, setIsCopied] = useState(false)
@@ -31,22 +33,22 @@ const Product = ({id}: {id: string}) => {
            refetch()
            fetchAgain()
            router.push('/')
-          console.log('Success! Uploading issold...');
+           toast.success("post solded successfully")
         },
         onError: (err) => {
-          console.error('Error uploading post:', err);
+          toast.error('Error on solding post:');
         refetch()
         },})
-  const {data: message, mutate: deletedId} = trpc.database.deletePostById.useMutation({
+  const {mutate: deletedId} = trpc.database.deletePostById.useMutation({
           onSuccess: () => {
             console.log('Success! Deleting post...');
             fetchAgain()
             router.push('/')
-           
+           toast.success("post deleted successfully")
             
           },
           onError: (err) => {
-            console.error('Error deleting post:', err);
+            toast.error('Error deleting post:');
             refetch()
             fetchAgain()
           },
@@ -101,7 +103,8 @@ const Product = ({id}: {id: string}) => {
     }
   }
   return (
-    <div className='flex justify-center items-center flex-col text-black dark:text-light'>
+    <div className='flex justify-center items-center flex-col text-black mt-10 dark:text-light'>
+    <div hidden={fetching} className='flex gap-4 items-center justify-center'>
      { user?.email === "eyuealzerihun1@gmail.com" ? <div className='flex gap-4 mb-10 items-center justify-center'>
       <button onClick={handleDelete}>
       <Trash2 width={50} height={50} className='hover:stroke-red-600 transition-all duration-200 hover:fill-red-400'/>
@@ -112,7 +115,7 @@ const Product = ({id}: {id: string}) => {
       })}><button onClick={handleDelete}>
       <Trash2 width={50} height={50} className='hover:stroke-red-600 transition-all duration-200 hover:fill-red-400'/>
       </button> <button className='border-2 border-light font-bold bg-dark px-4 h-8 text-lg text-light font-mono rounded-md dark:border-dark dark:bg-light hover:dark:bg-slate-400 dark:text-black hover:bg-black transition-colors duration-200' onClick={() => handleSold({id: post?.id!, sold: !post?.isSold as boolean})}>{post?.isSold === true ? "un-sold" : "sold"}</button></div> }
-
+        </div>
       <MaxWidthWrapper className = 'flex bg-dark border-4 rounded-md border-dark dark:bg-light dark:border-light flex-col gap-10'>
       <div className='flex flex-row max-md:flex-col justify-center gap-10 text-sm font-mono p-5'>
         <div className=' border-r-4 pr-4 dark:border-dark border-light flex flex-col  gap-10'> 

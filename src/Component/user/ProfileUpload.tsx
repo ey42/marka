@@ -11,6 +11,8 @@ import { Images } from "../Image"
 import { convertBlobUrlToFIle, extractTimeAndDate } from "../Database"
 import { Icons } from "../Icons"
 import { Phone } from "lucide-react"
+import { toast } from "sonner"
+
 
 
 
@@ -44,6 +46,7 @@ const ProfileUpload = () => {
         console.log('Success! Uploading post...');
         setFormSubmited(false); // Reset form state after success
         router.refresh()
+        toast.success("Profile uploaded successfully");
         refetch();
         setFormSubmited(false)
         setCompany("")
@@ -59,8 +62,9 @@ const ProfileUpload = () => {
         fileInputRef.current!.value = ""
       },
       onError: async(err) => {
-        console.error('Error uploading profile:', err);     
+        toast.error('Error uploading profile');     
          refetch()
+         fileInputRef.current!.value = ""
       
       },})
 

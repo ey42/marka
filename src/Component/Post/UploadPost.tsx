@@ -30,6 +30,8 @@ import MaxWidthWrapper from "../MaxWidthWrapper"
 import { Authclient } from "@/lib/auth-client"
 import Link from "next/link"
 import { ImageArray } from "../Image"
+import { toast } from "sonner"
+
 
 
 const {useSession} = Authclient
@@ -56,12 +58,12 @@ const {useSession} = Authclient
     const access = Catagory?.catagoryName
     const {mutate: upload, isError, isSuccess, isPending} = trpc.database.uploadPost.useMutation({
       onSuccess: () => {
-        console.log('Success! Uploading post...');
         router.refresh()
         fetchAgain(); 
+        toast.success("Post uploaded successfully")
       },
       onError: (err) => {
-        console.error('Error uploading post:', err);
+        toast.error('Error uploading post');
         fetchAgain()
       },})
         const spacedAccess = access?.map((a) => a.replace(/_/g, ' ')) || [] 
