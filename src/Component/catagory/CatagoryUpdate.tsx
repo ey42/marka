@@ -131,10 +131,10 @@ const {useSession} = Authclient
             </div>
             </div>
         </form>
-        <div className={`max-sm:w-40 font-mono text-dark dark:text-slate-50 text-sm flex flex-col max-lg:justify-center max-lg:items-center justify-start max-sm:justify-start max-sm:items-start lg:ml-36 gap-4 max-sm:ml-0`}> <h1 className="text-center transition-all duration-200 font-semibold text-lg">
+        <div className={`max-sm:w-40 max-md:mt-10 font-mono text-black dark:text-slate-50 text-sm flex flex-col max-lg:justify-center max-lg:items-center justify-start max-sm:justify-start max-sm:items-start lg:ml-36 gap-4 max-sm:ml-0`}> <h1 className="text-center transition-all duration-200 font-bold text-lg">
           {access !== undefined && access.length > 0 ?`These are list of ${access?.length! <= 1 ? "catagory" : "catagories"} in the database `: `no catagories`}</h1>
           
-                  <div className="text-sm font-semibold max-md:grid-rows-10 max-sm:grid-cols-1  grid grid-cols-3 grid-flow-row gap-x-10 gap-5 dark:marker:text-white list-none items-center max-sm:justify-start max-sm:items-start justify-center">
+                  <div className="text-sm mt-5 font-semibold max-md:grid-rows-10 max-sm:grid-cols-1  grid grid-cols-3 grid-flow-row gap-x-10 gap-5 dark:marker:text-white list-none items-center max-sm:justify-start max-sm:items-start justify-center">
                 { 
 access !== undefined ? access.map((n) => (
   <Link href={`/post/catagory-post/${n}`} key={n}>

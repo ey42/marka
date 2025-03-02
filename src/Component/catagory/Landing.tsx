@@ -15,7 +15,7 @@ import { Frown, RefreshCw } from "lucide-react"
 
 const Landing = () => {
   const {refetch} = trpc.database.deleteSolded.useQuery()  
-  const {data : data , refetch: fetchAgain} = trpc.database.getAllPosts.useQuery()  
+  const {data : data , isPending, refetch: fetchAgain} = trpc.database.getAllPosts.useQuery()  
   const {data: Catagory, isPending: loading } = trpc.database.getCatagoriesName.useQuery()
   const AllCatagory = Catagory?.AllCatagory
   const posts = data?.allPosts
@@ -40,9 +40,9 @@ fetchAgain()
                 <Link href={`post/catagory-post/${catagory.categories}`} className=" bg-dark hover:bg-black dark:hover:bg-zinc-200 text-light dark:bg-light tracking-wider dark:text-dark border-2 border-dark dark:border-light rounded-md py-1 px-2" key={catagory.id}>
                  <h1 className="font-semibold">{catagory.categories.replace(/_/g, ' ')}</h1>
                 </Link>
-            )): loading ? <div className="text-lg flex gap-2 font-bold justify-center items-center self-center"><h1>loading... catagories </h1> <RefreshCw /> </div> : <div className="flex justify-center items-center gap-2"><h1 className="text-lg font-bold self-center">no catagories found </h1><Frown /></div> }
+            )): loading ? <div className="text-lg flex gap-2 font-bold justify-center items-center self-center"><h1>loading... catagories </h1> <RefreshCw className="animate-spin"/> </div> : <div className="flex justify-center items-center gap-2"><h1 className="text-lg font-bold self-center">no catagories found </h1><Frown /></div> }
           </div>
-          <div className="z-10 mb-10 max-md:w-full">
+          <div className="z-10 mb-10 w-full">
              <Search/>
           </div>
          
@@ -60,7 +60,7 @@ fetchAgain()
             "hidden": search || posts === undefined || posts.length === 0
 
           })}>
-            {postForPage?.map((post) => (
+            {isPending ? <div className="flex gap-2 justify-center font-bold items-center"> <h1> loading... posts</h1> <RefreshCw className="animate-spin"/></div> : postForPage?.map((post) => (
                 <Link href={`product/${post.id}`} key={post.id} className="border-2 group bg-dark dark:bg-light border-black dark:border-light rounded-md hover:shadow-lg min-w-52 max-md:w-full hover:shadow-black dark:hover:shadow-zinc-400 transition-shadow duration-100">
                   <div className={cn("flex flex-col items-center justify-center",{
                     "contrast-50": post.isSold === true,

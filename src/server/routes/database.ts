@@ -7,9 +7,9 @@ import { z } from "zod";
 import * as uuid from 'uuid';
 import { TRPCError } from "@trpc/server";
 import EventEmitter, { on } from "events";
-import { asc, desc, eq } from "drizzle-orm";
+import { asc, desc, eq, and } from "drizzle-orm";
 import { getStorage } from "@/supabase/storage/Storages";
-import { FunctionDate } from '@/Component/Database';
+import { Eyueal, FunctionDate } from '@/Component/Database';
 import { sql } from 'drizzle-orm';
 
 
@@ -44,7 +44,7 @@ export const DatabaseRouter = router({
         const users = await db.select().from(schema.user)
         const user = users.find((user) => user.id === userId)
         try {
-       if(user?.email === "eyuealzerihun1@gmail.com" && user.role === "merchant" && userId === user.id){
+       if(user?.email === Eyueal && user.role === "merchant" && userId === user.id){
         if(indexCatagory !== -1){
             const deletedFileName = Imagefile.split('/').pop() as string
             console.log(deletedFileName + " delete file name from database b/c there is catagory by this name")
@@ -486,12 +486,14 @@ throw new TRPCError({
         try {
             const acceptedCount = await db.select({ count: sql`COUNT(*)` }).from(schema.user).where(eq(schema.user.accepted, "accept"))  
             const rejectedCount = await db.select({ count: sql`COUNT(*)` }).from(schema.user).where(eq(schema.user.accepted, "reject"))
+            const requestCount = await db.select({ count: sql`COUNT(*)` }).from(schema.user).where(and(eq(schema.user.role, "merchant"), eq(schema.user.accepted, "none")))
             const profiles = await db.query.profile.findMany({
                 with:{
                     userContent: true
                 },
              })
-            return {profiles, acceptedCount, rejectedCount}
+            
+            return {profiles, acceptedCount, rejectedCount, requestCount}
         } catch (error) {
             throw new TRPCError({code:"NOT_FOUND", message:"error getting profiles"})
         }

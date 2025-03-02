@@ -4,38 +4,31 @@ import Image from "next/image";
 import { Authclient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { extractTimeAndDate } from "./Database";
+import { trpc } from "@/app/_trpc/client";
+import Link from "next/link";
+import { RefreshCw } from "lucide-react";
 
 
-interface Users {
-  id: string;
-  email: string;
-  emailVerified: boolean;
-  name: string;
-  createdAt: Date;
-  updatedAt: Date;
-  image: string | null;
-  role: "customer" | "merchant" | null;
-  customerId: string | null;
-}
 
 interface DashboardProps {
   profile_id: string;
-  user: Users[]
+
 }
-  const {useSession} = Authclient
 
-const  Dashboard = ({profile_id,user}: DashboardProps) => {
+const  Dashboard = ({profile_id}: DashboardProps) => {
 
-  const {data: session, isPending, error} = useSession()
-  const users = session?.user;
+  const {data: success , isPending} = trpc.database.getUsers.useQuery({id: profile_id as string})
+  const user = success?.activeUser
+  const {data: access} = trpc.database.getProfiles.useQuery()
+  const p = access?.profiles
+  const profiles = p?.find((profile) => profile.userContent.id === profile_id)
 
-  const profile = user.filter((p) => profile_id === p.id)[0]
-  const firstName:string = profile.name.split(' ')[0]
-  const lastName:string = profile.name.split(' ')[1]
-  const email: string = profile.email
+  const profile = user
+  const firstName:string = profile !== undefined ? profile.name.split(' ')[0] : ""
+  const lastName:string = profile !== undefined ? profile.name.split(' ')[1] : ""
+  const email: string = profile !== undefined ? profile.email : " "
   const stars: number = 10
 
-  // const comment = Comment.filter((com) => com.commentId === profile_id)[0]
 
   
   return (
@@ -45,7 +38,7 @@ const  Dashboard = ({profile_id,user}: DashboardProps) => {
    
    <div className="relative border flex rounded-full justify-center items-center w-36 h-36 border-dark dark:border-slate-400 ">
 <Image
-src={profile.image!}
+src={profile !== undefined ? `${profile.image}`:''}
 alt="image"
 width={200}
 height={200}
@@ -65,11 +58,13 @@ className="rounded-full"
      </div>
      <div className="flex p-2 gap-2 border-b-2 border-dark dark:border-light">
       <h1>role: </h1>
-      <h1>{`${profile.role}`}</h1>
+      <h1>{profile !== undefined ? profile.role === "merchant" && profile.accepted === "none" ? `requesting for merchant` : profile.role === "customer" && profile.accepted === "none" ? "customer" : profile.role === "merchant" && profile.accepted === "accept" && profiles !== undefined && <Link href={`traders/${profiles.userContent?.id}`} className="hover:underline text-blue-700">
+      <h1>merchant</h1>
+   </Link> : <RefreshCw className="animate-spin"/> }</h1>
      </div>
      <div className="flex p-2 gap-2 border-b-2 border-dark dark:border-light">
-      <h1>{profile.createdAt && !profile.updatedAt ? "created-at" : "updated-at"}: </h1>
-      <h1>{`before ${profile.createdAt && !profile.updatedAt ? extractTimeAndDate(String(profile.createdAt)).diffInDays: extractTimeAndDate(String(profile.updatedAt)).diffInDays} days`}</h1>
+      <h1>{profile?.createdAt && !profile?.updatedAt ? "created-at" : "updated-at"}: </h1>
+      <h1>{profile !== undefined ? `before ${profile?.createdAt && !profile?.updatedAt ? extractTimeAndDate(String(profile?.createdAt)).diffInDays: extractTimeAndDate(String(profile?.updatedAt)).diffInDays} days` : <RefreshCw className="animate-spin"/>}</h1>
      </div>
     </div>
     </div>

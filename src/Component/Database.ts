@@ -1,10 +1,3 @@
-import { db } from '@/drizzle'
-import * as schema from "@/drizzle/db/schema"
-import { eq } from 'drizzle-orm';
-import * as uuid from 'uuid';
-
-
-
 
 export const catagory: string[] = ["cosmetics","bonda","kitchen equipments","furnitures","mobile and its accessories", "computer and its accessories", "car and its accessories","house", "children clothes and shoes", "others","shoes", "clothes", "musical instruments", "dikor equipment", "gifts"]
 

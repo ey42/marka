@@ -176,14 +176,15 @@ const ProfileUpload = () => {
 
 
   return (
-    <div className="mt-5 ml-5 mb-5 font-mono dark:text-light text-dark w-full flex flex-row justify-start max-md:justify-center gap-40 max-lg:gap-28 max-md:flex-col">
-      <div className="">
+    <div className="mt-10 ml-5 mb-5  font-mono dark:text-light text-dark w-full flex flex-row justify-start max-md:justify-center gap-40 max-lg:gap-28 max-md:flex-col">
+      <div className="px-2 ">
      
         <form onSubmit={onsubmit} className="flex flex-col gap-4 justify-start items-start max-w-max">
           <div className="w-24 h-24 border-dark rounded-md">
-            <Image src={image as string} alt="image" width={200} height={200} className="w-24 h-24 rounded-md border-2 border-dark dark:border-slate-300"/>
+            <Image src={image ? image as string : ""
+            } alt="image" width={200} height={200} className="w-24 h-24 rounded-md border-2 border-dark dark:border-slate-300"/>
           </div>
-        <div className="flex flex-col gap-6 w-full max-sm:w-40">
+        <div className="flex flex-col gap-6 w-full max-sm:w-full px-2">
           <div>
             <label htmlFor="image" className="flex flex-col font-bold text-sm text-dark dark:text-slate-300 cursor-pointer gap-2 ">
               <input id="image" type="file" ref={fileInputRef} onChange={handleImage} className=" h-9 file:text-sm p-0 font-bold text-dark dark:text-slate-300 border-1 rounded-md dark:border-slate-300 border-dark dark:file:text-light file:font-bold file:text-dark file:border-1 file:border-dark dark:file:border-slate-300  file:mr-3 file:rounded-md file:h-full dark:file:bg-dark file:cursor-pointer cursor-pointer text-nowrap file:duration-150 file:transition-all" accept="image/*"/>

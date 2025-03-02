@@ -46,7 +46,7 @@ const CatagoryPost = ({catagoryName}: {catagoryName: string}) => {
             </Link>
              
             ))}
-            </div> : isPending ?<div className='flex gap-2'> <h1 className='text-lg font-bold self-center'>Loading... for posts </h1><RefreshCw /></div> :
+            </div> : isPending ?<div className='flex gap-2'> <h1 className='text-lg font-bold self-center'>Loading... for posts </h1><RefreshCw className='animate-spin'/></div> :
             <div className='flex justify-center gap-2 items-center w-full h-full'> 
             <h1 className='text-2xl font-bold'>No Post Found</h1> <Frown />
             </div>}

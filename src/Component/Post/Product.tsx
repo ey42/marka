@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { ClipboardCheck, Copy, Phone, ShoppingCart, Trash2 } from 'lucide-react'
 import { Icons } from '../Icons'
-import { extractTimeAndDate } from '../Database'
+import { extractTimeAndDate, Eyueal } from '../Database'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Authclient } from "@/lib/auth-client";
 import PaginationComponent from '../paginationComponent'
@@ -65,7 +65,7 @@ const Product = ({id}: {id: string}) => {
  
         const handleDelete = () => {
           const comfirmed = window.confirm('are you sure you want to delete the post?')
-          if(comfirmed && user?.email === "eyuealzerihun1@gmail.com"){
+          if(comfirmed && user?.email === Eyueal){
           deletedId({postId: id})
           router.push('/') 
         } else if(comfirmed && user?.id !== post?.author.id){
@@ -105,7 +105,7 @@ const Product = ({id}: {id: string}) => {
   return (
     <div className='flex justify-center items-center flex-col text-black mt-10 dark:text-light'>
     <div hidden={fetching} className='flex gap-4 items-center justify-center'>
-     { user?.email === "eyuealzerihun1@gmail.com" ? <div className='flex gap-4 mb-10 items-center justify-center'>
+     { user?.email === Eyueal ? <div className='flex gap-4 mb-10 items-center justify-center'>
       <button onClick={handleDelete}>
       <Trash2 width={50} height={50} className='hover:stroke-red-600 transition-all duration-200 hover:fill-red-400'/>
       </button>  <button className={cn('border-2 border-light font-bold bg-dark px-4 h-8 text-lg text-light font-mono rounded-md dark:border-dark dark:bg-light hover:dark:bg-slate-400 dark:text-black hover:bg-black transition-colors duration-200',{

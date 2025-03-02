@@ -80,22 +80,22 @@ const Trader = ({id}: {id: string}) => {
                         </h1>
                     </div>
                   
-                    <Link target='_blank' className='flex gap-1 max-md:border-b-2 border-light dark:border-dark w-auto truncate' href={profile.instagram ? profile?.instagram?.includes('https://www.instagram.com/') ? profile?.instagram : `https://www.instagram.com/${profile?.instagram}` : "#"}>
+                    <Link target='_blank' className='flex gap-1 hover:underline max-md:border-b-2 border-light dark:border-dark w-auto truncate' href={profile.instagram ? profile?.instagram?.includes('https://www.instagram.com/') ? profile?.instagram : `https://www.instagram.com/${profile?.instagram}` : "#"}>
                     <h2 className='pl-2'>instagram :</h2>
                      {profile.instagram ? profile.instagram.includes('https://www.instagram.com') ? `@${profile.instagram.split('/').pop()}` : `@${profile.instagram}` : "no instagram account"}
                     </Link>
 
-                    <Link target='_blank' className='flex max-md:border-b-2 border-light dark:border-dark w-auto gap-1' href={profile.telegram ? profile?.telegram?.includes('https://t.me/') ? profile?.telegram : `https://t.me/${profile?.telegram}` : "#"}>
+                    <Link target='_blank' className='flex hover:underline  max-md:border-b-2 border-light dark:border-dark w-auto gap-1' href={profile.telegram ? profile?.telegram?.includes('https://t.me/') ? profile?.telegram : `https://t.me/${profile?.telegram}` : "#"}>
                     <h2 className='pl-2'>telegram :</h2>
                      {profile.telegram ? profile.telegram.includes('https://t.me/') ? `@${profile.telegram.split('/').pop()}` : `@${profile.telegram}` : "no telegram account"}
                     </Link>
 
-                    <Link target='_blank' className='flex max-md:border-b-2 border-light dark:border-dark w-auto gap-1' href={profile.facebook ? profile?.facebook?.includes('https://www.facebook.com/') ? profile?.facebook : `https://www.facebook.com/${profile?.facebook}` : "#"}>
+                    <Link target='_blank' className='flex hover:underline  max-md:border-b-2 border-light dark:border-dark w-auto gap-1' href={profile.facebook ? profile?.facebook?.includes('https://www.facebook.com/') ? profile?.facebook : `https://www.facebook.com/${profile?.facebook}` : "#"}>
                     <h2 className='pl-2'>facebook :</h2>
                      {profile.facebook ? profile.facebook.includes('https://www.facebook.com') ? `@${profile.facebook.split('/').pop()}` : `@${profile.facebook}` : "no facebook account"}
                     </Link>
 
-                    <Link target='_blank' className='flex max-md:border-b-2 border-light dark:border-dark w-auto gap-1' href={profile.x ? profile?.x?.includes('https://x.com/') ? profile?.x : `https://x.com/${profile?.x}` : "#"}>
+                    <Link target='_blank' className='flex hover:underline  max-md:border-b-2 border-light dark:border-dark w-auto gap-1' href={profile.x ? profile?.x?.includes('https://x.com/') ? profile?.x : `https://x.com/${profile?.x}` : "#"}>
                     <h2 className='pl-2'>x :</h2> 
                      {profile.x ? profile.x.includes('https://x.com') ? `@${profile.x.split('/').pop()}` : `@${profile.x}` : "no x account"}
                     </Link>

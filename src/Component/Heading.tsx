@@ -14,6 +14,8 @@ import ThemeContext from '@/context/themeContext'
 import Link from 'next/link';
 import React, { useContext, useEffect} from 'react'
 import { FaGoogle } from 'react-icons/fa';
+
+
 import { MdDarkMode, MdOutlineLightMode } from 'react-icons/md'
 import { Icons } from './Icons';
 import Image from "next/image";
@@ -50,14 +52,18 @@ const Heading = () => {
   
   const session = data?.session;
   const {data: success , isPending} = trpc.database.getUsers.useQuery({id: session?.userId as string})
+  const {data: access, refetch: fetchprofile} = trpc.database.getProfiles.useQuery()
+  const requestedCount : number = (access?.requestCount[0].count) as number
 
   const activeUserSession = success?.activeSessions
-  const activeUser = success?.activeUser
+  const activeUser  = success?.activeUser
+
   const user = success?.user
   
   useEffect(() => {
     refetch()
-  },[refetch])
+    fetchprofile()
+  },[refetch, requestedCount])
 
 
   const usersImage: (string | null)[] = []
@@ -69,6 +75,7 @@ if(user !== undefined){
 }
 
   const {darkTheme, setDarkTheme} = useContext(ThemeContext)
+  console.log(activeUser !== undefined && activeUser.email)
 
   return (
 
@@ -148,9 +155,9 @@ if(user !== undefined){
                   <Users className="dark:stroke-light transition-colors duration-300 stroke-dark dark:hover:fill-light hover:fill-black dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark"/>
                   </Link>
                 </div>
-                <div hidden={pathname.includes('/send') || (activeUser?.role === "merchant" && activeUser?.email !== Eyueal) || activeUser === undefined} >
+                <div hidden={pathname.includes('/send') || activeUser === undefined || (activeUser.accepted === "accept" && activeUser?.email !== Eyueal)} >
                     <Link href={activeUser?.email === Eyueal ? `/send/response` : `/send/request`} className="">
-                    {activeUser?.email === Eyueal? <Crown className="stroke-dark dark:stroke-light dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark dark:hover:fill-light hover:fill-black cursor-pointer transition-all duration-300"/> : <Send className="stroke-dark dark:stroke-light dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark dark:hover:fill-light hover:fill-black cursor-pointer transition-all duration-300" />}  </Link>
+                    {activeUser?.email === Eyueal? <div className="flex"><Crown className="stroke-dark dark:stroke-light dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark dark:hover:fill-light hover:fill-black cursor-pointer transition-all duration-300"/> <h1> {requestedCount} </h1> </div>: <Send className="stroke-dark dark:stroke-light dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark dark:hover:fill-light hover:fill-black cursor-pointer transition-all duration-300" />}  </Link>
                    
                 </div>
                 {activeUser && <Link href={`/profile/${activeUser?.id}`} className="mr-5">
@@ -184,9 +191,9 @@ if(user !== undefined){
       
             </div>
            
-            <div className="flex flex-row justify-center items-center">
-            <div className='flex justify-center items-center'>
-              <button className='z-10  w-10 h-6 text-dark text-xl '>
+            <div className="flex flex-row justify-center gap-4 items-center">
+            <div className="-mb-2 max-md:hidden">
+              <button className='z-10 text-dark text-xl '>
              {darkTheme ? <MdOutlineLightMode className='cursor-pointer text-slate-50 ' 
              onClick={() => {
               setDarkTheme(false);
@@ -203,8 +210,8 @@ if(user !== undefined){
                 
             </div> 
 
-                 {activeUser && <Link href={`/profile/${activeUser?.id}`} className="mr-5">
-              <div className=' dark:text-slate-300 text-dark max-md:hidden'>
+                 {activeUser && <Link href={`/profile/${activeUser?.id}`} className=" max-md:hidden max-md:mr-5">
+              <div className=' dark:text-slate-300 text-dark'>
 
                 <div className="w-8 h-8 border-2 rounded-full border-dark dark:border-light">  
                 <Image
@@ -223,7 +230,7 @@ if(user !== undefined){
                 <div className={cn("rounded-md pr-2 text-sm border-2 text-dark dark:bg-dark bg-light dark:border-light  dark:text-light border-dark flex gap-2",{
                 'text-sm border-2 bg-gradient-to-r dark:from-dark cursor-pointer dark:via-light dark:to-light from-light via-dark to-dark ease-linear transition-all duration-700 hover:text-light bg-[200%_auto] hover:bg-right dark:hover:text-black dark:hover:bg-black   hover:border-dark ': !isPending
                 })}>
-                <button disabled ={isPending}  className=' flex justify-start pl-2  font-bold text-sm py-0.5 font-mono' onClick={() => {
+                <button disabled ={isPending}  className='flex justify-start pl-2 font-bold text-sm py-0.5 font-mono' onClick={() => {
                   if(!user){
                     signIN()
                   } else{
@@ -267,15 +274,15 @@ if(user !== undefined){
                 </SheetHeader>
                 
                 <div className="mt-3 flex flex-col w-full  text-light md:hidden h-screen">
-                  <div className="flex w-full border-t-2 border-black mb-4">
+                  <div className="flex w-32 mx-auto rounded-md mb-4 hover:bg-black text-black hover:text-light bg-light">
 
-                    {darkTheme ? <div  className=" flex px-2 py-1 group hover:bg-black text-black hover:text-light bg-light w-full items-center justify-between gap-5 transition-all duration-200 cursor-pointer" onClick={() => {
+                    {darkTheme ? <div  className="flex px-2 py-1 rounded-md hover:bg-black group border-2 border-black text-black hover:text-light bg-light w-full items-center justify-between gap-5 transition-all duration-200 cursor-pointer" onClick={() => {
                       setDarkTheme(false);
                       localStorage.removeItem("theme")
                     }}> <h1 className="font-semibold text-sm" >light</h1>  <button className='border-2 rounded-full w-5 h-5 group-hover:border-light dark:border-light dark:text-slate-300 border-black text-dark dark:hover:text-slate-100 transition-all duration-200 md:hidden '><MdOutlineLightMode className='cursor-pointer fill-black group-hover:fill-light'
                    /> </button> </div>  
                     :
-                    <div className=" flex px-2 py-1 hover:bg-black group text-black hover:text-light bg-light w-full items-center justify-between gap-5 transition-all duration-200 cursor-pointer"onClick={()=>{
+                    <div className="rounded-md flex px-2 py-1 border-2 border-black  hover:bg-black group text-black hover:text-light bg-light w-full items-center justify-between gap-5 transition-all duration-200 cursor-pointer"onClick={()=>{
                       setDarkTheme(true);
                       localStorage.setItem('theme', "true")
                     }}> <h1 className="font-semibold text-sm" >dark</h1>  <button className='border-2 group-hover:border-light rounded-full w-5 h-5 dark:border-light dark:text-slate-300 border-black text-dark dark:hover:text-slate-100 transition-all duration-200 md:hidden '><MdDarkMode className='cursor-pointer group-hover:fill-light fill-black'
@@ -294,8 +301,8 @@ if(user !== undefined){
                 </div> }
                 
                 
-                  {activeUser !== undefined && activeUser.email === Eyueal ? <div className="flex flex-col bg-black w-full text-center">
-                <Link href='/upload/upload-catagory' hidden={activeUser?.email  !== 'eyuealzerihun1@gmail.com' || pathname.includes('upload/upload-catagory') || !activeUserSession} className="w-full ransition-all duration-200 hover:border-black hover:text-black hover:bg-light border-b-2 flex items-center justify-center  border-light bg-black">
+                  {activeUser !== undefined && activeUser.email === Eyueal ? <div hidden={activeUser.email !== Eyueal} className="flex flex-col bg-black w-full text-center">
+                <Link href='/upload/upload-catagory' hidden={activeUser?.email  !== Eyueal || pathname.includes('upload/upload-catagory') || !activeUserSession} className="w-full ransition-all duration-200 hover:border-black hover:text-black hover:bg-light border-b-2 flex items-center justify-center  border-light bg-black">
               <div className="py-1">
                 <h1 className="text-sm font-semibold">catagory</h1>
               </div>
@@ -318,8 +325,8 @@ if(user !== undefined){
               </div>
               </Link>
               </div>
-              : activeUser !== undefined && activeUser.accepted !== "accept" ?  <div  className="flex flex-col bg-black w-full text-center">
-                <Link href='/upload/upload-post' hidden={activeUser?.role !== "merchant" ||  pathname.includes('upload/upload-post')} className="w-full border-y-2 flex items-center ransition-all duration-200 justify-center hover:bg-light hover:text-black bg-black hover:border-black border-light">
+              : activeUser !== undefined && activeUser.accepted === "accept" && activeUser.role === "merchant" ?  <div hidden={activeUser.accepted !== "accept" || activeUser.role !== "merchant"} className="flex flex-col bg-black w-full text-center">
+                <Link href='/upload/upload-post' hidden={activeUser?.role !== "merchant" ||  pathname.includes('upload/upload-post')} className="w-full border-b-2 flex items-center ransition-all duration-200 justify-center hover:bg-light hover:text-black bg-black hover:border-black border-light">
               <div className="py-1">
                 <h1 className="text-sm font-semibold">Post</h1>
               </div>
@@ -335,11 +342,16 @@ if(user !== undefined){
                 <Users className="dark:stroke-light w-4 h-4 group-hover:fill-zinc-400 stroke-dark dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark"/>
               </div>
               </Link>
-              </div> : " "
+              </div> : <Link href='/profile/traders' hidden={activeUser?.email  === Eyueal || pathname.includes('profile/traders') || !activeUserSession} className={cn("w-full group border-b-2 ransition-all duration-200 flex items-center justify-center hover:bg-light hover:text-black bg-black hover:border-black border-light",{ "border-y-2": activeUser === undefined})}>
+              <div className="flex flex-row gap-1 py-1 justify-center">
+                <h1 className="text-sm font-semibold">Traders</h1>
+                <Users className="dark:stroke-light w-4 h-4 group-hover:fill-zinc-400 stroke-dark dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark"/>
+              </div>
+              </Link>
 
 }
                  
-            <div className='group flex gap-2 items-center justify-center mt-10 cursor-pointer hover:text-light hover:bg-black bg-light text-black border-b-2 transition-all duration-200 w-full md:hidden border-black'>
+            <div className='group flex gap-2 w-32 mx-auto items-center justify-center mt-10 cursor-pointer hover:text-light hover:bg-black bg-light text-black border-2 transition-all duration-200 md:hidden border-black rounded-md'>
             <button className=' flex justify-start pl-2 py-1 font-bold text-sm ' onClick={() => {
             if(!activeUser){
               signIN()

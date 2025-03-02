@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Icons } from './Icons'
 import { Mail, MapPin, Phone } from 'lucide-react'
 import Link from 'next/link'
+import { Eyueal } from './Database'
 
 const Footer = () => {
   const [isCopied, setIsCopied] = useState<boolean>(false)
@@ -63,7 +64,7 @@ const Footer = () => {
                 </div>
                 <div className="flex flex-row gap-2">
                 <Mail className='w-7 h-7 pb-1'/>
-                <h1 className='font-bold'>eyuealzerihun1@gmail.com</h1>
+                <h1 className='font-bold'>{Eyueal}</h1>
                 </div>
                 <div className="flex flex-row gap-2">
                 <MapPin className='w-7 h-7 pb-1'/>
