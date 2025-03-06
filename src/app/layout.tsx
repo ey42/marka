@@ -26,16 +26,18 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={cn("dark:bg-dark min-h-screen sm:w-screen box-border absolute bg-light text-dark",inter.className)}>
-        <Toaster richColors />
+      <body className={cn("dark:bg-dark w-full min-w-[456px] min-h-screen bg-light relative text-dark",inter.className)}>
+        <Toaster richColors closeButton position="top-center"/>
       <ThemeProvider>
           <Provider>
-            <div className="w-full h-full dark:bg-dark bg-light ">
+            <div className="w-full main min-w-full min-h-screen absolute overflow-auto dark:bg-dark bg-light">
         <NavBar />
-        <div className="h-screen overflow-auto">
+        <div className="w-full min-h-screen pb-20">
             {children} 
         </div>
+        <div className="bottom-0 min-h-full w-full">
         <Footer/>
+        </div>
         </div>
           </Provider>
        

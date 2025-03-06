@@ -55,7 +55,12 @@ const Product = ({id}: {id: string}) => {
         })
   const Result = posts && posts.filter((p) => {
     const postTitle = post?.title.toLowerCase() as string
-    return p.title.includes(postTitle)
+    const postCatagory = post?.catagory.toLowerCase() as string
+    return (
+      p.title?.toLowerCase().includes(postTitle) || 
+      p.description?.toLowerCase().includes(postTitle) ||
+      p.catagory?.toLowerCase().includes(postCatagory)
+  )
   }) 
 
   const searchParams = useSearchParams()

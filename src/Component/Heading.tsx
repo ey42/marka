@@ -36,6 +36,15 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 import Search from "./Search";
 import { Eyueal } from "./Database";
 import { cn } from "@/lib/utils";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 
 
@@ -79,16 +88,16 @@ if(user !== undefined){
 
   return (
 
-    <div className='w-full bg-light dark:bg-dark' >
+    <div className=' w-full backdrop-blur-md ' >
           <div className=" flex justify-between pb-1 items-end gap-4 h-[75px] border-dark dark:border-light border-b-[0.5px] ">
-         <div className='flex flex-row font-mono ml-4 justify-center gap-3 max-md:justify-start items-end '>
-          <div className={cn('flex justify-center gap-4',{
-            "hidden": pathname === "/"
+         <div className='flex flex-row flex-shrink font-mono ml-4 justify-center gap-3 max-md:justify-start items-end '>
+          <div className={cn('flex justify-center  gap-4',{
+            "md:hidden": pathname === "/"
           })}>
           <div>
-          <div className='w-full h-full dark:fill-slate-50 fill-dark  bg-light dark:bg-dark rounded-r-md flex flex-col justify-center'>
+          <div className='w-full h-full dark:fill-slate-50 fill-dark  bg-light dark:bg-dark rounded-r-md flex flex-shrink flex-col justify-center'>
             <Link href={'/'} className=" dark:fill-slate-50 -mb-6 fill-dark">
-            <Image src={'/green-city.png'} alt="hy" width={60} height={50}/>
+            <Image src={'/green-city.png'} alt="hy" width={150} height={150} className="w-10 h-10"/>
             <h3 className="  text-sm rounded-md tracking-wider dark:text-slate-50 text-center text-dark font-bold font-mono"><span className="text-blue-500">m</span>ar<span className="text-yellow-500">k</span>a</h3>
 
             </Link> 
@@ -156,8 +165,8 @@ if(user !== undefined){
                   </Link>
                 </div>
                 <div hidden={pathname.includes('/send') || activeUser === undefined || (activeUser.accepted === "accept" && activeUser?.email !== Eyueal)} >
-                    <Link href={activeUser?.email === Eyueal ? `/send/response` : `/send/request`} className="">
-                    {activeUser?.email === Eyueal? <div className="flex"><Crown className="stroke-dark dark:stroke-light dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark dark:hover:fill-light hover:fill-black cursor-pointer transition-all duration-300"/> <h1> {requestedCount} </h1> </div>: <Send className="stroke-dark dark:stroke-light dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark dark:hover:fill-light hover:fill-black cursor-pointer transition-all duration-300" />}  </Link>
+                    <Link href={activeUser?.email === Eyueal ? `/send/response` : `/send/request`} className="relative">
+                    {activeUser?.email === Eyueal? <div className="flex "><Crown className="stroke-dark dark:stroke-light dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark dark:hover:fill-light hover:fill-black cursor-pointer transition-all duration-300"/> <sup className="text-sm font-semibold">{requestedCount} </sup> </div>: <Send className="stroke-dark dark:stroke-light dark:hover:stroke-slate-200 hover:stroke-black fill-light dark:fill-dark dark:hover:fill-light hover:fill-black cursor-pointer transition-all duration-300" />}  </Link>
                    
                 </div>
                 {activeUser && <Link href={`/profile/${activeUser?.id}`} className="mr-5">
@@ -180,7 +189,7 @@ if(user !== undefined){
        
             <div className=' relative max-md:ml-4'>
            
-                 { pathname !== "/" ? (<div className="mt-5"><Search/></div>) : <div className="flex flex-col dark:text-light text-dark items-center bg-light dark:bg-dark h-full rounded-sm px-2">
+                 { pathname !== "/" ? (<div className="mt-5"><Search/></div>) : <div className="flex flex-col max-md:hidden dark:text-light text-dark items-center bg-light dark:bg-dark h-full rounded-sm px-2">
                     <h1 className="z-20 font-bold font-mono text-3xl"><span className="text-blue-500">m</span>ar<span className="text-yellow-500">k</span>a<span className="text-red-500">.</span>c<span className="text-green-500">o</span>m</h1>
                    <Link href={'/'} className=" flex flex-col justify-center items-center z-10"> 
                     <div className="bg-cover bg-center w-20 h-0 z-0 " >

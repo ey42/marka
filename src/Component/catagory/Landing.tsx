@@ -33,7 +33,7 @@ fetchAgain()
   }, [posts, refetch, fetchAgain])
   return (
     <MaxWidthWrapper> 
-       <div className="text-sm mt-16 bg-light dark:bg-dark text-black dark:text-light font-mono ">
+       <div className="text-sm mt-16 flex flex-1 justify-center items-center bg-light dark:bg-dark w-full text-black dark:text-light font-mono">
         <div className="flex flex-col gap-10 items-center justify-center">
           <div className="flex px-2 flex-wrap mb-5 justify-start items-start mt-4 gap-3 w-full">
             {AllCatagory !== undefined && AllCatagory !== null ? AllCatagory.map((catagory) => (
@@ -47,8 +47,8 @@ fetchAgain()
           </div>
          
 
-          <div  className={cn("drop-shadow-2xl shadow-2xl dark:shadow-light  shadow-gray-800 Landing-image flex rounded-lg mt-6 flex-col items-center justify-center gap-6 bg-dark dark:bg-light mx-4 h-60 mb-20",{
-            "hidden": search
+          <div  className={cn("drop-shadow-2xl max-md:hidden max-w-[1000px] shadow-2xl dark:shadow-light shadow-gray-800 Landing-image flex rounded-lg mt-6 flex-col items-center justify-center gap-6 bg-dark dark:bg-light h-60 mb-20",{
+            "hidden": search 
           })}>
             <div className=" flex flex-1 flex-col drop-shadow-2xl shadow-2xl shadow-black  dark:shadow-gray-800 items-center justify-center px-2 bg-dark dark:bg-light text-white dark:text-black rounded-lg">
             <h1 className="text-7xl text-center font-bold">Ethiopians</h1>
@@ -56,16 +56,15 @@ fetchAgain()
             </div>
             <Image src='/m.jpg' alt="merkato" width={800} height={200} content="cover" className="w-full flex flex-1 rounded-b-lg drop-shadow-xl dark:shadow-slate-400 dark:shadow-xl shadow-2xl border-2 border-dark dark:border-light shadow-dark h-60" priority style={{objectFit: "cover"}}/>
           </div>
-          <div className={cn("grid grid-cols-2 bg-zinc-200 dark:bg-zinc-800 p-5 rounded-md mt-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 max-md:w-full gap-6",{
-            "hidden": search || posts === undefined || posts.length === 0
-
-          })}>
+          <div className={cn("grid pos grid-cols-2 max-w-full bg-zinc-200 dark:bg-zinc-800 p-5 rounded-md mt-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4",{
+            "hidden": search
+          })} >
             {isPending ? <div className="flex gap-2 justify-center font-bold items-center"> <h1> loading... posts</h1> <RefreshCw className="animate-spin"/></div> : postForPage?.map((post) => (
-                <Link href={`product/${post.id}`} key={post.id} className="border-2 group bg-dark dark:bg-light border-black dark:border-light rounded-md hover:shadow-lg min-w-52 max-md:w-full hover:shadow-black dark:hover:shadow-zinc-400 transition-shadow duration-100">
+                <Link href={`product/${post.id}`} key={post.id} className="border-2 group bg-dark flex flex-col dark:bg-light border-black dark:border-light rounded-md hover:shadow-lg hover:shadow-black dark:hover:shadow-zinc-400 transition-shadow duration-100">
                   <div className={cn("flex flex-col items-center justify-center",{
                     "contrast-50": post.isSold === true,
                   })}>
-                    <Image src={post !== undefined ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}${(post.file as string[])[0]}`:''} width={600} height={450} alt={post.title} className="w-full h-48 rounded-t-sm border-b-2 border-light dark:border-black" loading="lazy"/>
+                    <Image src={post !== undefined ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}${(post.file as string[])[0]}`:''} width={600} height={450} alt={post.title} className="max-w-full h-48 rounded-t-sm border-b-2 border-light dark:border-black" loading="lazy"/>
                    
                   </div>
                   <div className="flex justify-between gap-6 bg-dark transition-all duration-100 group-hover:bg-black group-hover:dark:bg-zinc-200 rounded-b-sm dark:bg-light text-light dark:text-black">

@@ -8,7 +8,7 @@ const AdminResponse = () => {
   const rejectedCount : number = (access?.rejectedCount[0].count) as number
   const requestedCount : number = (access?.requestCount[0].count) as number
   return (
-    <div className="flex px-2 items-center justify-center mt-10 rounded-md mx-auto">
+    <div className="flex items-center mt-10 w-full justify-center flex-1 rounded-md mx-auto">
       <div className="flex dark:text-light w-full text-dark flex-col gap-10 font-mono items-center justify-center">
         <h1 className="text-2xl font-bold">Requester</h1>
         <h1 className="text-xl font-bold">Here you can find all the Requester</h1>
@@ -26,7 +26,7 @@ const AdminResponse = () => {
           <h1>{requestedCount}</h1>
         </div>
         </div>
-        <div className="flex flex-col  items-center w-full gap-10 p-20">
+        <div className="flex flex-col flex-shrink items-center w-full gap-10 px-4 py-20">
        {access?.profiles !== undefined && access.profiles.map((profile) =>( 
         profile.userContent.accepted === "none" && profile.userContent.role === "merchant" ?
         <Link  href={`/profile/traders/${profile.userContent.id}`} key={profile.id} passHref className="flex transition-all duration-200 text-light dark:text-dark border-2 bg-dark hover:bg-black hover:dark:bg-zinc-200 hover:dark:text-black dark:bg-light dark:border-light hover:dark:border-black border-dark w-1/2 max-md:w-full overflow-hidden rounded-xl flex-col p-2 gap-4">

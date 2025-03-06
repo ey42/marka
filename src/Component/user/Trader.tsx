@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React,{useState} from 'react'
 import PaginationComponent from '../paginationComponent'
-import { ShoppingCart, Star } from 'lucide-react'
+import { RefreshCw, ShoppingCart, Star } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Eyueal } from '../Database'
 import { Authclient } from "@/lib/auth-client";
@@ -13,8 +13,8 @@ import { Authclient } from "@/lib/auth-client";
 
 const Trader = ({id}: {id: string}) => {
     const router = useRouter()
-    const {data: access, refetch} = trpc.database.getProfile.useQuery({id: id as string}) 
-    const { data: data} = trpc.database.getPosts.useQuery({id: id as string})
+    const {data: access, refetch, isPending: pendingProfile} = trpc.database.getProfile.useQuery({id: id as string}) 
+    const { data: data, isPending: pendingPost} = trpc.database.getPosts.useQuery({id: id as string})
     const {mutate: update} = trpc.database.updateUser.useMutation(
         {
             onSuccess: () => {
@@ -49,7 +49,7 @@ const Trader = ({id}: {id: string}) => {
      
   return (
     <div className='dark:text-light flex flex-col mt-10 gap-10 font-semibold font-mono text-dark'>
-      <div className="flex flex-col items-center justify-center tracking-wider gap-4">
+      <div className="flex flex-col items-center justify-center px-3 tracking-wider gap-4">
         {(user !== undefined && profile !== undefined && profile !== null)  && (
             <div className='flex flex-col justify-center  border-4 dark:border-light border-dark w-4/5 xl:w-1/2 max-md:w-full overflow-hidden rounded-xl '>
                 <div className='flex items-center w-full justify-evenly gap-4 border-b-2 dark:border-light border-dark'>
@@ -73,7 +73,7 @@ const Trader = ({id}: {id: string}) => {
                     <h1 className='max-md:border-b-2 border-light dark:border-dark w-auto'>phone number : {profile.phoneNumber2 ? profile.phoneNumber2 : "sorry i dont have phone number"}</h1>
                     <h1 className='max-md:border-b-2 border-light dark:border-dark w-auto'>email : {user.email ? user.email : "sorry no email"}</h1>
                 </div>
-                <div className='flex flex-col max-md:border-l-2 border-light gap-2  w-1/2'>
+                <div className='flex flex-col max-md:border-l-2 border-light dark:border-dark gap-2  w-1/2'>
                     <div>
                         <h1  className='text-lg text-center font-bold'>
                             user accounts
@@ -109,9 +109,14 @@ const Trader = ({id}: {id: string}) => {
       </div>
       
       <div className='flex flex-col gap-4 justify-center items-center'>
+      {pendingPost ?  <div className='flex gap-2 items-center justify-center'> loading Profiles <RefreshCw className="animate-spin"/> </div> :
         <div className='flex gap-2 items-center justify-center my-16 '>  
-            <h1 className='text-3xl'>{postForPage !== undefined && postForPage?.length > 1 ? "Items" : postForPage?.length === 1 ? "Item" : "no items"}</h1> <div className='dark:text-light text-dark font-bold'><ShoppingCart className='w-10 h-10'/ ></div> 
-        </div>
+           <h1 className='text-3xl'>{postForPage !== undefined && postForPage?.length > 1 ? "Items" : postForPage?.length === 1 ? "Item" : "no items"}
+            </h1> 
+            <div className='dark:text-light text-dark font-bold'>
+                
+            </div> 
+        </div>}
         <div className={cn('grid items-center justify-center bg-zinc-200 dark:bg-zinc-800  p-10 gap-10 gap-y-20  max-md:gap-5 grid-flow-row grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 max-md:gap-y-20',{
             "hidden": posts === undefined || posts.length === 0
         })}>

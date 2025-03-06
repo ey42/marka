@@ -7,7 +7,7 @@ const NavBar = async() => {
 
   return (
     
-    <div className='w-full z-50 sticky top-0 m-0'>
+    <div className='w-full sticky z-50 top-0'>
      
       <Heading/>
     
