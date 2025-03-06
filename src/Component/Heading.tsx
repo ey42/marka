@@ -88,7 +88,7 @@ if(user !== undefined){
 
   return (
 
-    <div className=' w-full backdrop-blur-md ' >
+    <div className=' w-full backdrop-blur-xl ' >
           <div className=" flex justify-between pb-1 items-end gap-4 h-[75px] border-dark dark:border-light border-b-[0.5px] ">
          <div className='flex flex-row flex-shrink font-mono ml-4 justify-center gap-3 max-md:justify-start items-end '>
           <div className={cn('flex justify-center  gap-4',{
