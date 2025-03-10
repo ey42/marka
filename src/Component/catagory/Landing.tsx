@@ -80,8 +80,8 @@ fetchAgain()
             "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 min-h-64 max-w-full bg-zinc-200 gap-y-8 dark:bg-zinc-800 max-md:w-full p-5 rounded-md mt-10": postForPage !== undefined
           })} >
             {postForPage !== undefined  ? postForPage?.map((post) => (
-              <Suspense fallback={<PostSkeleton/>}>
-                <Post post={post} key={post.id}/>
+              <Suspense key={post.id} fallback={<PostSkeleton/>}>
+                <Post post={post} />
                 </Suspense>
               
             ))  : pending ? <div className="grid grid-cols-2 sm:grid-cols-2 w-full min-w-full md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-y-8 gap-4">{ falseArrayOnPost.map((i) =>  <PostSkeleton key={i}></PostSkeleton> )}</div> : <div className="flex justify-center items-center gap-2"><h1 className="text-lg mx-auto font-bold self-center">no post found </h1><Frown /></div> }

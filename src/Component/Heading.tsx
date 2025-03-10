@@ -72,7 +72,7 @@ const Heading = () => {
   useEffect(() => {
     refetch()
     fetchprofile()
-  },[refetch, requestedCount])
+  },[refetch, requestedCount, fetchprofile])
 
 
   const usersImage: (string | null)[] = []
