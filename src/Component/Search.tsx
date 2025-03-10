@@ -85,9 +85,11 @@ const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       </div>
       <div ref={resultsContainerRef} className={cn(" py-4 a mt-[19px] bg-light dark:bg-dark dark:text-light rounded-md text-black resultsContainer", {
         'hidden': searchTerm === "",
-        "border-dark rounded-b-lg max-h-[500px] absolute top-20 h-auto w-auto min-w-52 overflow-y-scroll max-w-7xl border-4 dark:border-light": pathname !== "/"
+        "border-dark rounded-b-lg max-h-[500px] absolute top-10 h-auto w-auto min-w-60 overflow-y-scroll max-w-7xl border-4 dark:border-light": pathname !== "/"
       })}>
-      <h2 className='font-mono text-3xl font-bold mb-4 px-4'>Search Results of <span className="text-blue-500">m</span>ar<span className="text-yellow-500">k</span>a:</h2>
+      <h2 className={cn('font-mono text-3xl font-bold mb-4 px-4',{
+        "text-lg": pathname !== "/"
+      })}>Search Results of <span className="text-blue-500">m</span>ar<span className="text-yellow-500">k</span>a:</h2>
       {searchResults?.length === 0 && searchTerm !== "" ? ( <div className='flex'> <p className='text-xl font-mono font-thin pl-4'>No results found.</p> <Frown /></div>
        
       ) : ( pathname === '/' ? (

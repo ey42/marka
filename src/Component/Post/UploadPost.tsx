@@ -202,8 +202,8 @@ const {useSession} = Authclient
 
   return (
    <MaxWidthWrapper>
-    <div className="mt-4 flex items-center justify-center border-1 rounded-md dark:border-slate-300 border-dark">
-      <div className="flex flex-row max-lg:flex-col max-lg:justify-center max-md:items-center max-md:justify-center  justify-evenly max-lg:items-center max-lg:gap-12 w-full max-sm:ml-2 ml-4">
+    <div className="mt-4 flex items-center justify-center border-1 rounded-md dark:border-slate-300  w-full border-dark">
+      <div className="flex flex-row max-lg:flex-col max-lg:justify-center max-md:items-start max-md:justify-start  justify-evenly max-lg:items-center max-lg:gap-12 w-full max-sm:ml-2 ml-4">
         <form onSubmit={onsubmit} className="flex flex-col gap-5 items-center justify-center ml-4">
           <div className="w-52 h-52 flex items-center transition-all duration-200 rounded-lg text-dark dark:text-light font-bold border-1 border-dark dark:border-slate-300">
             <Image src={image[0] as string} alt="post image" width={208} height={208} className="w-52 h-52 rounded-lg border-2 dark:border-slate-300 z-10 border-dark"/>
@@ -215,28 +215,28 @@ const {useSession} = Authclient
          
             <Input type="file" ref={fileInputRef} onChange={(e) => handleOnChange(e)} className="h-9 file:text-sm p-0 font-semibold font-mono text-dark dark:text-light border-1 rounded-md dark:border-slate-300 border-dark dark:file:text-light file:font-semibold file:text-dark file:border-1 file:border-dark dark:file:border-slate-300 file:mr-3 file:rounded-md file:h-full file:cursor-pointer cursor-pointer text-nowrap transition-all duration-200" accept="image/*" multiple />
             </div> 
-          <div className="flex flex-col gap-2 rounded-md">
+          <div className="flex flex-col gap-2 min-w-52 rounded-md">
             <h1 className="font-bold font-serif">Title</h1>
-           <input className= "transition-all max-sm:w-40 duration-100 dark:bg-dark placeholder:text-gray-500 focus:placeholder:text-transparent w-full h-9 p-0 dark:text-slate-300 text-dark font-bold text-sm  rounded-md border-2 border-dark dark:border-slate-300 pl-1 focus:ring-1 dark:focus:ring-slate-300 focus:ring-dark focus:outline-none dark:focus:bg-neutral-800" id="catagory" type="text" onChange={(e) => handleTitle(e)} value={title} placeholder="Post title" required/>
+           <input className= "transition-all  duration-100 dark:bg-dark placeholder:text-gray-500 focus:placeholder:text-transparent w-full h-9 p-0 dark:text-slate-300 text-dark font-bold text-sm  rounded-md border-2 border-dark dark:border-slate-300 pl-1 focus:ring-1 dark:focus:ring-slate-300 focus:ring-dark focus:outline-none dark:focus:bg-neutral-800" id="catagory" type="text" onChange={(e) => handleTitle(e)} value={title} placeholder="Post title" required/>
             </div>
            <div className="flex flex-col gap-2"> 
             <h1 className="font-bold font-serif">Description</h1>
-           <Textarea className="w-80 border-2 max-sm:w-40 border-dark dark:border-slate-300 transition-all duration-200 placeholder:text-gray-500 dark:focus:placeholder:text-transparent dark:placeholder:text-gray-500 focus:placeholder:text-transparent text-dark dark:text-slate-300 font-bold text-sm focus:outline-none focus:ring-1 focus:ring-dark dark:focus:ring-slate-300 dark:focus:bg-neutral-800" id="description" onChange={(e) => handleDescription(e)} value={description} placeholder="description"/>
+           <Textarea className="w-80 border-2  border-dark dark:border-slate-300 transition-all duration-200 placeholder:text-gray-500 dark:focus:placeholder:text-transparent dark:placeholder:text-gray-500 focus:placeholder:text-transparent text-dark dark:text-slate-300 font-bold text-sm focus:outline-none focus:ring-1 focus:ring-dark dark:focus:ring-slate-300 dark:focus:bg-neutral-800" id="description" onChange={(e) => handleDescription(e)} value={description} placeholder="description"/>
            </div>
            <div className="flex flex-col gap-2">
             <h1 className="font-bold font-serif">Price</h1>
-            <input type="number" className="w-80 border-2 max-sm:w-40 border-dark dark:border-slate-300 transition-all duration-300 placeholder:text-gray-500 dark:focus:placeholder:text-transparent rounded-sm h-9 dark:placeholder:text-gray-500 focus:placeholder:text-transparent text-dark dark:text-slate-300 font-bold text-sm focus:outline-none focus:ring-1 dark:bg-dark focus:ring-dark dark:focus:ring-slate-300 dark:focus:bg-neutral-800" id="description" onChange={(e) => handlePrice(e)} value={price} placeholder="price in ethiopian birr"/>
+            <input type="number" className="w-80 border-2  border-dark dark:border-slate-300 transition-all duration-300 placeholder:text-gray-500 dark:focus:placeholder:text-transparent rounded-sm h-9 dark:placeholder:text-gray-500 focus:placeholder:text-transparent text-dark dark:text-slate-300 font-bold text-sm focus:outline-none focus:ring-1 dark:bg-dark focus:ring-dark dark:focus:ring-slate-300 dark:focus:bg-neutral-800" id="description" onChange={(e) => handlePrice(e)} value={price} placeholder="price in ethiopian birr"/>
            </div>
            <div className="flex flex-col gap-2 rounded-md">
             <h1 className="font-bold font-serif">City</h1>
-           <input className= "transition-all max-sm:w-40 duration-100 dark:bg-dark placeholder:text-gray-500 focus:placeholder:text-transparent w-full h-9 p-0 dark:text-slate-300 text-dark font-bold text-sm  rounded-md border-2 border-dark dark:border-slate-300 pl-1 focus:ring-1 dark:focus:ring-slate-300 focus:ring-dark focus:outline-none dark:focus:bg-neutral-800" id="catagory" type="text" onChange={(e) => handleCity(e)} value={city} placeholder="City" required/>
+           <input className= "transition-all duration-100 dark:bg-dark placeholder:text-gray-500 focus:placeholder:text-transparent w-full h-9 p-0 dark:text-slate-300 text-dark font-bold text-sm  rounded-md border-2 border-dark dark:border-slate-300 pl-1 focus:ring-1 dark:focus:ring-slate-300 focus:ring-dark focus:outline-none dark:focus:bg-neutral-800" id="catagory" type="text" onChange={(e) => handleCity(e)} value={city} placeholder="City" required/>
             </div>
            <div className="flex flex-col gap-2">
             <h1 className="font-bold font-serif">Choose catagories</h1>
            <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          className="transition-all hover:bg-light font-mono dark:hover:bg-dark max-sm:w-40 duration-400 justify-between border-2 border-dark dark:border-slate-300 dark:bg-dark dark:text-light text-dark bg-light focus:ring-1 focus:ring-dark  font-semibold w-full dark:focus:ring-slate-300  dark:focus:border-slate-300 focus:border-dark"
+          className="transition-all hover:bg-light font-mono dark:hover:bg-darkduration-400 justify-between border-2 border-dark dark:border-slate-300 dark:bg-dark dark:text-light text-dark bg-light focus:ring-1 focus:ring-dark text-center font-semibold w-full dark:focus:ring-slate-300  dark:focus:border-slate-300 focus:border-dark"
         >
           {catagory && spacedAccess !== undefined
             ? spacedAccess.find((a:string) => a === catagory)
@@ -278,11 +278,11 @@ const {useSession} = Authclient
            </div>
            
            <div className="flex">
-            <Button type="submit" className=" dark:bg-white w-full max-sm:w-40 bg-gray-950 font-bold text-white dark:text-gray-950 dark:hover:bg-slate-300 hover:bg-gray-900 transition-all duration-500 " disabled = {isPending}>{isPending ? "uploading..." : "upload post"}</Button>
+            <Button type="submit" className=" dark:bg-white w-full  bg-gray-950 font-bold text-white dark:text-gray-950 dark:hover:bg-slate-300 hover:bg-gray-900 transition-all duration-500 " disabled = {isPending}>{isPending ? "uploading..." : "upload post"}</Button>
             </div>
             </div>
         </form>
-        <div className={`font-mono tracking-wide text-dark max-sm:w-40 dark:text-slate-50 text-sm flex flex-col max-lg:justify-center max-lg:items-center justify-start gap-4 lg:ml-36 max-sm:justify-start max-sm:items-start`}> <h1 className="text-center transition-all duration-500 font-semibold text-sm">
+        <div className={`font-mono tracking-wide text-dark max-sm:w-40 dark:text-slate-50 text-sm flex flex-col max-lg:justify-center max-lg:items-center justify-start gap-4 lg:ml-36 max-md:justify-start max-md:items-start`}> <h1 className="text-center transition-all duration-500 font-semibold text-sm">
           {catagoryName !== undefined && catagoryName.length > 0 ?`you do have list of posts by  ${catagoryName?.length! <= 1 ? "this catagory" : "these catagories"} click it to see `: `catagories...`}</h1>
           
                   <ul className="text-sm font-semibold  max-md:grid-rows-10 max-sm:grid-flow-row grid grid-rows-5 grid-flow-col gap-x-10 gap-5 dark:marker:text-white list-none items-center justify-center">

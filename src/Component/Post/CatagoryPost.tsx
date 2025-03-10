@@ -8,6 +8,8 @@ import PaginationComponent from '../paginationComponent';
 import {useRouter, useSearchParams } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Frown, RefreshCw } from 'lucide-react';
+import Post from '../Post';
+import PostSkeleton from '../PostSkeleton';
 
 const CatagoryPost = ({catagoryName}: {catagoryName: string}) => {
     const {data: data, isPending} = trpc.database.getPostWithCatagory.useQuery({catagory : catagoryName as string}) 
@@ -19,34 +21,18 @@ const CatagoryPost = ({catagoryName}: {catagoryName: string}) => {
     const currentPage = Number(searchParams.get('page')) || 1
     const totalPages = Math.ceil(postsCount / 50)
     const postForPage = posts?.slice((currentPage - 1) * 50, currentPage * 50)
+    const falseArrayOnPost = Array.from({length:  7}, () => "items") 
+
     
   return (
-    <MaxWidthWrapper className='flex items-center justify-center mt-10'>
-    <div className='flex bg-zinc-200 dark:bg-zinc-800 text-black rounded-md dark:text-light p-10 flex-col items-center justify-center'>
-            {postForPage !== undefined && posts && posts.length > 0 ?  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"> {postForPage.map((post) => (
-            <Link href={post ? `/product/${post.id}` : '/'} key={post.id} className="border-2 bg-dark group-hover:bg-black group-hover:dark:bg-zinc-200 text-white dark:bg-white dark:text-black group min-w-52 border-dark dark:border-light hover:shadow-lg hover:shadow-black transition-all duration-100 dark:hover:shadow-zinc-400 rounded-md">
-                <div className={cn("flex items-center justify-center",{
-                    "contrast-50": post.isSold === true
-                })}>
-                    <Image src={post !== undefined ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}${(post.file as string[])[0]}`:''} width={600} height={450} alt={post.title} className="w-full h-48 rounded-sm border-b-2 border-light dark:border-black" loading="lazy"/>
-                  
-                </div>
-                <div className="flex justify-between">
-                    <div>
-                    <h1 className="font-semibold text-sm pl-1">{post.title.split(" ")[0]}...</h1>
-                    <h1 className={cn("font-semibold pl-1",{
-                        "text-black font-bold px-1 rounded-md bg-red-500 text-sm ": post.isSold === true
-                    })}>{post.isSold ? "solded" : `ETB ${post.price}`}</h1>
-                    </div>
-                    <div className='flex flex-col mr-2 '>
-                    <h1 className="text-sm font-semibold pl-1">{post.author.name.split(" ")[0]}</h1>
-                    </div>
-                </div>
-                
-            </Link>
-             
-            ))}
-            </div> : isPending ?<div className='flex gap-2'> <h1 className='text-lg font-bold self-center'>Loading... for posts </h1><RefreshCw className='animate-spin'/></div> :
+    <MaxWidthWrapper className='flex w-full items-center justify-center mt-10'>
+    <div className={cn("flex min-h-64 w-full bg-zinc-200 dark:bg-zinc-800 p-5 rounded-md mt-10 ",{
+            "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 min-h-64 max-w-full bg-zinc-200 gap-y-8 dark:bg-zinc-800 max-md:w-full p-5 rounded-md mt-10": postForPage !== undefined
+          })} >
+            {postForPage !== undefined && posts && posts.length > 0 ? postForPage?.map((post) => (
+            <Post post={post} key={post.id}/>
+            ))
+             : isPending ?<div className='grid grid-cols-2 sm:grid-cols-2 w-full min-w-full md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-y-8 gap-4'>{falseArrayOnPost.map((i) => <PostSkeleton key={i}/>) } </div> :
             <div className='flex justify-center gap-2 items-center w-full h-full'> 
             <h1 className='text-2xl font-bold'>No Post Found</h1> <Frown />
             </div>}

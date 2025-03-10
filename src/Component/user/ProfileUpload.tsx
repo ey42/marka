@@ -73,10 +73,10 @@ const ProfileUpload = () => {
         Images(file, e).then(imageUrl => {
          console.log("image came from image function : "+ imageUrl)
          setImage(imageUrl!)
-         fileInputRef.current!.value = ""
        }).catch(error => {
          console.error("error processing image : " + error)
-        
+         fileInputRef.current!.value = ""
+
        })
     }
   

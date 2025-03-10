@@ -30,7 +30,7 @@ export default function RootLayout({
         <Toaster richColors closeButton position="top-center"/>
       <ThemeProvider>
           <Provider>
-            <div className="w-full main min-w-full min-h-screen absolute overflow-auto dark:bg-dark bg-light">
+            <div className="w-full main min-w-full min-h-screen absolute dark:bg-dark bg-light">
         <NavBar />
         <div className="w-full min-h-screen pb-20">
             {children} 

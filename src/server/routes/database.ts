@@ -175,14 +175,14 @@ export const DatabaseRouter = router({
     const allPosts = await db.query.post.findMany({
        with:{
         author : true, 
-        likeAndDislikePost: true,
+        // likeAndDislikePost: true,
         postCatagory :true,
         postProfile: true,
-        postSeen: true
+        // postSeen: true
        },
        orderBy: (post) => desc(post.createdAt)
     }) 
-        return {allPosts, postCount}
+        return {allPosts , postCount}
 } catch(error){
     throw new TRPCError({code: "NOT_FOUND", message: "error getting all posts" })
 }
@@ -532,10 +532,10 @@ throw new TRPCError({
             where: (post, {eq}) => eq(post.catagory, catagory),
            with:{
             author : true, 
-            likeAndDislikePost: true,
+            // likeAndDislikePost: true,
             postCatagory :true,
             postProfile: true,
-            postSeen: true
+            // postSeen: true
            },
            orderBy: (post) => desc(post.createdAt)
         })

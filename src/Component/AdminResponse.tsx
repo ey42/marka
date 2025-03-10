@@ -29,7 +29,7 @@ const AdminResponse = () => {
         <div className="flex flex-col flex-shrink items-center w-full gap-10 px-4 py-20">
        {access?.profiles !== undefined && access.profiles.map((profile) =>( 
         profile.userContent.accepted === "none" && profile.userContent.role === "merchant" ?
-        <Link  href={`/profile/traders/${profile.userContent.id}`} key={profile.id} passHref className="flex transition-all duration-200 text-light dark:text-dark border-2 bg-dark hover:bg-black hover:dark:bg-zinc-200 hover:dark:text-black dark:bg-light dark:border-light hover:dark:border-black border-dark w-1/2 max-md:w-full overflow-hidden rounded-xl flex-col p-2 gap-4">
+        <Link  href={`/profile/traders/${profile.userContent.id}`} key={profile.id} passHref className="flex transition-all duration-200 text-light dark:text-dark border-2 bg-dark hover:bg-zinc-800 hover:dark:bg-zinc-200 hover:dark:text-black dark:bg-light dark:border-light hover:dark:border-black border-dark w-1/2 max-md:w-full overflow-hidden rounded-xl flex-col p-2 gap-4">
        
           <div className="flex flex-row items-center justify-between w-full rounded-lg">
           <div className="flex flex-col items-center justify-center gap-2">

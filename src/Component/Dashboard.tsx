@@ -32,7 +32,7 @@ const  Dashboard = ({profile_id}: DashboardProps) => {
 
   
   return (
-    <div className="flex justify-center items-start mt-10 h-screen">
+    <div className="flex justify-center items-start mt-10 w-full h-screen">
     <div className="flex w-1/3 max-lg:w-1/2 max-md:w-auto items-center justify-center flex-col px-2 gap-6 bg-dark dark:bg-light dark:text-dark text-light rounded-sm">
     <div className="mt-4 ml-4 flex items-center justify-center ">
    
@@ -56,11 +56,11 @@ className="rounded-full"
       <h1>email: </h1>
       <h1>{`${email}`}</h1>
      </div>
-     <div className="flex p-2 gap-2 border-b-2 border-dark dark:border-light">
+     <div className="flex p-2 gap-2 items-start justify-start border-b-2 border-dark dark:border-light">
       <h1>role: </h1>
-      <h1>{profile !== undefined ? profile.role === "merchant" && profile.accepted === "none" ? `requesting for merchant` : profile.role === "customer" && profile.accepted === "none" ? "customer" : profile.role === "merchant" && profile.accepted === "accept" && profiles !== undefined && <Link href={`traders/${profiles.userContent?.id}`} className="hover:underline text-blue-700">
+      <h1>{profile !== undefined ? profile.role === "merchant" && profile.accepted === "accept" ? <Link href={`traders/${profiles?.userContent?.id}`} className="hover:underline text-blue-700">
       <h1>merchant</h1>
-   </Link> : <RefreshCw className="animate-spin"/> }</h1>
+   </Link> : profile.role === "merchant" && profile.accepted === "none" ? "pending for seller" : profile.role === "customer" && profile.accepted === "reject" ? <p className="text-sm"> rejected by the admin please check again and again</p> : profile.role === "customer" && profile.accepted === "none" ? "customer" : " " : <RefreshCw className="animate-spin"/> }</h1>
      </div>
      <div className="flex p-2 gap-2 border-b-2 border-dark dark:border-light">
       <h1>{profile?.createdAt && !profile?.updatedAt ? "created-at" : "updated-at"}: </h1>

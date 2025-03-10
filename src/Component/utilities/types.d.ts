@@ -16,7 +16,9 @@ interface Catagoryprops {
     id: string;
     categories: string;
     description: string | null;
-    Imagefile: string | string[]
+    Imagefile: string;
+    createdAt: Date;
+    updatedAt: Date | null;
   }
  interface sessionProps {
     id: string;
@@ -54,4 +56,34 @@ interface postProps {
     isSold: boolean | null;
     soldDate: string;
     price: string;
+    city: string;
+}
+type modifiedProfileProp = Omit<profileProp, "createdAt" | "updatedAt"> &{
+    createdAt: string;
+    updatedAt: string | null;
+}
+type modifiedUserProp = Omit<userProps, "createdAt" | "updatedAt" | "userContent"> &{
+    createdAt: string;
+    updatedAt: string | null;
+}
+interface AllPostProps {
+    title: string;
+    description: string | null;
+    catagory: string;
+    userId: string;
+    id: string;
+    file?: unknown;
+    profileId: string;
+    createdAt: string;
+    city: string;
+    updatedAt: string | null;
+    isSold: boolean | null;
+    soldDate: string | null;
+    price: string;
+    postCatagory: {
+        postId: string;
+        catagoryName: string;
+    }[];
+    postProfile: modifiedProfileProp;
+    author: modifiedUserProp;
 }

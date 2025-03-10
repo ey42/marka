@@ -88,7 +88,7 @@ if(user !== undefined){
 
   return (
 
-    <div className=' w-full backdrop-blur-md ' >
+    <div className=' w-full backdrop-blur-xl ' >
           <div className=" flex justify-between pb-1 items-end gap-4 h-[75px] border-dark dark:border-light border-b-[0.5px] ">
          <div className='flex flex-row flex-shrink font-mono ml-4 justify-center gap-3 max-md:justify-start items-end '>
           <div className={cn('flex justify-center  gap-4',{
@@ -112,17 +112,17 @@ if(user !== undefined){
           <NavigationMenuTrigger className="transition-colors focus:border-black dark:focus:border-light data-[state=open]:border-black dark:data-[state=open]:border-light duration-500 rounded-sm font-mono border-2 border-dark dark:border-light font-semibold h-7 text-sm text-dark hover:bg-black bg-light hover:text-light dark:bg-dark dark:text-light hover:dark:bg-light hover:dark:text-black data-[state=open]:bg-black data-[state=open]:text-light dark:data-[state=open]:bg-light dark:data-[state=open]:text-black dark:data-[active]:bg-light dark:data-[active]:text-black data-[active]:bg-black data-[active]:text-light dark:focus:bg-light focus:text-light dark:focus:text-black focus:bg-black px-1 py-2 max-lg:w-8 max-lg:h-8"> <div className="flex gap-2 "><h1 className="max-lg:hidden text-sm">uploads</h1> <MonitorUp /></div> </NavigationMenuTrigger>
           <NavigationMenuContent className=" transition-all duration-150 w-32 flex-col gap-2 backdrop-blur-sm dark:bg-light bg-dark dark:text-dark text-light">
             <div className="flex flex-col w-32 h-full">
-                <Link href='/upload/upload-catagory' hidden={pathname.includes('upload/upload-catagory') || !activeUserSession} className=" group hover:bg-black dark:hover:bg-zinc-300">
+                <Link href='/upload/upload-catagory' hidden={pathname.includes('upload/upload-catagory') || !activeUserSession} className=" group hover:bg-zinc-800 dark:hover:bg-zinc-300">
               <div className="flex flex-row justify-between transition-all duration-300 px-2 py-2">
               <ArrowUpFromLine className="group-hover:-translate-y-1 transition-transform duration-500 stroke-light dark:stroke-dark group-hover:stroke-light dark:group-hover:stroke-dark"/> <h1>catagory</h1>
               </div>
               </Link>
-              <Link href='/upload/upload-post' hidden={pathname.includes('upload/upload-post') || !activeUserSession} className="group hover:bg-black dark:hover:bg-zinc-300">
+              <Link href='/upload/upload-post' hidden={pathname.includes('upload/upload-post') || !activeUserSession} className="group hover:bg-zinc-800 dark:hover:bg-zinc-300">
               <div className="flex flex-row justify-between transition-all duration-300  px-2 py-2 ">
                  <ArrowUpFromLine className="group-hover:-translate-y-1 transition-transform duration-500 stroke-light dark:stroke-dark group-hover:stroke-light dark:group-hover:stroke-dark"/> <h1 >post</h1>
               </div>
               </Link>
-              <Link href={`/upload/upload-profile`}  hidden={pathname.includes('upload/upload-profile') || !activeUserSession} className="group hover:bg-black dark:hover:bg-zinc-300 ">
+              <Link href={`/upload/upload-profile`}  hidden={pathname.includes('upload/upload-profile') || !activeUserSession} className="group hover:bg-zinc-800 dark:hover:bg-zinc-300 ">
               <div className="flex flex-row justify-between transition-all duration-500 px-2  py-2 ">
               <UserPen className="group-dark:hover:stroke-dark transition-transform duration-500 group-hover:-translate-y-1 group-hover:stroke-light dark:group-hover:stroke-dark stroke-light dark:stroke-dark dark:fill-dark fill-white"/><h1>profile</h1>
               </div>
@@ -143,12 +143,12 @@ if(user !== undefined){
           <MonitorUp /></div> </NavigationMenuTrigger>
         <NavigationMenuContent className=" w-32 flex-col gap-4 backdrop-blur-sm dark:bg-light bg-dark text-light dark:text-dark">
           <div className="flex flex-col w-32 h-full ">
-            <Link href='/upload/upload-post' hidden={activeUser?.role  !== 'merchant' || pathname.includes('upload/upload-post') || !activeUserSession} className="group hover:bg-black dark:hover:bg-zinc-300 ">
+            <Link href='/upload/upload-post' hidden={activeUser?.role  !== 'merchant' || pathname.includes('upload/upload-post') || !activeUserSession} className="group hover:bg-zinc-800 dark:hover:bg-zinc-300 ">
             <div className="flex  flex-row justify-between transition-all duration-300 px-2 rounded-lg py-2 ">
                <ArrowUpFromLine className="group-hover:-translate-y-1 transition-all duration-500 dark:stroke-dark stroke-light group-hover:stroke-light dark:group-hover:stroke-dark"/> <h1>post</h1>
             </div>
             </Link>
-            <Link href={`/upload/upload-profile`} hidden={activeUser?.role  !== 'merchant' || pathname.includes('upload/upload-profile') || !activeUserSession} className="group hover:bg-black dark:hover:bg-zinc-300">
+            <Link href={`/upload/upload-profile`} hidden={activeUser?.role  !== 'merchant' || pathname.includes('upload/upload-profile') || !activeUserSession} className="group hover:bg-zinc-800 dark:hover:bg-zinc-300">
             <div className="flex flex-row justify-between transition-all duration-500 px-2 rounded-lg py-2 ">
             <UserPen className="dark:hover:stroke-dark transition-all duration-500 group-hover:-translate-y-1 group-hover:stroke-light dark:group-hover:stroke-dark stroke-light dark:stroke-dark"/><h1>profile</h1>
             </div>
@@ -237,7 +237,7 @@ if(user !== undefined){
 
                 <div className=" flex rounded-lg max-md:hidden mr-5 ">
                 <div className={cn("rounded-md pr-2 text-sm border-2 text-dark dark:bg-dark bg-light dark:border-light  dark:text-light border-dark flex gap-2",{
-                'text-sm border-2 bg-gradient-to-r dark:from-dark cursor-pointer dark:via-light dark:to-light from-light via-dark to-dark ease-linear transition-all duration-700 hover:text-light bg-[200%_auto] hover:bg-right dark:hover:text-black dark:hover:bg-black   hover:border-dark ': !isPending
+                'text-sm border-2 bg-gradient-to-r dark:from-dark cursor-pointer dark:via-light dark:to-light from-light via-dark to-dark ease-linear transition-all duration-700 hover:text-light bg-[200%_auto] hover:bg-right dark:hover:text-black dark:hover:bg-black hover:border-dark ': !isPending
                 })}>
                 <button disabled ={isPending}  className='flex justify-start pl-2 font-bold text-sm py-0.5 font-mono' onClick={() => {
                   if(!user){

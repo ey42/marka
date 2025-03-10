@@ -170,15 +170,7 @@
     justify-items: center;
   }
 }
-/* @media (max-width: 270px) {
-  .pos {
-    display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    justify-content: center;
-    justify-items: center;
-    max-width: 300px;
-  }
-} */
+
 @media (max-width: 200px) {
   .support {
     display: flex;
