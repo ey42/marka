@@ -14,20 +14,7 @@ import { sql } from 'drizzle-orm';
 
 
 // const ee = new EventEmitter();
-const postSchema : z.ZodType<postProps[]>  = z.array(z.object({
-    title: z.string(),
-    description: z.string().nullable(),
-    catagory: z.string(),
-    userId: z.string(),
-    id: z.string(),
-    file: z.array(z.string()),
-    profileId: z.string(),
-    createdAt: z.date(),
-    updatedAt: z.date().nullable(),
-    isSold: z.boolean().nullable(),
-    soldDate: z.string(),
-    price: z.string()
-}))
+
 
 export const DatabaseRouter = router({
     uploadCatagories: publicProcedure.input(z.object({
